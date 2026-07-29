@@ -2881,10 +2881,10 @@
    "url": "https://cdn.modrinth.com/data/9eGKb6K1/versions/jd1cFrJn/voicechat-fabric-1.21.1-2.6.21.jar"
   },
   {
-   "path": "mods/CustomSkinLoader_Universal-15.0.1.jar",
-   "sha1": "ab8dd841cafc3b4ecbf0250d3f5aee8a1fdb506a",
-   "size": 218215,
-   "url": "https://cdn.modrinth.com/data/idMHQ4n2/versions/OLaesh5y/CustomSkinLoader_Universal-15.0.1.jar"
+   "path": "mods/fabrictailor-2.5.0.jar",
+   "sha1": "cd38b5b7b60a2ea68580d11d2e8cc0b008b0532a",
+   "size": 123261,
+   "url": "https://cdn.modrinth.com/data/g8w1NapE/versions/UDZdkBPN/fabrictailor-2.5.0.jar"
   },
   {
    "path": "mods/sodium-extra-fabric-0.9.3+mc1.21.1.jar",
