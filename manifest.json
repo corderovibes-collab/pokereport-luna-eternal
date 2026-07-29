@@ -2827,6 +2827,13 @@
   },
   {
    "once": false,
+   "path": "vista-menu.png",
+   "sha1": "ac98b47df40b7ec14b401b72f7be60f9fac9fa1c",
+   "size": 1192835,
+   "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/vista-menu.png"
+  },
+  {
+   "once": false,
    "path": "config/fancymenu/assets/boton.png",
    "sha1": "7b5a3871e7f06d00847656479dae3d7b2d5ac5f1",
    "size": 242,
@@ -2877,8 +2884,8 @@
   {
    "once": false,
    "path": "config/fancymenu/customization/pokereport_main.txt",
-   "sha1": "dd7ce920ff2d6dc3d17a7b3a5bb89f02970b8ae8",
-   "size": 62762,
+   "sha1": "bec7e39a1d46f913d7eec99da2352ac5c07c5e59",
+   "size": 59185,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fancymenu__customization__pokereport_main.txt"
   },
   {
@@ -2924,14 +2931,6 @@
    "sha1": "219fa634a1087af5cb8af30e5f5b43613f8ccc89",
    "size": 10198,
    "url": "https://cdn.modrinth.com/data/9mtu0sUO/versions/NFtAZrG7/fast-ip-ping-v1.0.11-mc1.21.1-fabric.jar",
-   "optional": true,
-   "group": "extra"
-  },
-  {
-   "path": "mods/SkinShuffle-2.9.1+1.21.jar",
-   "sha1": "850c8d617c7a8a69148a2a44aff7f8a16c0c2a9f",
-   "size": 5054375,
-   "url": "https://cdn.modrinth.com/data/3s19I5jr/versions/lvj5D7rA/SkinShuffle-2.9.1%2B1.21.jar",
    "optional": true,
    "group": "extra"
   },
