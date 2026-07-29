@@ -1020,322 +1020,322 @@
    "url": "https://cdn.modrinth.com/data/w7ThoJFB/versions/6jrMC48Z/zoomify-2.15.2%2B1.21.1.jar"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/accessories.json5",
    "sha1": "cbbf3c0a62d295f3eb59b96d37cc86c36cfd7e6f",
    "size": 917,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__accessories.json5"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/accessories_compat.json5",
    "sha1": "8713bf822b4e73757a6c1e678879fbe30cc2b875",
    "size": 224,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__accessories_compat.json5"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/advancementdisable.toml",
    "sha1": "93b1ff523ca2c20ee842ec0eb947bfa073cbfd82",
    "size": 72,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__advancementdisable.toml"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/advancementplaques.toml",
    "sha1": "203b0f871e75c1ad19f46a2ba52d50195ac98105",
    "size": 3017,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__advancementplaques.toml"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/badoptimizations.txt",
    "sha1": "a7658628e9315824a7d75abbfa9d2749a434a641",
    "size": 3460,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__badoptimizations.txt"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/beautify.json",
    "sha1": "06a4a9c80e78f38c6acfa382fc4e7bce076ef77e",
    "size": 118,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__beautify.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/betterf3.json",
    "sha1": "ac7c2e607a5d7ec9f28633bf513847ead04892d9",
    "size": 2527,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__betterf3.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/betterthirdperson.json5",
    "sha1": "087ae0b2cf5db04c79302f366697bbd51de116ad",
    "size": 640,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__betterthirdperson.json5"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/biome_replacer.properties",
    "sha1": "9d3b70793b278df7bf09ac75de4d881a00254c2f",
    "size": 1904,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__biome_replacer.properties"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/brb.toml",
    "sha1": "f2b217da5a75a5ef303630f78c43c15e99c4a41e",
    "size": 296,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__brb.toml"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/c2me.toml",
    "sha1": "4cccd0456d26f5ff2a76f3bef5e920a18728bfb7",
    "size": 8774,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__c2me.toml"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/capture_xp.json",
    "sha1": "7aba220819b9ebdb3303c7da3d3b83d29d99e6e1",
    "size": 204,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__capture_xp.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/cardinal-components-api.properties",
    "sha1": "0034d877ec2ea3155efaf54db8549db1e094f003",
    "size": 452,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__cardinal-components-api.properties"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/carved_wood-common.json",
    "sha1": "e27192696fdea2c67af243db77d6813cd1116dad",
    "size": 704,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__carved_wood-common.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/catchindicator-client.cfg",
    "sha1": "24be0c9cb328ac79ac9cfe059a3b42d4dd0c4061",
    "size": 1107,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__catchindicator-client.cfg"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/catchrate-display.json",
    "sha1": "01f8fc49cd15cac9493c41d8b3263870ab71d347",
    "size": 181,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__catchrate-display.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/cobblecuisine.json",
    "sha1": "eebc82604f8adedd826236e78d74c36a00d85dea",
    "size": 3918,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__cobblecuisine.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/cobbledollars/bank.json",
    "sha1": "e55c6558204b1bb8783438e5bfee189026a40642",
    "size": 5574,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__cobbledollars__bank.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/cobbledollars/client.json",
    "sha1": "f1ae9b9250f13418904776fb02fd9c2def8712c2",
    "size": 39,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__cobbledollars__client.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/cobbledollars/common.json",
    "sha1": "682c7b54ed4e37c6fb4bdbe371226c47cf2910fd",
    "size": 155,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__cobbledollars__common.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/cobbledollars/default_shop.json",
    "sha1": "5f29515cdb17fde93ad8b22f03b549a414737e8a",
    "size": 2320,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__cobbledollars__default_shop.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/cobblemon/main.json",
    "sha1": "d11f2615d623925744d9088f51db08681fb3d90c",
    "size": 3402,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__cobblemon__main.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/cobblemon/spawning/best-spawner-config.json",
    "sha1": "5f15b2570168927ee13ab3e64518cbd3af4fb8ba",
    "size": 537,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__cobblemon__spawning__best-spawner-config.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/cobblemon/starters.json",
    "sha1": "b285293bfed3773a9b2ddc6f0c1be81aca312634",
    "size": 3131,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__cobblemon__starters.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/cobblemon-additions/cobblemon-additions.json",
    "sha1": "ca6fafdc8d8489a14a7c727ab6f47d21513cdcdf",
    "size": 360,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__cobblemon-additions__cobblemon-additions.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/cobblemon-battle-extras-profiles.json",
    "sha1": "7ccc6ad2fbc211b05ee30a8cf39a9d2ab153346e",
    "size": 100,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__cobblemon-battle-extras-profiles.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/cobblemon-battle-extras-server.json",
    "sha1": "c0ae23c60892216d7154a73fbdd43c696088b511",
    "size": 72,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__cobblemon-battle-extras-server.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/cobblemon-battle-extras.json",
    "sha1": "6308ff730e60e9fee074ea07221d5e1668f70b15",
    "size": 4031,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__cobblemon-battle-extras.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/cobblemonbattlepositions.json",
    "sha1": "7f88fa4fe5f6a92a5ebc92e0c46e227d40925033",
    "size": 163,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__cobblemonbattlepositions.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/cobblemonraiddens/blacklist.json5",
    "sha1": "014b39a73a9f8d9a29a7f55103fba750dbc421ef",
    "size": 843,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__cobblemonraiddens__blacklist.json5"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/cobblemonraiddens/client.json5",
    "sha1": "6d458871b0e23cf0692434282c72cb7aa7de1646",
    "size": 979,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__cobblemonraiddens__client.json5"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/cobblemonraiddens/common.json5",
    "sha1": "7a2c46fa209145deae01351cd1223d67d7a61ac0",
    "size": 2037,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__cobblemonraiddens__common.json5"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/cobblemonraiddens/conditions.json5",
    "sha1": "9acd237644d7437c4abae514aaa5234363ebe003",
    "size": 459,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__cobblemonraiddens__conditions.json5"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/cobblemonraiddens/tier_five.json5",
    "sha1": "a8a45c1802ce513beae4acf62516087bb5b3b021",
    "size": 2267,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__cobblemonraiddens__tier_five.json5"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/cobblemonraiddens/tier_four.json5",
    "sha1": "9b0cd55749f65ad28b926f53e918f4d158f2071a",
    "size": 2226,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__cobblemonraiddens__tier_four.json5"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/cobblemonraiddens/tier_one.json5",
    "sha1": "f4fe7a3ae80c65fa835795a47c4aa887ea3e8885",
    "size": 2136,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__cobblemonraiddens__tier_one.json5"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/cobblemonraiddens/tier_seven.json5",
    "sha1": "c758b3ab75be719c41af457158b7f3e15b69f372",
    "size": 2348,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__cobblemonraiddens__tier_seven.json5"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/cobblemonraiddens/tier_six.json5",
    "sha1": "3db9dd1efc28f4f6aa6b758f03aa49309ccd9ad7",
    "size": 2306,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__cobblemonraiddens__tier_six.json5"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/cobblemonraiddens/tier_three.json5",
    "sha1": "db1cac5f43251a7321c335d8be9bc683815edfc1",
    "size": 2137,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__cobblemonraiddens__tier_three.json5"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/cobblemonraiddens/tier_two.json5",
    "sha1": "7e62ddc5cfbf793687d52e5bf1fa8f099d0446f5",
    "size": 2137,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__cobblemonraiddens__tier_two.json5"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/cobblenav/client-config.json",
    "sha1": "5c82ca8624c0c6649c36a6b7375485461b8aee64",
    "size": 399,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__cobblenav__client-config.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/cobblenav/server-config.json",
    "sha1": "0823cea38e10da954d312ca2b7086fdb3e868d11",
    "size": 1095,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__cobblenav__server-config.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/cobbreeding/main.json",
    "sha1": "d92b9eb8a4d2f0ee0d80782a6f27bb495a351057",
    "size": 999,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__cobbreeding__main.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/comforts-common.toml",
    "sha1": "9f35d6dfdcbc8773d8a057bffbfac5c8d9ed1b0a",
    "size": 189,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__comforts-common.toml"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/comforts-server.toml",
    "sha1": "6dacffe575a5a6f91e00524e8a2db09fc4585ed6",
    "size": 1869,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__comforts-server.toml"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/continuity.json",
    "sha1": "dcd61957c3ede67c890235ee6615d0f0945118cd",
    "size": 122,
@@ -1377,154 +1377,154 @@
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__customsplashscreen__wide_logo.png"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/customsplashscreen.json",
    "sha1": "122ab7fbef6da98faff4d65ceed705e08b6da779",
    "size": 426,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__customsplashscreen.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/defaultoptions/keybindings.txt",
    "sha1": "ec0d3c7004021af9287edc53fb99bb07c81ae682",
    "size": 6120,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__defaultoptions__keybindings.txt"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/defaultoptions/options.txt",
    "sha1": "5e01ab06cd8d1fe5efba6bc7cb06cf1846bba991",
    "size": 1844,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__defaultoptions__options.txt"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/defaultoptions/servers.dat",
    "sha1": "8ab6b5488fb3fd25f7ef17c8091238067bd14536",
    "size": 17746,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__defaultoptions__servers.dat"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/defaultoptions-common.toml",
    "sha1": "d73a0db4fe03b84fd0cbe52e0ac8e879c0d3aaf6",
    "size": 1732,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__defaultoptions-common.toml"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/entityculling.json",
    "sha1": "9a4e4410269cfc31c75c780841ef81f1fac69069",
    "size": 2228,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__entityculling.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/entity_model_features.json",
    "sha1": "937f5d4b70520a1bea9eac99f98228bc3b37a347",
    "size": 1206,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__entity_model_features.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/entity_texture_features.json",
    "sha1": "1e4aa4a5d53eceeec82ec8431ca088e66e7112a8",
    "size": 1423,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__entity_texture_features.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/etf_warnings.json",
    "sha1": "1573fc320a363b30a1a5e4cae1d4596ec177085d",
    "size": 28,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__etf_warnings.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/euphoria_patcher/.data.json",
    "sha1": "3dbb72e53680015676c2cf4d64038ffe0944938b",
    "size": 162,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__euphoria_patcher__.data.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/euphoria_patcher/settings.toml",
    "sha1": "3631172fe188127670e2d79a2223e23444f54fbe",
    "size": 2636,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__euphoria_patcher__settings.toml"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fabric/indigo-renderer.properties",
    "sha1": "e83217dead01b47f321ca92239686103b0721a99",
    "size": 291,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fabric__indigo-renderer.properties"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fancymenu/assets/bg_test.png",
    "sha1": "b808355035d469b28b355e8a6c70348b77d04770",
    "size": 871140,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fancymenu__assets__bg_test.png"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fancymenu/assets/cobbleverse_icon_16.png",
    "sha1": "1adb1b6423b2b2b39d9aaa08d5c511ab2bab1b1d",
    "size": 3634,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fancymenu__assets__cobbleverse_icon_16.png"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fancymenu/assets/cobbleverse_icon_32.icns",
    "sha1": "2c2247edeec5bc3cc4f946f76e277e0ec6795182",
    "size": 115281,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fancymenu__assets__cobbleverse_icon_32.icns"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fancymenu/assets/cobbleverse_icon_32.png",
    "sha1": "15e0cec5b08e4c1229eb7d0c5a718fff3fc7f3a3",
    "size": 5085,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fancymenu__assets__cobbleverse_icon_32.png"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fancymenu/assets/cobbleverse_title.png",
    "sha1": "1331755a741350293ed446cf1cad6562fa843884",
    "size": 227564,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fancymenu__assets__cobbleverse_title.png"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fancymenu/assets/discord_icon.png",
    "sha1": "cb40d6f37764d334a54f816b750204cc716aabb5",
    "size": 12789,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fancymenu__assets__discord_icon.png"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fancymenu/assets/latias_latios_background.png",
    "sha1": "f42fb1c53551df96c31cf1ff17654c5034fe7ca9",
    "size": 2913129,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fancymenu__assets__latias_latios_background.png"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fancymenu/assets/pokedex_menu.png",
    "sha1": "46370f3f0d8ced878598253f5f6d9835cac1205f",
    "size": 250362,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fancymenu__assets__pokedex_menu.png"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fancymenu/assets/slideshow_frame.png",
    "sha1": "0df2e5cc900966a28230b680dd5eef83a2e9b043",
    "size": 4382,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fancymenu__assets__slideshow_frame.png"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fancymenu/customizablemenus.txt",
    "sha1": "c0fae00a1e71f00ba44b490df0dd69061ca9db77",
    "size": 143,
@@ -1559,28 +1559,28 @@
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fancymenu__customization__cobbleverse_resourcepack_selection.txt"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fancymenu/custom_gui_screens.txt",
    "sha1": "5e7b2a3da5f38f5574db94338a481c1b105a1820",
    "size": 442,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fancymenu__custom_gui_screens.txt"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fancymenu/layout_editor/widgets/element_layer_control.lewidget",
    "sha1": "5152cf40b4030cef0186fa9009f387f8b60ed382",
    "size": 203,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fancymenu__layout_editor__widgets__element_layer_control.lewidget"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fancymenu/legacy_checklist.txt",
    "sha1": "f1569161a6ad24cc61b02dece317ea16e351ff1e",
    "size": 42,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fancymenu__legacy_checklist.txt"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fancymenu/listener_instances.txt",
    "sha1": "a0c1ab0274616b63f1157595291635dbe535a5f2",
    "size": 1344,
@@ -1594,987 +1594,987 @@
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fancymenu__options.txt"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fancymenu/slideshows/pokedex/images/AlfredoGym.png",
    "sha1": "b1fdc32c3741c462679729a5ef02547b63e32f47",
    "size": 363503,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fancymenu__slideshows__pokedex__images__AlfredoGym.png"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fancymenu/slideshows/pokedex/images/AshHouse.png",
    "sha1": "3c47e1ab09231dad3da4f759d0797e80cd44d198",
    "size": 416308,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fancymenu__slideshows__pokedex__images__AshHouse.png"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fancymenu/slideshows/pokedex/images/BurnedTower.png",
    "sha1": "81d6fe3eae529001778f01b4ae7b454db0999602",
    "size": 302050,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fancymenu__slideshows__pokedex__images__BurnedTower.png"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fancymenu/slideshows/pokedex/images/ChampionCamilla.png",
    "sha1": "bcb6d95c423659e5d9929acedeebbae9689f6e95",
    "size": 272597,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fancymenu__slideshows__pokedex__images__ChampionCamilla.png"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fancymenu/slideshows/pokedex/images/CrownCemetery.png",
    "sha1": "df91091620640b12368297801e5672c6fd238396",
    "size": 364738,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fancymenu__slideshows__pokedex__images__CrownCemetery.png"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fancymenu/slideshows/pokedex/images/DeoxysMeteorite.png",
    "sha1": "aafd69343a957284ba56cf9ee0ff6bb6f698b17e",
    "size": 315510,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fancymenu__slideshows__pokedex__images__DeoxysMeteorite.png"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fancymenu/slideshows/pokedex/images/DistortionWorld.png",
    "sha1": "4ca94942b3866c8ed8fc1294aec9ee0f3219809e",
    "size": 390440,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fancymenu__slideshows__pokedex__images__DistortionWorld.png"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fancymenu/slideshows/pokedex/images/FannieGym.png",
    "sha1": "e6c84270b13184b0a64fe5865139f0cb9d3c8f88",
    "size": 329883,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fancymenu__slideshows__pokedex__images__FannieGym.png"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fancymenu/slideshows/pokedex/images/FlyingTaxi.png",
    "sha1": "7b56bbcec5a122b3eeebcb2553ae58fd0a0292c4",
    "size": 448203,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fancymenu__slideshows__pokedex__images__FlyingTaxi.png"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fancymenu/slideshows/pokedex/images/FurioGym.png",
    "sha1": "5d573ee3c1490563ca62379f09caeb3627956855",
    "size": 414132,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fancymenu__slideshows__pokedex__images__FurioGym.png"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fancymenu/slideshows/pokedex/images/GengarGmax.png",
    "sha1": "cf35fb559bf937698a7239029027d3e590ccb437",
    "size": 312456,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fancymenu__slideshows__pokedex__images__GengarGmax.png"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fancymenu/slideshows/pokedex/images/GroudonVolcano.png",
    "sha1": "bb50355b02838e6ec93fe2c01d15f82592d5ec2d",
    "size": 399767,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fancymenu__slideshows__pokedex__images__GroudonVolcano.png"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fancymenu/slideshows/pokedex/images/HoennLeague.png",
    "sha1": "d64a2b1217f9fd34be7034a5333891b3d7dab38a",
    "size": 408119,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fancymenu__slideshows__pokedex__images__HoennLeague.png"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fancymenu/slideshows/pokedex/images/HouseFurnitures.png",
    "sha1": "4363e6cfce4d1d3e24eaa75b74fd0244023c9029",
    "size": 357965,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fancymenu__slideshows__pokedex__images__HouseFurnitures.png"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fancymenu/slideshows/pokedex/images/JohtoLeague.png",
    "sha1": "563e310ce267c7c40e4a43903951402bce9e98f0",
    "size": 278869,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fancymenu__slideshows__pokedex__images__JohtoLeague.png"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fancymenu/slideshows/pokedex/images/KantoCartographer.png",
    "sha1": "d07010c5f820dd9d7d4782c8516a49218b132128",
    "size": 334955,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fancymenu__slideshows__pokedex__images__KantoCartographer.png"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fancymenu/slideshows/pokedex/images/KyogreTemple.png",
    "sha1": "0233e0a035ec7d2cbad30a51127d88348f7e900f",
    "size": 291554,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fancymenu__slideshows__pokedex__images__KyogreTemple.png"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fancymenu/slideshows/pokedex/images/LakeVerity.png",
    "sha1": "cd3910584d0cc0806249aae212977425591598ae",
    "size": 393397,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fancymenu__slideshows__pokedex__images__LakeVerity.png"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fancymenu/slideshows/pokedex/images/LegendaryBirds.png",
    "sha1": "260773a794ed42ae591a2e218c5a288e09b36f7c",
    "size": 442680,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fancymenu__slideshows__pokedex__images__LegendaryBirds.png"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fancymenu/slideshows/pokedex/images/MegaZygardeVSMegaCharizardX.png",
    "sha1": "550cb07d8e2e69c2b6b6e8c03c8d5d246cb72d3c",
    "size": 309576,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fancymenu__slideshows__pokedex__images__MegaZygardeVSMegaCharizardX.png"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fancymenu/slideshows/pokedex/images/MistyGym.png",
    "sha1": "dd080e56d82fb82611bcf51f776d69a694079ef1",
    "size": 396909,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fancymenu__slideshows__pokedex__images__MistyGym.png"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fancymenu/slideshows/pokedex/images/NecrozmaTowers.png",
    "sha1": "73ca03c0ca3783d2e3f53ce015b3054aafc03ed9",
    "size": 364167,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fancymenu__slideshows__pokedex__images__NecrozmaTowers.png"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fancymenu/slideshows/pokedex/images/OriginTemple.png",
    "sha1": "f5aa9c94197a517a6e3113511f6856f13b32138d",
    "size": 360871,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fancymenu__slideshows__pokedex__images__OriginTemple.png"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fancymenu/slideshows/pokedex/images/PokeMart.png",
    "sha1": "9789c51639c5c57aebe3df204a1771c9ce5a3ecc",
    "size": 401999,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fancymenu__slideshows__pokedex__images__PokeMart.png"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fancymenu/slideshows/pokedex/images/PokemonCenter.png",
    "sha1": "c723a30bc033da17d14931487360b09897d1f8ab",
    "size": 427416,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fancymenu__slideshows__pokedex__images__PokemonCenter.png"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fancymenu/slideshows/pokedex/images/RadioTower.png",
    "sha1": "275a42182c5f1dd185605feebf98e018701d2713",
    "size": 311724,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fancymenu__slideshows__pokedex__images__RadioTower.png"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fancymenu/slideshows/pokedex/images/RegirockTemple.png",
    "sha1": "fdc37e1c77888951922a11d36e6ab4cb225a2fbd",
    "size": 411253,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fancymenu__slideshows__pokedex__images__RegirockTemple.png"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fancymenu/slideshows/pokedex/images/RegisteelTemple.png",
    "sha1": "d240a27f3b81b173a033013f1706ffa6be49671d",
    "size": 278721,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fancymenu__slideshows__pokedex__images__RegisteelTemple.png"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fancymenu/slideshows/pokedex/images/RidingTorterraTogether.png",
    "sha1": "b89bd7e14e7c1202ceff7b7064409e96a2c775b6",
    "size": 472200,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fancymenu__slideshows__pokedex__images__RidingTorterraTogether.png"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fancymenu/slideshows/pokedex/images/SabrinaGym.png",
    "sha1": "2f4ea9b6563152f554afb5b88f5d6366136c2902",
    "size": 270673,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fancymenu__slideshows__pokedex__images__SabrinaGym.png"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fancymenu/slideshows/pokedex/images/SecretGarden.png",
    "sha1": "04684ed8435a03689ffea8b64f32d267905519af",
    "size": 341900,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fancymenu__slideshows__pokedex__images__SecretGarden.png"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fancymenu/slideshows/pokedex/images/SinnohLeague.png",
    "sha1": "14855e924a408350577821015c0a72edcc798d8d",
    "size": 373808,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fancymenu__slideshows__pokedex__images__SinnohLeague.png"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fancymenu/slideshows/pokedex/images/SnowpointTemple.png",
    "sha1": "d7ba42ce735d37aec085ecbad7f26c4be3b08618",
    "size": 381593,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fancymenu__slideshows__pokedex__images__SnowpointTemple.png"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fancymenu/slideshows/pokedex/images/StarkMountain.png",
    "sha1": "2fea4ea9fbb771f2933be382a125742e9ba488de",
    "size": 417673,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fancymenu__slideshows__pokedex__images__StarkMountain.png"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fancymenu/slideshows/pokedex/images/TeamGalacticPharmacy.png",
    "sha1": "5cf4da03dbeac3fabce7675f12c2a74bc4d2dce7",
    "size": 373184,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fancymenu__slideshows__pokedex__images__TeamGalacticPharmacy.png"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fancymenu/slideshows/pokedex/images/TeamRocket.png",
    "sha1": "3044d5d7c9fc529eb71b2c63067eb5be60aa6878",
    "size": 224343,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fancymenu__slideshows__pokedex__images__TeamRocket.png"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fancymenu/slideshows/pokedex/images/TeamRocketRadio.png",
    "sha1": "a7b5458b50c6dc79013565c6416d056ed76b9e17",
    "size": 330164,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fancymenu__slideshows__pokedex__images__TeamRocketRadio.png"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fancymenu/slideshows/pokedex/images/WhirlIsland.png",
    "sha1": "ecd7778c8d23123e185970f10aa8db232f9c4106",
    "size": 360905,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fancymenu__slideshows__pokedex__images__WhirlIsland.png"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fancymenu/slideshows/pokedex/properties.txt",
    "sha1": "2d084b487846efb5a8b79136f22ad4a5f0e5fc1a",
    "size": 172,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fancymenu__slideshows__pokedex__properties.txt"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fancymenu/ui_themes/cherry_blossom.json",
    "sha1": "9a453a566f041ddbc39e17918acdac90f6eaed38",
    "size": 9349,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fancymenu__ui_themes__cherry_blossom.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fancymenu/ui_themes/cozy_campfire.json",
    "sha1": "e7fbd4e11f3e969d20d7c713e61fa6d6cedd077e",
    "size": 9347,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fancymenu__ui_themes__cozy_campfire.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fancymenu/ui_themes/dark.json",
    "sha1": "b8793f498fc95000ab68a7d6b45d8575ad45d558",
    "size": 9329,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fancymenu__ui_themes__dark.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fancymenu/ui_themes/dark_high_contrast.json",
    "sha1": "9583fa877b286337557aae3429f91d66682091b7",
    "size": 9359,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fancymenu__ui_themes__dark_high_contrast.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fancymenu/ui_themes/light.json",
    "sha1": "5b9e9bc9d4d683584c919bcdae3b75581ae42f60",
    "size": 9331,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fancymenu__ui_themes__light.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fancymenu/ui_themes/light_high_contrast.json",
    "sha1": "8a290f6e1a0bdf2be972878e1c134a0c31f4a069",
    "size": 9361,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fancymenu__ui_themes__light_high_contrast.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fancymenu/ui_themes/pumpkin_soup.json",
    "sha1": "39c96a61bdeb936b151e38d0050b70abb78e3620",
    "size": 9345,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fancymenu__ui_themes__pumpkin_soup.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fancymenu/ui_themes/purple_void.json",
    "sha1": "9e38ca299adfe6ab2ad331c6adb80e26ff823da8",
    "size": 9343,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fancymenu__ui_themes__purple_void.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fancymenu/ui_themes/spooky_season.json",
    "sha1": "9fa05d2794bdec26dee5224075c98bd7da9c1a0d",
    "size": 9347,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fancymenu__ui_themes__spooky_season.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fancymenu/user_variables.db",
    "sha1": "b41f9d7688944b0d96eaa089a5a5bb74af28d258",
    "size": 23,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fancymenu__user_variables.db"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/ferritecore.mixin.properties",
    "sha1": "8cec200d99bbe46689cbae8df75d62f4d52f68c1",
    "size": 1615,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__ferritecore.mixin.properties"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fightorflight.json5",
    "sha1": "ea135baf3c8d164ac97afa56f2076d649944adf6",
    "size": 17137,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fightorflight.json5"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fightorflight_moves.json5",
    "sha1": "5fa80f7b56af3fc6604ec959b6a139c00eb4afbf",
    "size": 8197,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fightorflight_moves.json5"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/fightorflight_visual_effect.json5",
    "sha1": "56ce52b8f865bea022836f548ea74024da5e24ba",
    "size": 1371,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fightorflight_visual_effect.json5"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/forgeconfigapiport.toml",
    "sha1": "bbf08b318d61b5e00395430b6b2664659c860c4f",
    "size": 524,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__forgeconfigapiport.toml"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/forgivingvoid-common.toml",
    "sha1": "be41b7788bd42fdc7b7caa0ad0c4eaa256ce60bb",
    "size": 2166,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__forgivingvoid-common.toml"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/global_packs.toml",
    "sha1": "90f4993a0e3f84cf811dcbd0b78af2f41fb86cb4",
    "size": 1174,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__global_packs.toml"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/immediatelyfast.json",
    "sha1": "9005fdfb4eeaa64cf158b244b263aa5347d03db0",
    "size": 1114,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__immediatelyfast.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/infinite-music-options.json",
    "sha1": "95a63ed0fe539124547af57982eae502a67ee354",
    "size": 526,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__infinite-music-options.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/interactic.json5",
    "sha1": "2cd72975bb7aec90922762a62a0ed5bb6df1a98a",
    "size": 1026,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__interactic.json5"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/iris-excluded.json",
    "sha1": "20bd3420b5c911402ac289c154b56ac1dd8f84ba",
    "size": 31,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__iris-excluded.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/iris.properties",
    "sha1": "49d4d80469633e2086c1c709bfe17f9a7834c061",
    "size": 280,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__iris.properties"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/lenientdeath.json5",
    "sha1": "93738efa05c4e9ae42f3beed49d47ed6546404d1",
    "size": 23088,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__lenientdeath.json5"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/lithium.properties",
    "sha1": "38f2993a7d80d0a6a25eb6182bd6898af24a16eb",
    "size": 267,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__lithium.properties"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/lumymon.json",
    "sha1": "6acc9e73216901ef79ecf2d98166d9c082e82b78",
    "size": 310,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__lumymon.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/mega_showdown/config.json",
    "sha1": "862ff18e769baed605dc652bd9d0db8c0c9f388e",
    "size": 570,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__mega_showdown__config.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/midnightlib.json",
    "sha1": "ef717d24a45baf1406cd1c5600b176cb8b3cb2db",
    "size": 37,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__midnightlib.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/mobsbegone-blacklist.json",
    "sha1": "f7f04d97755fe0977735cad5ca4345de15ea66bd",
    "size": 1970,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__mobsbegone-blacklist.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/modernfix-mixins.properties",
    "sha1": "ac93eaa0eae4db7f95ba8d40e04109bb6ffb9b92",
    "size": 4144,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__modernfix-mixins.properties"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/modmenu.json",
    "sha1": "0e52e45edc7fe8dc1b7feaba32daa243b0284c9e",
    "size": 830,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__modmenu.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/moreculling.toml",
    "sha1": "a2794f496f2597ea693bc675243d8785269f5fc6",
    "size": 985,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__moreculling.toml"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/MouseTweaks.cfg",
    "sha1": "651b3e4db2d430dc1da3566b2984b264061a6794",
    "size": 135,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__MouseTweaks.cfg"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/musicnotification.json",
    "sha1": "0a345bcf708e48e0e0408b027bf24b68726a8fac",
    "size": 580,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__musicnotification.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/neruina.json5",
    "sha1": "72cf2e0644af440014df38988834378aef5121fe",
    "size": 352,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__neruina.json5"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/nethermap.toml",
    "sha1": "e832116752b099fb599a88b3e26899454621de34",
    "size": 138,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__nethermap.toml"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/notenoughanimations.json",
    "sha1": "306aacd2894af930869ac63401af7bfbbb7b06a2",
    "size": 1630,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__notenoughanimations.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/notenoughcrashes.json",
    "sha1": "2b792fb7eb312e343c5f5fae080e967de0aae1f7",
    "size": 156,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__notenoughcrashes.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/obc-common.toml",
    "sha1": "8c3a513fa67ae524df0134e170396d88bab8837e",
    "size": 720,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__obc-common.toml"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/packetfixer.properties",
    "sha1": "4429082866d3f4bfbf3c33856d76485f6f5968da",
    "size": 489,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__packetfixer.properties"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/PaginatedAdvancements.json5",
    "sha1": "fa7d151ad96faadaf22d9b9fa1766c2f41b01a2f",
    "size": 367,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__PaginatedAdvancements.json5"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/particlerain/config.json",
    "sha1": "b903a2af70ecca865d81bed33145689858471f2f",
    "size": 1191,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__particlerain__config.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/particlerain/particles.json",
    "sha1": "2c4378fb8509cb9c7d0a1410bf80310e342bc7cd",
    "size": 279,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__particlerain__particles.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/particle_core_config.toml",
    "sha1": "7118122322673229d7494ffde8dca40a4ac27dd9",
    "size": 378,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__particle_core_config.toml"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/particle_core_disabled_optimizations_v2.json",
    "sha1": "ad40f183930c3de707a341869a4a3ca2916caae8",
    "size": 1758,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__particle_core_disabled_optimizations_v2.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/particular-common.toml",
    "sha1": "e00622337689a0e7e21b2da5e455638dffafc33e",
    "size": 5736,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__particular-common.toml"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/PastureLoot.json",
    "sha1": "b8f69459db8720e07ed30b8af93bfc5b7a50c0d1",
    "size": 1071,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__PastureLoot.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/pingwheel.json",
    "sha1": "9c06fd2feab1b45dbc8e1fc09d0bf9a032691512",
    "size": 410,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__pingwheel.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/pingwheel.server.json",
    "sha1": "4af89204103333c0e1ea81db64821db56fe7c8d0",
    "size": 111,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__pingwheel.server.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/playerxp/playerxp.json",
    "sha1": "d4360b4e376b310a311affc814e17a1b0524a1dc",
    "size": 227,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__playerxp__playerxp.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/rctmod-client.toml",
    "sha1": "6ceff8e56d1c66b842df8a72e5f97283cadea038",
    "size": 807,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__rctmod-client.toml"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/rctmod-server.toml",
    "sha1": "2eff97357749938c8b8efdb14e84474d85b8805a",
    "size": 8777,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__rctmod-server.toml"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/reeses_sodium_options.json",
    "sha1": "f560f2778c881de9be83eb6ddcb3a019621af2f9",
    "size": 746,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__reeses_sodium_options.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/repurposed_structures.json",
    "sha1": "ea91ce24f5adb02243913975b0cb855cfaf77f7c",
    "size": 88,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__repurposed_structures.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/resourcepackoverrides.json",
    "sha1": "76a4aee361a2f60d7e709e6c0c0e6d7704df997e",
    "size": 13767,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__resourcepackoverrides.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/respackopts/_respackopts.conf",
    "sha1": "2f86c375605ccaaa40e96eb3c959f75a41454326",
    "size": 456,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__respackopts___respackopts.conf"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/roughlyenoughitems/collapsible.json5",
    "sha1": "b8f58d0db20421137a3322553a4a972be68d5db7",
    "size": 1321158,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__roughlyenoughitems__collapsible.json5"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/roughlyenoughitems/config.json5",
    "sha1": "8a12ce92cbf461bacd7163f6a14bba20007705a3",
    "size": 59010,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__roughlyenoughitems__config.json5"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/roughlyenoughitems/pinyin.properties",
    "sha1": "3c9b5606e5a949c7d5faf348ab4c037e0279364f",
    "size": 49,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__roughlyenoughitems__pinyin.properties"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/roughlyenoughitems/pinyin_double.properties",
    "sha1": "09df39fd1ddbd5f566d3b48cb54955fc42ef54eb",
    "size": 74,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__roughlyenoughitems__pinyin_double.properties"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/safepastures/safepastures.json",
    "sha1": "b50c8203fa763764f8c64bc189794c174f4b61ba",
    "size": 1272,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__safepastures__safepastures.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/scalablelux.properties",
    "sha1": "16500b6b32449eb0ddfe9150889a64b30e2e56bd",
    "size": 84,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__scalablelux.properties"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/sodium-mixins.properties",
    "sha1": "5455463ee999b945c1cff8ae90f2b705e19fb86c",
    "size": 258,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__sodium-mixins.properties"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/sodium-options.json",
    "sha1": "7ca1d97b68c43d679d975520ff40cfdc33f826d8",
    "size": 762,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__sodium-options.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/sophisticatedbackpacks-common.toml",
    "sha1": "6ecd599f4b89f78175594edf728b66ed3f8445d0",
    "size": 119,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__sophisticatedbackpacks-common.toml"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/sophisticatedbackpacks-server.toml",
    "sha1": "5cb1a3cf2b4848f0578a2832a260925dada33055",
    "size": 18706,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__sophisticatedbackpacks-server.toml"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/sophisticatedcore-client.toml",
    "sha1": "020f9b78b0db2eb49b3bff1517dcab3ce8c6faba",
    "size": 347,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__sophisticatedcore-client.toml"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/sophisticatedcore-common.toml",
    "sha1": "492fc825e3dc492363550700eaeea3b967b42ead",
    "size": 9204,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__sophisticatedcore-common.toml"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/sophisticatedstorage-client.toml",
    "sha1": "32b522470ed59492d6f179513a664a80d485cebe",
    "size": 400,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__sophisticatedstorage-client.toml"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/sophisticatedstorage-common.toml",
    "sha1": "d578e18d501ad877880d4e8505fdfde1dfb1367a",
    "size": 186,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__sophisticatedstorage-common.toml"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/sophisticatedstorage-server.toml",
    "sha1": "cdf8d3890246aed8b18ea3784ab068dc42b88d7c",
    "size": 24321,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__sophisticatedstorage-server.toml"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/soundsbegone.json",
    "sha1": "10081707fd94babcaa85a218f20190d6fe51316a",
    "size": 2945,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__soundsbegone.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/sound_physics_remastered/occlusion.properties",
    "sha1": "5eac9cfb94e24fa3256faab120c97e3d1615cce5",
    "size": 4879,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__sound_physics_remastered__occlusion.properties"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/sound_physics_remastered/reflectivity.properties",
    "sha1": "95feb43eb67757038518212b08739cb39bb9763e",
    "size": 4713,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__sound_physics_remastered__reflectivity.properties"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/sound_physics_remastered/soundphysics.properties",
    "sha1": "d28f5f62aebcbe96ce0ad333b8cb8298776d20f8",
    "size": 5104,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__sound_physics_remastered__soundphysics.properties"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/sound_physics_remastered/sound_rates.properties",
    "sha1": "ffa4744c11537ab268f0bd77a23fafe5b3372156",
    "size": 78615,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__sound_physics_remastered__sound_rates.properties"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/stackdeobf.json",
    "sha1": "f64f26adf375e4982c7f081c8e38865084294303",
    "size": 130,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__stackdeobf.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/tim_core.json",
    "sha1": "402438c80127e9d58839a16abae0dbbafab2fdce",
    "size": 762,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__tim_core.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/toms_storage.json",
    "sha1": "30a5871bd64087d12f5dabd723d529d487842ef7",
    "size": 448,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__toms_storage.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/vanillabackport-client.toml",
    "sha1": "332f8ffb8f86b83b74bac3a8f11623951a9bb59b",
    "size": 348,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__vanillabackport-client.toml"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/vanillabackport-common.toml",
    "sha1": "67125e46906690d05bf6d7c2b63a12ac07d60ef6",
    "size": 3265,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__vanillabackport-common.toml"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/VillagerConfig/villagerconfig.json5",
    "sha1": "0cb956eb9d1904db1235a5807db487afd9e83b19",
    "size": 647,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__VillagerConfig__villagerconfig.json5"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/waystones-common.toml",
    "sha1": "13f32dc260837fcfd1ce9a43ecd8a7842d509559",
    "size": 8387,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__waystones-common.toml"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/xaero/lib/client.cfg",
    "sha1": "cc1c5a24171af753177aec549736c89fb80f3c37",
    "size": 30,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__xaero__lib__client.cfg"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/xaero/lib/common.cfg",
    "sha1": "53aa30b9615d597221a624808feb6e41590532a0",
    "size": 240,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__xaero__lib__common.cfg"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/xaero/lib/profiles/cobbleverse.cfg",
    "sha1": "7d5652abf425db7a101f98c9d4f2b8a891e3b1fa",
    "size": 129,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__xaero__lib__profiles__cobbleverse.cfg"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/xaero/lib/server_profiles/cobbleverse.cfg",
    "sha1": "d4e8116e22ef8414feb77fbb6e68ea9c0b2aaef8",
    "size": 83,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__xaero__lib__server_profiles__cobbleverse.cfg"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/xaero/minimap/client.cfg",
    "sha1": "a6563ffdc53a2e4a4ca9b8a3bfb999eae8aef1fe",
    "size": 240,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__xaero__minimap__client.cfg"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/xaero/minimap/common.cfg",
    "sha1": "6563c45a1f8f62b43040105fae432ba0e1860ad6",
    "size": 151,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__xaero__minimap__common.cfg"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/xaero/minimap/default_radar_categories_client.json",
    "sha1": "19a42a82ad56f83bf3b24d20d7de7fa43efd62bb",
    "size": 5642,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__xaero__minimap__default_radar_categories_client.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/xaero/minimap/default_radar_categories_server.json",
    "sha1": "857b0758e3dd857371841fe2e0e59e92e2e48bf7",
    "size": 4749,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__xaero__minimap__default_radar_categories_server.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/xaero/minimap/profiles/cobbleverse.cfg",
    "sha1": "b505b1e655e6ad149aaf8d4138326c04071eefa0",
    "size": 3921,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__xaero__minimap__profiles__cobbleverse.cfg"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/xaero/minimap/profiles/entity_radar_categories/cobbleverse.cfg.json",
    "sha1": "3e6381ab862426da89b6cba5c209a62c9803fbf7",
    "size": 5641,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__xaero__minimap__profiles__entity_radar_categories__cobbleverse.cfg.json"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/xaero/minimap/profiles/info_display_config/cobbleverse.cfg.txt",
    "sha1": "2b8d12369471b57bfa6426254b2170bc8e6b3b88",
    "size": 684,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__xaero__minimap__profiles__info_display_config__cobbleverse.cfg.txt"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/xaero/minimap/server_profiles/cobbleverse.cfg",
    "sha1": "d4e8116e22ef8414feb77fbb6e68ea9c0b2aaef8",
    "size": 83,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__xaero__minimap__server_profiles__cobbleverse.cfg"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/xaero/world-map/client.cfg",
    "sha1": "b295f50cfa807c4c01eb8757f8119368ec5ee429",
    "size": 526,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__xaero__world-map__client.cfg"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/xaero/world-map/common.cfg",
    "sha1": "c1117ed9c3629358c6d6c9a014836c9fdee5a439",
    "size": 145,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__xaero__world-map__common.cfg"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/xaero/world-map/profiles/cobbleverse.cfg",
    "sha1": "280e8b4ecd6faa83db0d428f071e015bcd93641b",
    "size": 1627,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__xaero__world-map__profiles__cobbleverse.cfg"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/xaero/world-map/server_profiles/cobbleverse.cfg",
    "sha1": "d4e8116e22ef8414feb77fbb6e68ea9c0b2aaef8",
    "size": 83,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__xaero__world-map__server_profiles__cobbleverse.cfg"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/xaerohud.txt",
    "sha1": "41020b08698bd0c08640d1e1b7f745dd28b0cd5b",
    "size": 123,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__xaerohud.txt"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/yacl.json5",
    "sha1": "622920f29084efcd3a8d0b2a0ea0756fece182d2",
    "size": 250,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__yacl.json5"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/zfastnoise.mixin.properties",
    "sha1": "2cabd14d915aea53bc4943c73335356e9cfefba6",
    "size": 81,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__zfastnoise.mixin.properties"
   },
   {
-   "once": false,
+   "once": true,
    "path": "config/zoomify.json",
    "sha1": "d2e8797db1e7c4bed3e8102b182d9bf53e536e26",
    "size": 709,
@@ -2870,8 +2870,8 @@
   {
    "once": false,
    "path": "config/fancymenu/customization/pokereport_main.txt",
-   "sha1": "33c336bcd8db9413b39a88086f967481716939aa",
-   "size": 57223,
+   "sha1": "7024db717c55874a84176f1c3b7b5e14df01aacd",
+   "size": 59852,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__fancymenu__customization__pokereport_main.txt"
   },
   {
@@ -2879,6 +2879,12 @@
    "sha1": "101515616e310c671f04b89d0908857ebc55bf53",
    "size": 5364892,
    "url": "https://cdn.modrinth.com/data/9eGKb6K1/versions/jd1cFrJn/voicechat-fabric-1.21.1-2.6.21.jar"
+  },
+  {
+   "path": "mods/CustomSkinLoader_Universal-15.0.1.jar",
+   "sha1": "ab8dd841cafc3b4ecbf0250d3f5aee8a1fdb506a",
+   "size": 218215,
+   "url": "https://cdn.modrinth.com/data/idMHQ4n2/versions/OLaesh5y/CustomSkinLoader_Universal-15.0.1.jar"
   },
   {
    "path": "mods/sodium-extra-fabric-0.9.3+mc1.21.1.jar",
