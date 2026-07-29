@@ -2881,12 +2881,6 @@
    "url": "https://cdn.modrinth.com/data/9eGKb6K1/versions/jd1cFrJn/voicechat-fabric-1.21.1-2.6.21.jar"
   },
   {
-   "path": "mods/fabrictailor-2.5.0.jar",
-   "sha1": "cd38b5b7b60a2ea68580d11d2e8cc0b008b0532a",
-   "size": 123261,
-   "url": "https://cdn.modrinth.com/data/g8w1NapE/versions/UDZdkBPN/fabrictailor-2.5.0.jar"
-  },
-  {
    "path": "mods/sodium-extra-fabric-0.9.3+mc1.21.1.jar",
    "sha1": "330bfdc64bb48098f9d5faa8a5b752ebef4da926",
    "size": 469925,
