@@ -2920,6 +2920,30 @@
    "url": "https://cdn.modrinth.com/data/zV5r3pPn/versions/IrL0IGkV/skinlayers3d-fabric-1.11.2-mc1.21.1.jar",
    "optional": true,
    "group": "extra"
+  },
+  {
+   "path": "mods/cobblemonalphas-1.4.1.jar",
+   "sha1": "10cb391a4bbf2a2ca342dad214c1230f175ce817",
+   "size": 510732,
+   "url": "https://cdn.modrinth.com/data/QnWyhFGf/versions/wVSPSTdd/cobblemonalphas-1.4.1.jar"
+  },
+  {
+   "path": "mods/lootr-fabric-1.21.1-1.11.37.122.jar",
+   "sha1": "cf864eb868f77d46d207a97bd2e56cab70c8ec9e",
+   "size": 1034217,
+   "url": "https://cdn.modrinth.com/data/EltpO5cN/versions/uapIrG9e/lootr-fabric-1.21.1-1.11.37.122.jar"
+  },
+  {
+   "path": "mods/lootrmon-fabric-1.21.1-0.0.0.3.jar",
+   "sha1": "a09db5b7dd916f3c7fb9e1da1bd83c04f14ce4d9",
+   "size": 107470,
+   "url": "https://cdn.modrinth.com/data/ywwXJDli/versions/nquNxBhW/lootrmon-fabric-1.21.1-0.0.0.3.jar"
+  },
+  {
+   "path": "mods/cobblemon_smartphone-fabric-1.1.2.jar",
+   "sha1": "97c44115d08b754acf8cd787924113d827aca987",
+   "size": 561775,
+   "url": "https://cdn.modrinth.com/data/n2f1HbK8/versions/IlZ44NoT/cobblemon_smartphone-fabric-1.1.2.jar"
   }
  ]
 }
