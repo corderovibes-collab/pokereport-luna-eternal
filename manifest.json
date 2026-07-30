@@ -2944,6 +2944,12 @@
    "sha1": "97c44115d08b754acf8cd787924113d827aca987",
    "size": 561775,
    "url": "https://cdn.modrinth.com/data/n2f1HbK8/versions/IlZ44NoT/cobblemon_smartphone-fabric-1.1.2.jar"
+  },
+  {
+   "path": "config/cobbleverse/Luna-RP.zip",
+   "sha1": "9792ba57c0c4d45e7f3304e17d4c8bc8f2c9493b",
+   "size": 20325,
+   "url": "https://raw.githubusercontent.com/corderovibes-collab/pokereport-luna-eternal/main/assets/Luna-RP.zip"
   }
  ]
 }
