@@ -2589,13 +2589,6 @@
   },
   {
    "once": false,
-   "path": "datapacks/COBBLEVERSE - No Hunger.zip",
-   "sha1": "7d9f0f02379471fbefe8daadf1614c48eadd049a",
-   "size": 8925,
-   "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/datapacks__COBBLEVERSE_-_No_Hunger.zip"
-  },
-  {
-   "once": false,
    "path": "datapacks/COBBLEVERSE-DP-v31.zip",
    "sha1": "1567c40b41d1aadc843b21f0be598bd577a12c96",
    "size": 4626446,
