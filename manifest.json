@@ -2950,6 +2950,12 @@
    "sha1": "0de54726e29815f743a717e20e691876c416c184",
    "size": 21525,
    "url": "https://raw.githubusercontent.com/corderovibes-collab/pokereport-luna-eternal/main/assets/Luna-RP.zip"
+  },
+  {
+   "path": "mods/Jade-1.21.1-Fabric-15.10.5.jar",
+   "sha1": "ec3bf463b891c2b2400ed5bb01c0b3d67de4170a",
+   "size": 739009,
+   "url": "https://cdn.modrinth.com/data/nvQzSEkH/versions/5Sbkzz4O/Jade-1.21.1-Fabric-15.10.5.jar"
   }
  ]
 }
