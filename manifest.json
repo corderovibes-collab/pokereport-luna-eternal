@@ -2974,6 +2974,12 @@
    "sha1": "545e9562a18c1269a817cd2b820eaa3b328edc02",
    "size": 1758901,
    "url": "https://cdn.modrinth.com/data/gF3BGWvG/versions/rUrxgVyp/open-parties-and-claims-fabric-1.21.1-0.29.3.jar"
+  },
+  {
+   "path": "mods/counter-fabric-1.7.3-1.9.0.jar",
+   "sha1": "f4ea79a0518b62c2be083643005a2346d67a227c",
+   "size": 164958,
+   "url": "https://cdn.modrinth.com/data/rj8uLYP4/versions/eEfCCFXB/counter-fabric-1.7.3-1.9.0.jar"
   }
  ]
 }
