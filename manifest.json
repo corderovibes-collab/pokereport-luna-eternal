@@ -2956,6 +2956,24 @@
    "sha1": "ec3bf463b891c2b2400ed5bb01c0b3d67de4170a",
    "size": 739009,
    "url": "https://cdn.modrinth.com/data/nvQzSEkH/versions/5Sbkzz4O/Jade-1.21.1-Fabric-15.10.5.jar"
+  },
+  {
+   "path": "mods/appleskin-fabric-mc1.21-3.0.6.jar",
+   "sha1": "97452cfadfde1f8f8c67838643019eabafa58fbb",
+   "size": 1082585,
+   "url": "https://cdn.modrinth.com/data/EsAfCjCV/versions/b5ZiCjAr/appleskin-fabric-mc1.21-3.0.6.jar"
+  },
+  {
+   "path": "mods/bobby-5.2.4.1+mc1.21.jar",
+   "sha1": "6f79364441347b59ccdfd224da5f894c0179330b",
+   "size": 863337,
+   "url": "https://cdn.modrinth.com/data/M08ruV16/versions/a8r0n94h/bobby-5.2.4.1%2Bmc1.21.jar"
+  },
+  {
+   "path": "mods/open-parties-and-claims-fabric-1.21.1-0.29.3.jar",
+   "sha1": "545e9562a18c1269a817cd2b820eaa3b328edc02",
+   "size": 1758901,
+   "url": "https://cdn.modrinth.com/data/gF3BGWvG/versions/rUrxgVyp/open-parties-and-claims-fabric-1.21.1-0.29.3.jar"
   }
  ]
 }
