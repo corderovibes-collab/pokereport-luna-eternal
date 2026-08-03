@@ -2991,6 +2991,24 @@
    "sha1": "f4ea79a0518b62c2be083643005a2346d67a227c",
    "size": 164958,
    "url": "https://cdn.modrinth.com/data/rj8uLYP4/versions/eEfCCFXB/counter-fabric-1.7.3-1.9.0.jar"
+  },
+  {
+   "path": "mods/kantonpcs-1.0.5.jar",
+   "sha1": "200a1bb7cc681e18e651f1f34b37c3a51cce8992",
+   "size": 1808869,
+   "url": "https://cdn.modrinth.com/data/ifw9j2BM/versions/uo9mtS5O/kantonpcs-1.0.5.jar"
+  },
+  {
+   "path": "mods/blabber-1.8.1-standalone.jar",
+   "sha1": "c28674b6357548d69b729e84981895e2f47b355a",
+   "size": 350870,
+   "url": "https://cdn.modrinth.com/data/2oRMVFgd/versions/YthTUpyA/blabber-1.8.1-standalone.jar"
+  },
+  {
+   "path": "mods/cutscene-api-mc1.21.1-fabric-1.6.6.jar",
+   "sha1": "df8c60b5184b910b33dc1e4236ba14de06551a37",
+   "size": 280910,
+   "url": "https://cdn.modrinth.com/data/R54NT4it/versions/q59P2WFk/cutscene-api-mc1.21.1-fabric-1.6.6.jar"
   }
  ]
 }
