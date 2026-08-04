@@ -3003,6 +3003,24 @@
    "sha1": "df8c60b5184b910b33dc1e4236ba14de06551a37",
    "size": 280910,
    "url": "https://cdn.modrinth.com/data/R54NT4it/versions/q59P2WFk/cutscene-api-mc1.21.1-fabric-1.6.6.jar"
+  },
+  {
+   "path": "mods/easy_npc_bundle-fabric-1.21.1-7.4.1.jar",
+   "sha1": "2aae1f4ea53e989a6fbb14c91bfdbf2745649d55",
+   "size": 25259,
+   "url": "https://cdn.modrinth.com/data/CgGEe1h3/versions/dH1K8SjV/easy_npc_bundle-fabric-1.21.1-7.4.1.jar"
+  },
+  {
+   "path": "mods/easy_npc_config_ui-fabric-1.21.1-7.4.1.jar",
+   "sha1": "7c89b01647f2e24d12a254023449bc8c7f84cc17",
+   "size": 1021461,
+   "url": "https://cdn.modrinth.com/data/uTGjf7vA/versions/8kE1E55X/easy_npc_config_ui-fabric-1.21.1-7.4.1.jar"
+  },
+  {
+   "path": "mods/easy_npc-fabric-1.21.1-7.4.1.jar",
+   "sha1": "b5d7e5151a870100ecb959fab482c85c2d278a95",
+   "size": 2322666,
+   "url": "https://cdn.modrinth.com/data/Epm6R3P2/versions/VC8AVudT/easy_npc-fabric-1.21.1-7.4.1.jar"
   }
  ]
 }
