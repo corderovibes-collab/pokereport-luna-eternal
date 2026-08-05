@@ -498,12 +498,6 @@
    "url": "https://cdn.modrinth.com/data/1IjD5062/versions/kSPJ4hQv/continuity-3.0.0%2B1.21.jar"
   },
   {
-   "path": "mods/toms_storage_fabric-1.21-2.4.1.jar",
-   "sha1": "6ddca91f9234d593526662cb1aac8257076282dd",
-   "size": 1970402,
-   "url": "https://cdn.modrinth.com/data/XZNI4Cpy/versions/rfiala5p/toms_storage_fabric-1.21-2.4.1.jar"
-  },
-  {
    "path": "mods/clientsort-fabric-2.2.2+1.21.1.jar",
    "sha1": "9e2139f45c60fc20f542f03b30a299b9adea76a1",
    "size": 341676,
@@ -2410,13 +2404,6 @@
    "sha1": "402438c80127e9d58839a16abae0dbbafab2fdce",
    "size": 762,
    "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__tim_core.json"
-  },
-  {
-   "once": true,
-   "path": "config/toms_storage.json",
-   "sha1": "30a5871bd64087d12f5dabd723d529d487842ef7",
-   "size": 448,
-   "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.42/config__toms_storage.json"
   },
   {
    "once": true,
