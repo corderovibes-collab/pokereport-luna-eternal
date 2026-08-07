@@ -38,6 +38,13 @@ ACTOS = {
 ficheros: dict[str, str] = {}
 
 
+# Todos los marcadores del evento, sacados de donde se crean. `admin/reiniciar`
+# los limpia a partir de estas listas para que anadir uno nuevo no vuelva a
+# dejar restos colgados.
+_OBJETIVOS_GLOBALES = ['ev_estado', 'ev_reloj', 'ev_senal', 'ev_senal_act', 'ev_codigo', 'ev_modo', 'ev_sys', 'ev_reto', 'ev_reto_id', 'ev_raid0', 'ev_raid', 'ev_raid_v', 'ev_oak', 'ev_oak_esp', 'ev_sig', 'ev_lab', 'ev_lab0', 'ev_lab_v', 'ev_luna', 'ev_fijar', 'ev_oak_listo', 'ev_esc', 'ev_esc_p', 'ev_esc_t', 'ev_cine_t']
+_OBJETIVOS_JUGADOR = ['ev_unirse', 'ev_acto', 'ev_baliza', 'ev_m1', 'ev_m2', 'ev_m3', 'ev_m4', 'ev_m5', 'ev_m6', 'ev_p1', 'ev_p4', 'ev_p6']
+
+
 def f(ruta: str, cuerpo: str) -> None:
     """Registra una mcfunction quitando la indentacion del literal."""
     lineas = [l[4:] if l.startswith("    ") else l for l in cuerpo.strip("\n").split("\n")]
@@ -77,9 +84,13 @@ f("cargar", f"""
     scoreboard objectives add ev_lab dummy
     scoreboard objectives add ev_lab0 dummy
     scoreboard objectives add ev_lab_v dummy
+    # Marcador del laboratorio activo (para el aviso de llegada).
+    scoreboard objectives add ev_lab_m dummy
     # Cuenta atras entre la revelacion y la aparicion de Luna.
     scoreboard objectives add ev_luna dummy
     scoreboard objectives add ev_fijar dummy
+    # Oak lo pone a 1 desde su ultimo boton para cerrar el Acto I.
+    scoreboard objectives add ev_oak_listo dummy
     # trigger, no dummy: es lo unico que un jugador sin permisos puede usar
     scoreboard objectives add ev_unirse trigger
     scoreboard objectives add ev_esc dummy
@@ -154,6 +165,7 @@ f("segundo", f"""
     execute if score #ev ev_estado matches 0 run function evento:bloqueo/npcs
     execute if score #ev ev_raid_v matches 1.. run function evento:senales/vigilar_raid
     execute if score #ev ev_lab_v matches 1 run function evento:lab/vigilar_raid
+    execute if score #ev ev_lab_m matches 1 run function evento:lab/distancia
     execute if score #ev ev_luna matches 1.. run function evento:lab/luna_cuenta
     execute if score #ev ev_fijar matches 1.. run function evento:lab/fijar_cuenta
 
@@ -288,7 +300,8 @@ for n, (titulo, sub) in ACTOS.items():
 # pueda pelear el climax del evento por su cuenta.
 ficheros["data/evento/function/actos/a4.mcfunction"] += (
     "function evento:cristales/encender_lab" + chr(10)
-    + "function evento:lab/armar_raid" + chr(10))
+    + "function evento:lab/armar_raid" + chr(10)
+    + "function evento:lab/marcar" + chr(10))
 
 f("actos/avanzar", """
     # Salta al acto siguiente sea cual sea el actual.
@@ -316,9 +329,8 @@ f("actos/avanzar", """
 # Se comprueba asi porque los NPCs de Easy NPC tienen bloqueado `function`
 # (ver unsafeNpcCommands): Oak no puede llamar al motor, pero si puede dar un
 # objeto, y el motor si puede mirar los inventarios.
-f("actos/a1_reloj", """
-    execute as @a[tag=ev_participa] if items entity @s container.* minecraft:compass run return run function evento:actos/a2
-""")
+# `actos/a1_reloj` se define mas abajo, junto a SENALES: necesita las
+# coordenadas de la senal 1 para reconocer el rastreador.
 
 
 # ===========================================================================
@@ -391,14 +403,33 @@ def _setlab(activo):
             f"can_reset=false,raid_tier=tier_seven,raid_type=dragon]")
 
 
-for n in CRISTALES:
-    f(f"cristales/encender{n}", _setbloque(n, True))
+# El `forceload` no es un adorno.
+#
+# `setblock` sobre un chunk descargado falla **en silencio**: el cristal se
+# quedaba apagado porque cuando arranca el acto el grupo esta lejos, y luego al
+# llegar decia "the raid den is not active right now" sin mas pista.
+#
+# Y hace falta ademas DESPUES: `senales/vigilar_raid` lee `raid_cleared` cada
+# segundo para enterarse de la victoria, y sobre un chunk descargado tampoco
+# puede. Asi que la zona se mantiene cargada mientras esa senal este en juego, y
+# se suelta al apagar los cristales.
+def _cargar(x, z):
+    return f"forceload add {x - 1} {z - 1} {x + 1} {z + 1}"
 
-f("cristales/encender_lab", _setlab(True))
+
+for n, (cx, cy, cz) in CRISTALES.items():
+    f(f"cristales/encender{n}", "\n".join([_cargar(cx, cz), _setbloque(n, True)]))
+
+f("cristales/encender_lab", "\n".join(
+    [_cargar(CRISTAL_LAB[0], CRISTAL_LAB[2]), _setlab(True)]))
 
 f("cristales/apagar_todos", "\n".join(
-    ["# Se llama al reiniciar y al terminar: el mundo queda como estaba."] +
-    [_setbloque(n, False) for n in CRISTALES] + [_setlab(False)]))
+    ["# Se llama al reiniciar y al terminar: el mundo queda como estaba.",
+     "# Se cargan primero, o el `setblock` de apagado tampoco llegaria."]
+    + [_cargar(x, z) for _, (x, _, z) in CRISTALES.items()]
+    + [_cargar(CRISTAL_LAB[0], CRISTAL_LAB[2])]
+    + [_setbloque(n, False) for n in CRISTALES] + [_setlab(False)]
+    + ["forceload remove all"]))
 
 
 # Vigilancia del cristal del laboratorio.
@@ -414,6 +445,53 @@ f("lab/armar_raid", "\n".join([
     f"execute store result score #ev ev_lab0 run data get block {_LX} {_LY} {_LZ} raid_cleared",
     "scoreboard players set #ev ev_lab_v 1",
 ]))
+
+# El rastreador vuelve a despertar, ahora hacia el laboratorio.
+#
+# Sin esto el Acto IV arrancaba y el grupo se quedaba sin saber a donde ir: las
+# tres senales tenian su marcador y el laboratorio no. Es el mismo objeto de
+# siempre, reapuntado — asi nadie tiene que aprender nada nuevo.
+# La ENTRADA del laboratorio, no donde esta Vex. Igual que con la cueva de
+# Sable: el marcador lleva a la puerta y la escena la lleva ella dentro.
+_VEX = (1787, 65, 569)
+
+f("lab/marcar", f"""
+    clear @a[tag=ev_participa] minecraft:compass
+    give @a[tag=ev_participa] minecraft:compass[custom_name='{{"text":"Rastreador de energia","color":"light_purple","italic":false}}',lore=['{{"text":"La senal mas fuerte de todas.","color":"gray","italic":true}}','{{"text":"Viene del laboratorio.","color":"dark_gray","italic":true}}'],enchantment_glint_override=true,minecraft:lodestone_tracker={{target:{{pos:[I;{_VEX[0]},{_VEX[1]},{_VEX[2]}],dimension:"minecraft:overworld"}},tracked:false}}]
+
+    title @a[tag=ev_participa] times 5 60 15
+    title @a[tag=ev_participa] subtitle {{"text":"El rastreador se ha vuelto loco","color":"gray"}}
+    title @a[tag=ev_participa] title [{{"text":"LA FUENTE","color":"light_purple","bold":true}}]
+    execute as @a[tag=ev_participa] at @s run playsound minecraft:block.beacon.power_select voice @s ~ ~ ~ 1000000 0.6
+    tellraw @a[tag=ev_participa] ["",{{"text":"\\n  El rastreador apunta al laboratorio. Sigan la aguja.\\n","color":"gray","italic":true}}]
+
+    scoreboard players set #ev ev_lab_m 1
+""")
+
+# La llegada al laboratorio, igual que la de las tres senales.
+#
+# Faltaba: el marcador llevaba hasta la puerta pero al llegar no pasaba nada y
+# la brujula seguia encendida. Las tres senales tienen su aviso y esta no, y se
+# notaba justo en el momento mas importante del evento.
+f("lab/distancia", f"""
+    # `positioned` PRIMERO: si va despues, la distancia se mide del jugador a si
+    # mismo (siempre 0) y la llegada salta al instante.
+    execute as @a[tag=ev_participa] at @s positioned {_VEX[0]} {_VEX[1]} {_VEX[2]} if entity @s[distance=..{RADIO_LLEGADA}] run return run function evento:lab/llegada
+    execute as @a[tag=ev_participa] run title @s actionbar [{{"text":"Senal ","color":"gray"}},{{"text":"el laboratorio","color":"light_purple"}},{{"text":"  ·  sigue la aguja","color":"dark_gray"}}]
+""")
+
+f("lab/llegada", """
+    # Solo la primera vez: el marcador se apaga para todo el grupo.
+    execute unless score #ev ev_lab_m matches 1 run return 0
+    scoreboard players set #ev ev_lab_m 0
+
+    clear @a[tag=ev_participa] minecraft:compass
+    title @a[tag=ev_participa] times 5 60 15
+    title @a[tag=ev_participa] subtitle {"text":"La puerta esta abierta","color":"gray"}
+    title @a[tag=ev_participa] title [{"text":"EL LABORATORIO","color":"light_purple","bold":true}]
+    execute as @a[tag=ev_participa] at @s run playsound minecraft:block.beacon.deactivate voice @s ~ ~ ~ 1 0.6
+    tellraw @a[tag=ev_participa] ["",{"text":"\\n  El rastreador se apaga. Ya no hace falta.\\n","color":"gray","italic":true}]
+""")
 
 f("lab/vigilar_raid", "\n".join([
     f"execute store result score #ev ev_lab run data get block {_LX} {_LY} {_LZ} raid_cleared",
@@ -622,6 +700,28 @@ f("senales/armar_raid", "\n".join([
     "scoreboard players set #ev ev_raid 0",
     *_arma,
 ]))
+
+f("actos/a1_reloj", f"""
+    # El Acto I se cierra cuando el grupo TIENE EL RASTREADOR. Dos vias, y basta
+    # con cualquiera:
+    #
+    #   1. `ev_oak_listo`, que pone el ultimo boton de Oak.
+    #   2. El propio rastreador en el inventario.
+    #
+    # La segunda existe porque el dialogo del NPC vive DENTRO DE LA ENTIDAD, en
+    # el chunk — `world/easy_npc/npcs/` es solo un indice y editarlo no cambia
+    # nada. Si el NPC plantado es de una version anterior, su boton da la
+    # brujula pero no marca nada, y el acto no cerraba nunca. Mirando el objeto
+    # da igual de que version sea el NPC.
+    #
+    # Se reconoce por el BRILLO, no por ser "una brujula cualquiera". Probado en
+    # el servidor: `if items` no sabe mirar dentro de `lodestone_tracker`
+    # —ni siquiera `~{{}}` para ver si existe—, pero `enchantment_glint_override`
+    # si casa. Una brujula normal no lo lleva, y `admin/reiniciar` limpia las
+    # brujulas de todos, asi que no queda ninguna de la partida anterior.
+    execute if score #ev ev_oak_listo matches 1 run return run function evento:actos/a2
+    execute as @a[tag=ev_participa] if items entity @s container.* minecraft:compass[enchantment_glint_override=true] run return run function evento:actos/a2
+""")
 
 f("senales/vigilar_raid", "\n".join([
     *_vigila,
@@ -845,6 +945,8 @@ for esc, nombre in [(1, "acto1"), (2, "revelacion")]:
 # evento.
 LUNA_POS = (1820, 64, 499)
 LUNA_NIVEL = 75
+# Luna mide 0,6 bloques. x6 la deja en 3,6 — lo que pidio el usuario.
+LUNA_ESCALA = 6.0
 LUNA_ELEGIDO = "A1ejandroreport"
 
 # ---------------------------------------------------------------------------
@@ -900,15 +1002,22 @@ f("lab/fijar_cuenta", """
 f("lab/fijar_luna", f"""
     scoreboard players set #ev ev_fijar 0
 
-    # Luna se queda clavada donde aparece.
+    # Luna se queda clavada donde aparece, y enorme.
     #
     # Si se mueve, la escena final se convierte en perseguirla por el
     # laboratorio con doce personas detras. `NoAI` le apaga el cerebro y
     # `PersistenceRequired` evita que se esfume si el grupo tarda en llegar.
     #
+    # El tamano va por el atributo de la ENTIDAD, no por los datos del Pokemon.
+    # Esa distincion es justo lo que se buscaba: el atributo vive en la criatura
+    # que esta en el mundo, asi que Luna se ve de {LUNA_ESCALA * 0.6:.1f} bloques mientras es
+    # salvaje y **vuelve a su tamano normal en cuanto la capturan**, porque a la
+    # Pokeball solo se va su ficha. Mide 0,6 de base, de ahi el x{LUNA_ESCALA}.
+    #
     # Se busca por cercania al punto de aparicion y con radio corto, para no
-    # congelar por error a un Pokemon salvaje que pasara por ahi.
+    # tocar por error a un Pokemon salvaje que pasara por ahi.
     execute positioned {LUNA_POS[0]} {LUNA_POS[1]} {LUNA_POS[2]} as @e[type=cobblemon:pokemon,distance=..6,limit=1,sort=nearest] run data merge entity @s {{NoAI:1b,PersistenceRequired:1b}}
+    execute positioned {LUNA_POS[0]} {LUNA_POS[1]} {LUNA_POS[2]} as @e[type=cobblemon:pokemon,distance=..6,limit=1,sort=nearest] run attribute @s minecraft:generic.scale base set {LUNA_ESCALA}
 """)
 
 
@@ -943,6 +1052,42 @@ f("zonas/limpiar", "\n".join(
     ["# Recoge lo que quede sin capturar, para no dejar el mapa sembrado."] +
     [f"execute positioned {x} {y} {z} run kill @e[type=cobblemon:pokemon,distance=..25]"
      for _, (x, y, z), _ in ZONAS.values()]))
+
+
+# ---------------------------------------------------------------------------
+#  Modo prueba
+# ---------------------------------------------------------------------------
+#
+# Cambia los cuatro jefes por versiones de nivel 5 con media vida, misma especie
+# para que la escena se lea igual. Sirve para recorrer el evento entero en
+# solitario sin pasarse una hora peleando.
+#
+# El `forceload` no es opcional: `crd dens` necesita el chunk cargado, y las
+# cuatro zonas estan a cientos de bloques unas de otras.
+_TODOS = [("grum", *CRISTALES[1]), ("sable", *CRISTALES[2]),
+          ("nix", *CRISTALES[3]), ("vex", *CRISTAL_LAB)]
+
+for _modo, _sufijo in [("prueba", "_prueba"), ("real", "_eclipse")]:
+    _l = [f"# Cambia los cuatro cristales a los jefes de {_modo}."]
+    for _q, _x, _y, _z in _TODOS:
+        _l.append(f"forceload add {_x - 8} {_z - 8} {_x + 8} {_z + 8}")
+    for _q, _x, _y, _z in _TODOS:
+        _l.append(f"crd dens {_x} {_y} {_z} boss cobblemonraiddens:{_q}{_sufijo}")
+    # `crd dens` deja el cristal encendido; el evento decide cuando se abre.
+    _l.append("function evento:cristales/apagar_todos")
+    _l.append("forceload remove all")
+    _l.append(f'tellraw @a[tag=ev_admin] {{"text":"[Evento] Jefes en modo {_modo.upper()}.","color":"yellow"}}')
+    f(f"admin/modo_{_modo}", "\n".join(_l))
+
+
+# Deja el evento listo para recorrerlo una persona sola: dentro del grupo,
+# acreditada, y con los jefes en nivel 5.
+f("admin/prueba_solo", """
+    tag @s add ev_participa
+    tag @s add ev_apto
+    function evento:admin/modo_prueba
+    tellraw @s ["",{"text":"\\n  Listo para probar en solitario.\\n","color":"green","bold":true},{"text":"  Estas en el grupo y acreditado. Jefes a nivel 5.\\n","color":"gray"},{"text":"  Acuerdate de [ MODO REAL ] antes del evento de verdad.\\n","color":"yellow"}]
+""")
 
 f("lab/aparece_luna", f"""
     scoreboard players set #ev ev_luna 0
@@ -984,6 +1129,10 @@ ficheros["data/evento/function/actos/a5.mcfunction"] += (
 
 # El Acto II arranca el marcador de la primera senal: reparte la brujula de
 # piedra iman apuntando al campamento y enciende la deteccion de llegada.
+# Cerrar el dialogo de Oak: quien haya hablado con el se queda con la
+# pantalla abierta mientras empieza el acto, y eso tapa el rotulo.
+ficheros["data/evento/function/actos/a2.mcfunction"] += (
+    "execute as @a[tag=ev_participa] run easy_npc dialog close @s" + chr(10))
 ficheros["data/evento/function/actos/a2.mcfunction"] += "function evento:senales/s1_marcar" + chr(10)
 ficheros["data/evento/function/actos/a2.mcfunction"] += "function evento:senales/armar_raid" + chr(10)
 
@@ -1065,6 +1214,7 @@ f("admin/revisar", """
 """)
 
 f("admin/iniciar_ya", """
+    scoreboard players set #ev ev_oak_listo 0
     scoreboard players set #ev ev_senal 0
     scoreboard players set #ev ev_codigo 0
     scoreboard players set @a ev_baliza 0
@@ -1085,22 +1235,31 @@ f("admin/saltar", """
     function evento:actos/avanzar
 """)
 
-f("admin/reiniciar", """
-    function evento:cristales/apagar_todos
-    scoreboard players set #ev ev_estado 0
-    scoreboard players set #ev ev_reloj 0
-    scoreboard players set #ev ev_senal 0
-    scoreboard players set #ev ev_codigo 0
-    scoreboard players set @a[tag=ev_participa] ev_acto 0
-    scoreboard players set @a ev_baliza 0
-    scoreboard players set @a ev_m1 0
-    scoreboard players set @a ev_m2 0
-    scoreboard players set @a ev_m3 0
-    scoreboard players set @a ev_m4 0
-    scoreboard players set @a ev_m5 0
-    scoreboard players set @a ev_m6 0
-    tellraw @s {"text":"[Evento] Todo a cero. El modo (completo/corto) se mantiene.","color":"yellow"}
-""")
+# Reiniciar tiene que dejarlo TODO a cero, no una lista escrita a mano.
+#
+# La version anterior olvidaba `ev_senal_act`, y eso dejaba el HUD de distancia
+# —«Senal el bosque · sigue la aguja»— corriendo para siempre aunque el evento
+# estuviera parado. La unica forma de quitarlo era saberse el nombre del
+# marcador.
+#
+# Ahora la lista se deriva de los objetivos que existen de verdad, asi que
+# anadir un marcador nuevo no vuelve a dejar restos: se limpia solo.
+#
+# Se salvan a proposito:
+#   ev_modo      completo o corto, es una decision del director
+#   ev_sys       el contador interno del reloj
+#   ev_unirse    es un `trigger`, lo gestiona el propio juego
+_NO_TOCAR = {"ev_modo", "ev_sys", "ev_unirse"}
+_GLOBALES = [o for o in _OBJETIVOS_GLOBALES if o not in _NO_TOCAR]
+_POR_JUGADOR = [o for o in _OBJETIVOS_JUGADOR if o not in _NO_TOCAR]
+
+f("admin/reiniciar", "\n".join(
+    ["function evento:cristales/apagar_todos"]
+    + [f"scoreboard players set #ev {o} 0" for o in _GLOBALES]
+    + [f"scoreboard players set @a {o} 0" for o in _POR_JUGADOR]
+    + ["clear @a minecraft:compass"]
+    + ['tellraw @s {"text":"[Evento] Todo a cero. El modo (completo/corto) se mantiene.","color":"yellow"}']
+))
 
 f("admin/modo_corto", f"""
     scoreboard players set #ev ev_modo 1
@@ -1149,47 +1308,76 @@ _panel = [
         txt("  Acto "), marcador("ev_estado"),
         txt("   Senales "), marcador("ev_senal"),
         txt("   Digitos "), marcador("ev_codigo"), txt(NL)),
+    # INVITAR va el primero porque es el primer paso real del dia del evento:
+    # sin el nadie puede apuntarse, y sin gente apuntada INICIAR no hace nada.
+    # (Se quedo fuera al recortar el panel y lo encontro la auditoria.)
     "tellraw @s " + linea(
-        ESP, boton("[ INICIAR ]", "admin/iniciar", "green", "Arranca el Acto I y la escena de Oak"),
+        ESP, boton("[ INVITAR ]", "admin/invitar", "aqua", "Manda la invitacion a todo el servidor"),
+        ESP, boton("[ INICIAR ]", "admin/iniciar", "green", "Arranca el evento"),
+        ESP, boton("[ ESTADO ]", "admin/estado", "aqua", "Detalle completo"),
+        ESP, boton("[ ACREDITADOS ]", "admin/revisar", "gold", "Quien esta listo y quien no")),
+    "tellraw @s " + linea(
+        txt(NL + "  Si algo se atasca" + NL, "dark_gray"),
         ESP, boton("[ SALTAR ACTO ]", "admin/saltar", "yellow", "Fuerza el acto siguiente"),
-        ESP, boton("[ ESTADO ]", "admin/estado", "aqua", "Detalle completo")),
-    "tellraw @s " + linea(
-        txt(NL + "  Durante el evento" + NL, "dark_gray"),
-        ESP, boton("[ GUARDIAN CAIDO ]", "senales/completar", "gold", "Suma una senal del Acto II"),
-        ESP, boton("[ VEX CAIDA ]", "lab/vex_derrotada", "light_purple", "Pasa al Acto V"),
-        ESP, boton("[ LUNA CAPTURADA ]", "actos/terminar", "light_purple", "Cierra el evento")),
-    "tellraw @s " + linea(
-        txt(NL + "  Cinemáticas" + NL, "dark_gray"),
-        ESP, boton("[ APERTURA ]", "cine/apertura", "gold", "Camara elevandose + voz de Oak. 20 s"),
-        ESP, boton("[ LABORATORIO ]", "cine/laboratorio", "dark_purple", "Plano al abrirse la entrada. 7 s"),
-        ESP, boton("[ REVELACION ]", "cine/revelacion", "aqua", "Orbita sobre la capsula + la verdad. 26 s"),
-        ESP, boton("[ CORTAR ]", "admin/cortar_cine", "red", "Aborta camara y voz")),
-    "tellraw @s " + linea(
-        txt(NL + "  Preparativos" + NL, "dark_gray"),
-        ESP, boton("[ COMPROBAR ]", "admin/comprobar", "green", "Repasa que este todo puesto"),
-        ESP, boton("[ ACREDITADOS ]", "admin/revisar", "gold", "Quien ha terminado el Protocolo Luna y quien no"),
-        ESP, boton("[ POBLAR ZONAS ]", "zonas/poblar_todas", "green", "Suelta los 48 Pokemon de las tres zonas de captura"),
-        ESP, boton("[ LIMPIAR ZONAS ]", "zonas/limpiar", "red", "Recoge lo que quede sin capturar"),
-        ESP, boton("[ RASTREADORES ]", "admin/dar_rastreadores", "aqua", "Uno para cada jugador"),
-        ESP, boton("[ PONER BALIZA ]", "admin/poner_baliza", "white", "Aqui donde estas")),
-    "tellraw @s " + linea(
-        txt(NL + "  Diálogos (se abren a todos)" + NL, "dark_gray"),
-        ESP, boton("[ OAK ]", "dialogos/oak_todos", "gold", "La llamada del Profesor Oak"),
-        ESP, boton("[ GRUM ]", "dialogos/grum_todos", "white", "Guardián del bosque"),
-        ESP, boton("[ SABLE ]", "dialogos/sable_todos", "white", "Guardián de la montaña"),
-        ESP, boton("[ NIX ]", "dialogos/nix_todos", "white", "Guardián de la costa"),
-        ESP, boton("[ VEX ]", "dialogos/vex_todos", "light_purple", "La Doctora Vex")),
-    "tellraw @s " + linea(
-        txt(NL + "  Ensayo" + NL, "dark_gray"),
-        ESP, boton("[ MONTAR ZONA ]", "admin/ensayo/montar", "green", "Planta los 6 NPCs y 5 balizas a tu alrededor"),
-        ESP, boton("[ DESMONTAR ]", "admin/ensayo/desmontar", "red", "Recoge solo lo del ensayo")),
-    "tellraw @s " + linea(
-        txt(NL + "  Emergencias" + NL, "dark_gray"),
-        ESP, boton("[ MODO CORTO ]", "admin/modo_corto", "yellow", "Salta la senal de la costa"),
         ESP, boton("[ REINICIAR ]", "admin/reiniciar", "red", "Todo a cero"),
-        ESP, boton("[ AYUDA ]", "admin/ayuda", "gray", "Comandos escritos")),
+        ESP, boton("[ SOLTAR A TODOS ]", "admin/soltar_a_todos", "red", "Saca a quien se quede encerrado")),
+    "tellraw @s " + linea(
+        txt(NL, "gray"),
+        ESP, boton("[ MAS OPCIONES ]", "admin/mas", "dark_gray", "Pruebas, zonas, dialogos y cinematicas"),
+        txt(NL)),
 ]
 f("admin/panel", "\n".join(_panel))
+
+# Todo lo que NO se toca el dia del evento.
+#
+# El panel llego a tener 28 botones y era inservible: para arrancar habia que
+# buscar INICIAR entre cinematicas, ensayos y modos de prueba. Arriba se queda
+# lo imprescindible; el resto vive aqui, a un clic.
+_mas = [
+    "tellraw @s " + linea(txt(NL + "  -- MAS OPCIONES --" + NL, "gray", bold=True)),
+    "tellraw @s " + linea(
+        txt("  Probar" + NL, "dark_gray"),
+        ESP, boton("[ PRUEBA EN SOLITARIO ]", "admin/prueba_solo", "yellow", "Al grupo, acreditado, y jefes a nivel 5"),
+        ESP, boton("[ MODO REAL ]", "admin/modo_real", "red", "Devuelve los jefes a sus niveles"),
+        ESP, boton("[ COMPROBAR ]", "admin/comprobar", "green", "Repaso previo")),
+    "tellraw @s " + linea(
+        txt(NL + "  Zonas de captura" + NL, "dark_gray"),
+        ESP, boton("[ POBLAR ]", "zonas/poblar_todas", "green", "Suelta los 48 Pokemon"),
+        ESP, boton("[ LIMPIAR ]", "zonas/limpiar", "red", "Recoge lo que sobre")),
+    "tellraw @s " + linea(
+        txt(NL + "  A mano, si el motor falla" + NL, "dark_gray"),
+        ESP, boton("[ GUARDIAN CAIDO ]", "senales/completar", "gold", "Suma una senal"),
+        ESP, boton("[ VEX CAIDA ]", "lab/vex_derrotada", "light_purple", "Pasa al Acto V"),
+        ESP, boton("[ LUNA CAPTURADA ]", "actos/terminar", "light_purple", "Cierra el evento"),
+        ESP, boton("[ RASTREADORES ]", "admin/dar_rastreadores", "aqua", "Uno para cada jugador")),
+    "tellraw @s " + linea(
+        txt(NL + "  Cinematicas" + NL, "dark_gray"),
+        ESP, boton("[ APERTURA ]", "cine/apertura", "gold", "20 s"),
+        ESP, boton("[ LABORATORIO ]", "cine/laboratorio", "dark_purple", "7 s"),
+        ESP, boton("[ REVELACION ]", "cine/revelacion", "aqua", "26 s"),
+        ESP, boton("[ CORTAR ]", "admin/cortar_cine", "red", "Aborta camara y voz")),
+    "tellraw @s " + linea(
+        txt(NL + "  El grupo" + NL, "dark_gray"),
+        ESP, boton("[ VER GRUPO ]", "admin/grupo", "aqua", "Quien esta apuntado"),
+        ESP, boton("[ VACIAR GRUPO ]", "admin/vaciar_grupo", "red", "Saca a todos del evento")),
+    # Abren el dialogo de un NPC a todo el grupo desde donde estes. Utiles si un
+    # NPC se pierde o alguien se salta una escena.
+    "tellraw @s " + linea(
+        txt(NL + "  Repetir una escena" + NL, "dark_gray"),
+        ESP, boton("[ OAK ]", "dialogos/oak_todos", "gold", "La llamada"),
+        ESP, boton("[ GRUM ]", "dialogos/grum_todos", "white", "El bosque"),
+        ESP, boton("[ SABLE ]", "dialogos/sable_todos", "white", "La montana"),
+        ESP, boton("[ NIX ]", "dialogos/nix_todos", "white", "La costa"),
+        ESP, boton("[ VEX ]", "dialogos/vex_todos", "light_purple", "El laboratorio")),
+    "tellraw @s " + linea(
+        txt(NL + "  Otros" + NL, "dark_gray"),
+        ESP, boton("[ MODO CORTO ]", "admin/modo_corto", "yellow", "Dos senales en vez de tres"),
+        ESP, boton("[ PONER BALIZA ]", "admin/poner_baliza", "white", "Aqui donde estas"),
+        ESP, boton("[ QUITAR BALIZAS ]", "admin/quitar_balizas", "red", "Recoge las balizas"),
+        ESP, boton("[ AYUDA ]", "admin/ayuda", "gray", "Comandos escritos"),
+        ESP, boton("[ VOLVER ]", "admin/panel", "green", "Al panel principal")),
+]
+f("admin/mas", "\n".join(_mas))
 
 # ===========================================================================
 #  Interfaz grafica: el Libro del Director

@@ -179,12 +179,26 @@ def titular():
         '/title @a times 4 60 12')
 
 
+# El rastreador nace ya apuntando a la senal 1.
+#
+# Antes salia sin destino, y una brujula sin `lodestone_tracker` apunta al
+# spawn del mundo. Le ponia el rumbo el Acto II al arrancar, asi que durante un
+# segundo apuntaba mal — y si alguien hablaba con Oak fuera de secuencia (un
+# admin, al que el cerrojo no frena) se quedaba con una brujula rota para
+# siempre, sin ninguna pista de por que.
+#
+# Naciendo apuntada, el objeto es correcto en cualquier orden. `s1_marcar` lo
+# vuelve a entregar igual al arrancar el acto; entregarlo dos veces no molesta.
+#
+# `tracked:false` evita que Minecraft exija una piedra iman de verdad ahi.
 RASTREADOR = (
     "/give @p minecraft:compass["
     "custom_name='{\"text\":\"Rastreador de energia\",\"color\":\"aqua\",\"italic\":false}',"
     "lore=['{\"text\":\"Lo armo el Profesor Oak anoche.\",\"color\":\"gray\",\"italic\":true}',"
     "'{\"text\":\"Apunta hacia Luna.\",\"color\":\"dark_gray\",\"italic\":true}'],"
-    "enchantment_glint_override=true]"
+    "enchantment_glint_override=true,"
+    "minecraft:lodestone_tracker={target:{pos:[I;1887,64,255],"
+    "dimension:\"minecraft:overworld\"},tracked:false}]"
 )
 
 DIALOGOS = [
@@ -236,7 +250,10 @@ DIALOGOS = [
         boton("b_acepto", "Cuente conmigo.",
               callar(), voz("a1_06"),
               coro("Tomen. Es un rastreador de energia, lo arme anoche con lo que tenia. No es gran cosa, pero apunta hacia ella. Siganlo."),
-              accion_comando(RASTREADOR)),
+              accion_comando(RASTREADOR),
+              # Cierra el Acto I. Antes el motor lo deducia viendo una brujula
+              # en el inventario, y eso saltaba con cualquier brujula.
+              accion_comando("/scoreboard players set #ev ev_oak_listo 1")),
     ]),
 ]
 

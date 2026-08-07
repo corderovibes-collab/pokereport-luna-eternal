@@ -12,6 +12,10 @@ Lo que aporta el mod (`cobblemonraiddens`):
   - Arena instanciada en su propia dimension: el mundo no se toca.
   - Animos compartidos (Ataque / Defensa / Curacion) — juego cooperativo real.
   - Escudos por umbral de vida, que obligan a coordinarse.
+
+Los jefes van a `escala` 3,5-4: en una incursion de doce personas el Pokemon
+tiene que verse como un jefe, no como uno salvaje mas. Hydreigon se queda algo
+por debajo porque ya es enorme de base y a 4 no cabe en el laboratorio.
   - Reparto de recompensa **por dano hecho** (asi esta la config del servidor).
 
 Todo campo que aqui se define **pisa** al de `config/cobblemonraiddens/tier_*.json5`,
@@ -144,7 +148,7 @@ jefe(
     tipo="DARK",
     tier="TIER_FIVE",
     barra="Mightyena de Grum",
-    escala=1.8,
+    escala=4.0,
     guion=GUION_GRUM,
 )
 
@@ -189,7 +193,7 @@ jefe(
     tipo="ICE",
     tier="TIER_FIVE",
     barra="Weavile de Sable",
-    escala=1.8,
+    escala=4.0,
     vida=10.0,
     dinero=12000,
     guion={
@@ -222,7 +226,7 @@ jefe(
     tipo="WATER",
     tier="TIER_FIVE",
     barra="Sharpedo de Nix",
-    escala=1.7,
+    escala=4.0,
     vida=12.0,
     dinero=16000,
     guion={
@@ -260,7 +264,7 @@ jefe(
     tipo="DRAGON",
     tier="TIER_SEVEN",
     barra={"text": "Hydreigon de la Doctora Vex", "color": "dark_purple", "bold": True},
-    escala=1.6,
+    escala=3.5,
     vida=16.0,
     dinero=50000,
     guion={
@@ -275,28 +279,37 @@ jefe(
 
 
 # ===========================================================================
-#  Jefe de pruebas
+#  Jefes de pruebas
 # ===========================================================================
 #
-# Existe solo para comprobar la cadena completa sin tener que ganar una pelea
-# de verdad: victoria -> sube el contador del cristal -> el motor se entera ->
-# rotulo y frase de Oak.
+# Uno por cada jefe real, con la MISMA especie para que la escena se lea igual,
+# pero a nivel 5 y con media vida: se caen de un golpe.
 #
-# Nivel 5 y media vida: se cae de un golpe. NO USAR EN EL EVENTO.
-jefe(
-    "grum_prueba",
-    especie="poochyena",
-    nivel=5,
-    habilidad="runaway",
-    movimientos=["tackle", "howl", "sandattack", "bite"],
-    tipo="DARK",
-    tier="TIER_FIVE",
-    barra="PRUEBA - no usar en el evento",
-    escala=1.0,
-    vida=0.5,
-    vida_por_jugador=1.0,
-    dinero=0,
-)
+# Existen para poder recorrer el evento entero en solitario sin pasarse una hora
+# peleando. Se cambian con `[ MODO PRUEBA ]` en el panel y se devuelven con
+# `[ MODO REAL ]`.
+#
+# NO USAR EN EL EVENTO. La barra lo dice para que no haya dudas.
+for _id, _esp, _tipo in [
+    ("grum",  "mightyena", "DARK"),
+    ("sable", "weavile",   "ICE"),
+    ("nix",   "sharpedo",  "WATER"),
+    ("vex",   "hydreigon", "DRAGON"),
+]:
+    jefe(
+        f"{_id}_prueba",
+        especie=_esp,
+        nivel=5,
+        habilidad="runaway" if _id == "grum" else "pressure",
+        movimientos=["tackle", "growl", "sandattack", "bite"],
+        tipo=_tipo,
+        tier="TIER_FIVE",
+        barra={"text": f"PRUEBA - {_esp} nivel 5", "color": "yellow"},
+        escala=1.0,
+        vida=0.5,
+        vida_por_jugador=1.0,
+        dinero=0,
+    )
 
 
 def main() -> int:
