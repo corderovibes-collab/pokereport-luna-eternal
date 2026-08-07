@@ -1,5 +1,81 @@
 # Dónde lo dejamos
 
+## 7 de agosto (noche) — el final, las zonas de captura y el reparto de roles
+
+### El evento ya termina solo
+
+```
+cae Vex → revelación (61 s, seis líneas de Oak que llevaban días sin usarse)
+        → aparece LUNA nivel 75 en 1820 64 499
+        → dos segundos después queda CONGELADA
+        → solo A1ejandroreport recibe la Master Ball
+        → la captura dispara el cierre
+```
+
+Congelarla va **dos segundos después del spawn**, no en el mismo tick: la
+entidad todavía no existe y un `data merge` inmediato no encontraría nada.
+`NoAI` para que no se mueva —si no, el final es perseguirla— y
+`PersistenceRequired` para que no se esfume si el grupo tarda.
+
+Dar la ball a una sola persona convierte el final en **una escena** en vez de
+doce personas lanzando bolas a la vez.
+
+### Tres especies, tres roles
+
+La primera versión de las misiones pedía «un tipo lucha cualquiera». Eso dejaba
+presentarse con algo inservible y llamarlo preparación. Ahora se pide la
+**especie exacta**, elegida contra los jefes reales:
+
+| Rol | Pokémon | Zona | Por qué |
+|---|---|---|---|
+| **Tanque** | Granbull | `1238 64 508` | **Intimidación** baja el ataque a Grum, Sable y Nix nada más salir. Hada resiste siniestro y es **inmune a dragón** — el arma contra Hydreigon |
+| **Daño** | Machamp | `1230 69 460` | 130 de ataque y lucha pega ×2 a los cuatro. Lucha puro: volador, psíquico y hada **no los usa ningún jefe** |
+| **Soporte** | Ribombee | `1162 68 412` | Bicho/hada resiste siniestro **×0,25** y lucha ×0,5. Danza Aleteo y Bola Polen, que cura al aliado |
+
+**Nivel 60**, no 30-45. Los jefes van de 45 a 70; con un nivel 40 el Hydreigon
+de Vex los borra de un golpe.
+
+```
+Grum · Mightyena 45   calentamiento
+Sable · Weavile 52    justa
+Nix · Sharpedo 58     pareja
+Vex · Hydreigon 70    pared
+```
+
+### Las zonas
+
+**16 de cada uno**, todos a nivel 60, repartidos en tres anillos alrededor del
+centro para que no se amontonen. Se sueltan a mano —`[ POBLAR ZONAS ]` en el
+panel— porque las tablas de aparición de Cobblemon no garantizan ni cantidad ni
+nivel. `[ LIMPIAR ZONAS ]` recoge lo que sobre.
+
+La misión lleva las coordenadas escritas dentro, así que nadie pregunta dónde.
+
+### El soporte ya funciona con doce
+
+```
+max_players_for_support: 4  →  12
+```
+
+Por encima del límite **los movimientos de apoyo dejan de compartirse**. Con 4,
+la Bola Polen de Ribombee no curaba a nadie y el rol de soporte era decorativo.
+Cambiado y reiniciado.
+
+### Lo que NO se puede hacer
+
+**No se puede prohibir que usen sus Pokémon viejos.** La lista del mod
+(`config/cobblemonraiddens/blacklist.json5`) es **negra, no blanca**: se pueden
+vetar especies concretas, no decir «solo estas tres». Vetar las otras mil
+rompería las incursiones normales del servidor.
+
+Lo que sí queda pendiente y sirve: **vetar legendarios y pseudo-legendarios**,
+que es lo que de verdad desequilibraría el combate.
+
+Para enforcement total haría falta escribir un mod: un datapack no puede leer
+el equipo Pokémon de un jugador.
+
+---
+
 ## 7 de agosto — el evento entero encadenado, del bosque al laboratorio
 
 **57 voces** publicadas: 32 de Oak y las de los cuatro antagonistas.

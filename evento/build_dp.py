@@ -77,6 +77,9 @@ f("cargar", f"""
     scoreboard objectives add ev_lab dummy
     scoreboard objectives add ev_lab0 dummy
     scoreboard objectives add ev_lab_v dummy
+    # Cuenta atras entre la revelacion y la aparicion de Luna.
+    scoreboard objectives add ev_luna dummy
+    scoreboard objectives add ev_fijar dummy
     # trigger, no dummy: es lo unico que un jugador sin permisos puede usar
     scoreboard objectives add ev_unirse trigger
     scoreboard objectives add ev_esc dummy
@@ -151,6 +154,8 @@ f("segundo", f"""
     execute if score #ev ev_estado matches 0 run function evento:bloqueo/npcs
     execute if score #ev ev_raid_v matches 1.. run function evento:senales/vigilar_raid
     execute if score #ev ev_lab_v matches 1 run function evento:lab/vigilar_raid
+    execute if score #ev ev_luna matches 1.. run function evento:lab/luna_cuenta
+    execute if score #ev ev_fijar matches 1.. run function evento:lab/fijar_cuenta
 
     # Evento parado: no se hace nada mas.
     execute if score #ev ev_estado matches 0 run return 0
@@ -830,9 +835,149 @@ for esc, nombre in [(1, "acto1"), (2, "revelacion")]:
     scoreboard players set #ev ev_esc_t 0
 """)
 
-# El Acto I arranca su escena solo. El V no: la revelacion la lanza el admin
-# cuando el grupo esta delante de la capsula, que es cuestion de puesta en escena
-# y no de que el motor decida.
+
+# ===========================================================================
+#  El final: Luna
+# ===========================================================================
+#
+# Donde aparece y a quien se le entrega la ball. Se deja arriba y con nombre
+# porque son las dos cosas que mas probablemente haya que cambiar el dia del
+# evento.
+LUNA_POS = (1820, 64, 499)
+LUNA_NIVEL = 75
+LUNA_ELEGIDO = "A1ejandroreport"
+
+# ---------------------------------------------------------------------------
+#  Las tres zonas de captura
+# ---------------------------------------------------------------------------
+#
+# Todos los jefes del evento son siniestros, y tres de los cuatro pegan en
+# fisico —solo Hydreigon es especial—. De ahi salen los tres roles:
+#
+#   Granbull   TANQUE     Intimidacion baja el ataque de Mightyena, Weavile y
+#                         Sharpedo nada mas salir. Hada resiste siniestro y es
+#                         inmune a dragon, que es el arma contra Hydreigon.
+#   Machamp    DANO       130 de ataque y lucha pega x2 a los cuatro. Lucha
+#                         puro: sus debilidades no las usa ningun jefe.
+#   Ribombee   SOPORTE    Bicho/hada resiste siniestro x0,25 y lucha x0,5.
+#                         Danza Aleteo y Bola Polen, que cura al aliado.
+#
+# Nivel 60 contra jefes de 45 a 70: el primero es calentamiento, el ultimo una
+# pared. Capturar a 40 como decia la version anterior dejaba al grupo sin nada
+# que hacer contra Hydreigon.
+NIVEL_CAPTURA = 60
+
+# Cuantos se sueltan por zona. Doce personas necesitan uno cada una, pero se
+# fallan capturas: con dieciseis nadie se queda esperando el respawn.
+POR_ZONA = 16
+
+ZONAS = {
+    1: ("granbull", (1238, 64, 508), "TANQUE"),
+    2: ("machamp",  (1230, 69, 460), "DANO"),
+    3: ("ribombee", (1162, 68, 412), "SOPORTE"),
+}
+
+# La revelacion son seis lineas de Oak (ESCENAS[2]) que suman poco mas de un
+# minuto. Luna no aparece hasta que terminan: si sale antes, nadie escucha nada.
+_DUR_REVELACION = sum(DURACIONES[c] for c, _ in ESCENAS[2]) + 4
+
+f("lab/revelacion", f"""
+    # Se llama sola al caer Vex. Arranca la escena y programa la aparicion.
+    function evento:escenas/lanzar_revelacion
+    scoreboard players set #ev ev_luna {_DUR_REVELACION}
+""")
+
+f("lab/luna_cuenta", """
+    scoreboard players remove #ev ev_luna 1
+    execute if score #ev ev_luna matches 0 run return run function evento:lab/aparece_luna
+""")
+
+f("lab/fijar_cuenta", """
+    scoreboard players remove #ev ev_fijar 1
+    execute if score #ev ev_fijar matches 0 run return run function evento:lab/fijar_luna
+""")
+
+f("lab/fijar_luna", f"""
+    scoreboard players set #ev ev_fijar 0
+
+    # Luna se queda clavada donde aparece.
+    #
+    # Si se mueve, la escena final se convierte en perseguirla por el
+    # laboratorio con doce personas detras. `NoAI` le apaga el cerebro y
+    # `PersistenceRequired` evita que se esfume si el grupo tarda en llegar.
+    #
+    # Se busca por cercania al punto de aparicion y con radio corto, para no
+    # congelar por error a un Pokemon salvaje que pasara por ahi.
+    execute positioned {LUNA_POS[0]} {LUNA_POS[1]} {LUNA_POS[2]} as @e[type=cobblemon:pokemon,distance=..6,limit=1,sort=nearest] run data merge entity @s {{NoAI:1b,PersistenceRequired:1b}}
+""")
+
+
+# ---------------------------------------------------------------------------
+#  Poblar las zonas de captura
+# ---------------------------------------------------------------------------
+#
+# Se sueltan a mano en vez de fiarlo a la aparicion natural: con doce personas
+# hay que garantizar que haya suficientes y todos del mismo nivel, y las tablas
+# de aparicion de Cobblemon no dan ninguna de las dos cosas.
+#
+# Se reparten en circulo alrededor del centro; amontonados en un bloque se
+# empujan entre ellos y quedan feisimos.
+import math as _math
+
+for _n, (_especie, (_zx, _zy, _zz), _rol) in ZONAS.items():
+    _lineas = [f"# {_rol}: {POR_ZONA} {_especie} de nivel {NIVEL_CAPTURA} en {_zx} {_zy} {_zz}"]
+    for _i in range(POR_ZONA):
+        _ang = 2 * _math.pi * _i / POR_ZONA
+        _r = 6 + (_i % 3) * 3          # tres anillos, para que no formen un aro
+        _dx = round(_r * _math.cos(_ang))
+        _dz = round(_r * _math.sin(_ang))
+        _lineas.append(
+            f"execute positioned {_zx + _dx} {_zy} {_zz + _dz} run pokespawn {_especie} level={NIVEL_CAPTURA}")
+    f(f"zonas/poblar{_n}", "\n".join(_lineas))
+
+f("zonas/poblar_todas", "\n".join(
+    ["# Suelta las tres zonas de golpe. Es lo que se pulsa antes del evento."] +
+    [f"function evento:zonas/poblar{n}" for n in ZONAS]))
+
+f("zonas/limpiar", "\n".join(
+    ["# Recoge lo que quede sin capturar, para no dejar el mapa sembrado."] +
+    [f"execute positioned {x} {y} {z} run kill @e[type=cobblemon:pokemon,distance=..25]"
+     for _, (x, y, z), _ in ZONAS.values()]))
+
+f("lab/aparece_luna", f"""
+    scoreboard players set #ev ev_luna 0
+
+    # `pokespawn` no tiene posicion propia: sin `positioned` la suelta en 0,0,0.
+    execute positioned {LUNA_POS[0]} {LUNA_POS[1]} {LUNA_POS[2]} run pokespawn luna level={LUNA_NIVEL}
+
+    # Congelarla llega dos segundos despues, no aqui: la entidad no existe
+    # todavia en este mismo tick y el `data merge` no encontraria nada.
+    scoreboard players set #ev ev_fijar 2
+
+    title @a[tag=ev_participa] times 20 90 30
+    title @a[tag=ev_participa] subtitle {{"text":"Ahi esta","color":"gray"}}
+    title @a[tag=ev_participa] title [{{"text":"LUNA","color":"light_purple","bold":true}}]
+    execute as @a[tag=ev_participa] at @s run playsound minecraft:block.beacon.power_select voice @s ~ ~ ~ 1000000 0.7
+
+    # La ball va a una sola persona a proposito. Que la capture quien conduce
+    # el evento convierte el final en una escena en vez de en una carrera de
+    # doce personas lanzando bolas a la vez.
+    give {LUNA_ELEGIDO} cobblemon:master_ball[custom_name='{{"text":"Ball de Luna","color":"light_purple","italic":false}}',lore=['{{"text":"La ultima que le quedaba al Profesor Oak.","color":"gray","italic":true}}'],enchantment_glint_override=true] 1
+    execute as @a[tag=ev_participa] at @s run playsound evento:voz.oak.a5_03 voice @s ~ ~ ~ 1000000 1
+    tellraw @a[tag=ev_participa] ["",{{"text":"\\n  PROFESOR OAK  ","color":"gold","bold":true}},{{"text":"{LUNA_ELEGIDO}, es tuya. Con calma.\\n","color":"white"}}]
+""")
+
+# El Acto V lanza su revelacion solo.
+#
+# Antes la disparaba el admin a mano, con la idea de esperar a que el grupo
+# estuviera delante de la capsula. Pero al encadenarse todo lo demas era el
+# unico sitio donde el evento se quedaba mudo: caia Vex, salia el rotulo del
+# Acto V y ya. Seis lineas grabadas sin usar.
+#
+# Ahora va detras de la caida de Vex. Sigue habiendo boton en el panel por si
+# hay que repetirla.
+ficheros["data/evento/function/actos/a5.mcfunction"] += (
+    "function evento:lab/revelacion" + chr(10))
 # El Acto I NO lanza cinematica: la escena la lleva Oak en persona. Uno habla
 # con el y el resto escucha, que es como se decidio montarlo. La cinematica
 # de apertura sigue disponible como boton del panel por si algun dia se usa.
@@ -1023,6 +1168,8 @@ _panel = [
         txt(NL + "  Preparativos" + NL, "dark_gray"),
         ESP, boton("[ COMPROBAR ]", "admin/comprobar", "green", "Repasa que este todo puesto"),
         ESP, boton("[ ACREDITADOS ]", "admin/revisar", "gold", "Quien ha terminado el Protocolo Luna y quien no"),
+        ESP, boton("[ POBLAR ZONAS ]", "zonas/poblar_todas", "green", "Suelta los 48 Pokemon de las tres zonas de captura"),
+        ESP, boton("[ LIMPIAR ZONAS ]", "zonas/limpiar", "red", "Recoge lo que quede sin capturar"),
         ESP, boton("[ RASTREADORES ]", "admin/dar_rastreadores", "aqua", "Uno para cada jugador"),
         ESP, boton("[ PONER BALIZA ]", "admin/poner_baliza", "white", "Aqui donde estas")),
     "tellraw @s " + linea(
@@ -1417,6 +1564,17 @@ def avances() -> dict:
 
     n_dark = por_tipo("captura_siniestro", "dark", "captura_siniestro")
     n_ice = por_tipo("captura_hielo", "ice", "captura_hielo")
+
+    # La captura de Luna cierra el evento sola.
+    #
+    # Aqui el filtro por especie —la unica limitacion de Cobblemon, que tanto
+    # estorbo para "captura un siniestro"— es justo lo que hace falta: hay una
+    # sola Luna y basta con nombrarla.
+    salida["data/evento/advancement/captura_luna.json"] = json.dumps({
+        "criteria": {"luna": {"trigger": "cobblemon:catch_pokemon",
+                              "conditions": {"count": 1, "species": "pokereport:luna"}}},
+        "rewards": {"function": "evento:actos/terminar"},
+    }, indent=1)
 
     salida["data/evento/advancement/veterano.json"] = json.dumps({
         "criteria": {"combates": {"trigger": "cobblemon:battles_won", "conditions": {"count": 5}}},
