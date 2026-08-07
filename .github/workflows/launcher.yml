@@ -71,7 +71,14 @@ jobs:
           # Sin certificado de Apple. Sin esto, electron-builder intenta firmar
           # y aborta en un runner limpio.
           CSC_IDENTITY_AUTO_DISCOVERY: false
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        # OJO: aqui NO se pasa GH_TOKEN. Con esa variable presente,
+        # electron-builder entra en su rama de publicacion aunque se le diga
+        # `--publish never`, y revienta buscando metadatos del repositorio:
+        #
+        #   Cannot detect repository by .git/config
+        #   TypeError: Cannot read properties of null (reading 'channel')
+        #
+        # De subir los ficheros se encarga el trabajo `publicar`, mas abajo.
         run: npx electron-builder --publish never
 
       - uses: actions/upload-artifact@v4
