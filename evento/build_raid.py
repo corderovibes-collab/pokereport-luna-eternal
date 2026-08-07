@@ -236,6 +236,45 @@ jefe(
 
 
 # ===========================================================================
+#  Acto IV — el laboratorio.  El Hydreigon de la Doctora Vex
+# ===========================================================================
+#
+# El climax. Va a TIER_SEVEN, que es el unico tier que el mod deja vacio a
+# proposito para jefes propios: haz de luz mas intenso, mejores recompensas y
+# su propio logro.
+#
+# Nivel 70 y vida x16, bastante por encima de Nix. Aun asi la regla dice que
+# doce personas ganan: lo que hace duro este combate no es la vida, son las
+# siete fases: dos escudos seguidos y una limpieza de mejoras justo antes del
+# ultimo tramo.
+#
+# Hydreigon es siniestro/dragon. El siniestro sigue cayendo ante lucha, bicho
+# y hada —lo que el PROTOCOLO LUNA les hizo capturar—, pero el dragon suma
+# hielo y dragon. Quien llegue aqui con el equipo del principio lo va a notar.
+jefe(
+    "vex_eclipse",
+    especie="hydreigon",
+    nivel=70,
+    habilidad="levitate",
+    movimientos=["darkpulse", "dragonpulse", "flamethrower", "nastyplot"],
+    tipo="DRAGON",
+    tier="TIER_SEVEN",
+    barra={"text": "Hydreigon de la Doctora Vex", "color": "dark_purple", "bold": True},
+    escala=1.6,
+    vida=16.0,
+    dinero=50000,
+    guion={
+        "hp:0.85": ["SHIELD_UP", "BOSS:SPA:1"],
+        "hp:0.70": ["SHIELD_DOWN"],
+        "hp:0.55": ["RESET_PLAYER", "SET_SUN"],
+        "hp:0.40": ["SHIELD_UP", "BOSS:SPE:1"],
+        "hp:0.25": ["SHIELD_DOWN", "BOSS:SPA:1"],
+        "hp:0.10": ["RESET_PLAYER", "BOSS:ATK:2"],
+    },
+)
+
+
+# ===========================================================================
 #  Jefe de pruebas
 # ===========================================================================
 #

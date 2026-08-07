@@ -73,6 +73,10 @@ f("cargar", f"""
     scoreboard objectives add ev_oak_esp dummy
     # Retardo entre la frase de victoria de Oak y el anuncio de la senal siguiente.
     scoreboard objectives add ev_sig dummy
+    # Vigilancia del cristal del laboratorio, aparte de la de las senales.
+    scoreboard objectives add ev_lab dummy
+    scoreboard objectives add ev_lab0 dummy
+    scoreboard objectives add ev_lab_v dummy
     # trigger, no dummy: es lo unico que un jugador sin permisos puede usar
     scoreboard objectives add ev_unirse trigger
     scoreboard objectives add ev_esc dummy
@@ -146,6 +150,7 @@ f("segundo", f"""
     execute if score #ev ev_sig matches 1.. run function evento:senales/sig_cuenta
     execute if score #ev ev_estado matches 0 run function evento:bloqueo/npcs
     execute if score #ev ev_raid_v matches 1.. run function evento:senales/vigilar_raid
+    execute if score #ev ev_lab_v matches 1 run function evento:lab/vigilar_raid
 
     # Evento parado: no se hace nada mas.
     execute if score #ev ev_estado matches 0 run return 0
@@ -219,6 +224,8 @@ GUARDIANES = {
         "El cristal esta al fondo de la cueva."),
     3: ("SHARPEDO", "minecraft:entity.guardian.attack", 0.5,
         "El cristal esta junto al agua, detras de el."),
+    4: ("HYDREIGON", "minecraft:entity.ender_dragon.growl", 0.7,
+        "El cristal esta al fondo del laboratorio."),
 }
 
 f("guardianes/cuenta", """
@@ -270,6 +277,13 @@ for n, (titulo, sub) in ACTOS.items():
     tellraw @a[tag=ev_participa] ["",{{"text":"\\n"}},{{"text":"  ACTO {romano} · {titulo}","color":"gold","bold":true}},{{"text":"\\n  {sub}\\n","color":"gray"}}]
     tellraw @a[tag=ev_admin] {{"text":"[Evento] Acto {n} iniciado","color":"dark_gray"}}
 """)
+
+# El Acto IV abre el laboratorio: enciende el cristal de Vex y empieza a
+# vigilarlo. Hasta ese momento el cristal esta ahi pero apagado, para que nadie
+# pueda pelear el climax del evento por su cuenta.
+ficheros["data/evento/function/actos/a4.mcfunction"] += (
+    "function evento:cristales/encender_lab" + chr(10)
+    + "function evento:lab/armar_raid" + chr(10))
 
 f("actos/avanzar", """
     # Salta al acto siguiente sea cual sea el actual.
@@ -351,6 +365,10 @@ CRISTALES = {
 
 CRISTAL_TIPO = {1: "dark", 2: "ice", 3: "water"}
 
+# El cristal de Vex, en el laboratorio. No es una senal: se enciende al empezar
+# el Acto IV y al ganarlo cae ella, no se suma nada.
+CRISTAL_LAB = (1796, 80, 568)
+
 
 def _setbloque(n, activo):
     x, y, z = CRISTALES[n]
@@ -359,12 +377,43 @@ def _setbloque(n, activo):
             f"can_reset=false,raid_tier=tier_five,raid_type={CRISTAL_TIPO[n]}]")
 
 
+def _setlab(activo):
+    """El cristal de Vex. Tier siete: el unico que el mod deja vacio para
+    jefes propios, con el haz mas intenso y su propio logro."""
+    x, y, z = CRISTAL_LAB
+    return (f"setblock {x} {y} {z} cobblemonraiddens:raid_crystal_block["
+            f"is_active={'true' if activo else 'false'},is_natural=false,"
+            f"can_reset=false,raid_tier=tier_seven,raid_type=dragon]")
+
+
 for n in CRISTALES:
     f(f"cristales/encender{n}", _setbloque(n, True))
 
+f("cristales/encender_lab", _setlab(True))
+
 f("cristales/apagar_todos", "\n".join(
     ["# Se llama al reiniciar y al terminar: el mundo queda como estaba."] +
-    [_setbloque(n, False) for n in CRISTALES]))
+    [_setbloque(n, False) for n in CRISTALES] + [_setlab(False)]))
+
+
+# Vigilancia del cristal del laboratorio.
+#
+# Va aparte de la de las senales porque el desenlace es otro: al ganarlo no se
+# suma una senal, cae Vex y arranca el Acto V. Misma tecnica —comparar el
+# contador `raid_cleared` contra una marca tomada al armar—, distinto final.
+_LX, _LY, _LZ = CRISTAL_LAB
+
+f("lab/armar_raid", "\n".join([
+    "scoreboard players set #ev ev_lab0 0",
+    "scoreboard players set #ev ev_lab 0",
+    f"execute store result score #ev ev_lab0 run data get block {_LX} {_LY} {_LZ} raid_cleared",
+    "scoreboard players set #ev ev_lab_v 1",
+]))
+
+f("lab/vigilar_raid", "\n".join([
+    f"execute store result score #ev ev_lab run data get block {_LX} {_LY} {_LZ} raid_cleared",
+    "execute unless score #ev ev_lab = #ev ev_lab0 run return run function evento:lab/vex_derrotada",
+]))
 
 
 for n, (x, y, z, zona) in SENALES.items():
@@ -682,6 +731,7 @@ f("actos/a4_reloj", """
 """)
 
 f("lab/vex_derrotada", """
+    scoreboard players set #ev ev_lab_v 0
     tellraw @a[tag=ev_participa] ["",{"text":"\\n  La Doctora Vex huye. La capsula queda accesible.\\n","color":"light_purple","italic":true}]
     execute as @a[tag=ev_participa] at @s run playsound minecraft:entity.ender_dragon.death voice @s ~ ~ ~ 0.6 1.4
     function evento:actos/a5

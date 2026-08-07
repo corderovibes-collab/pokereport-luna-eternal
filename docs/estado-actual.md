@@ -1,5 +1,88 @@
 # Dónde lo dejamos
 
+## 7 de agosto — el evento entero encadenado, del bosque al laboratorio
+
+**57 voces** publicadas: 32 de Oak y las de los cuatro antagonistas.
+
+```
+Acto I    Oak                                    laboratorio de Oak, 1084 66 530
+Acto II   Grum → Sable → Nix                     tres incursiones encadenadas
+Acto III  el cifrado                             cinco pruebas, sin construir nada
+Acto IV   Vex · Hydreigon 70 · tier 7            el clímax
+Acto V    el reencuentro                         pendiente
+```
+
+### Los cuatro antagonistas
+
+Cada uno sostiene lo mismo de una forma distinta, y en ese orden:
+
+| | | |
+|---|---|---|
+| **Grum** | culpa | cree que fue piedad, pero no duerme |
+| **Sable** | certeza | Luna no puede alcanzarlo, y por eso lo eligieron |
+| **Nix** | miedo | de lo que hay detrás de la puerta |
+| **Vex** | fracaso | lleva dos años fallando y lo sabe con precisión decimal |
+
+La cadena narrativa se pasa el testigo sola. Nix deja caer que **Luna pudo irse
+el primer día y nunca lo intentó**; Vex lo confirma —*«la puerta lleva abierta
+desde el segundo día»*— y deja la pregunta que paga el Acto V: *«ninguno de
+ustedes ha perdido lo suficiente para entender la respuesta»*.
+
+### Coordenadas
+
+```
+Oak       1084 66 530
+Grum      1888 64 257    cristal 1890 64 259    marcador 1887 64 255
+Sable     1630 69 164    cristal 1632 69 161    marcador 1631 69 222 (boca de cueva)
+Nix       1621 63 550    cristal 1625 63 548    marcador 1613 63 557
+Vex       1800 80 569    cristal 1796 80 568
+```
+
+### Los jefes
+
+| | Pokémon | nivel | vida | tier | fases |
+|---|---|---|---|---|---|
+| Grum | Mightyena | 45 | ×8 | 5 | 4 |
+| Sable | Weavile | 52 | ×10 | 5 | 5 |
+| Nix | Sharpedo | 58 | ×12 | 5 | 5 |
+| **Vex** | **Hydreigon** | **70** | **×16** | **7** | **6** |
+
+Tier siete es el único que el mod deja vacío a propósito para jefes propios.
+
+### Todo cerrado con cerrojo
+
+Los NPCs y los cristales viven en el mundo permanentemente, pero **nadie puede
+tocarlos hasta que empiece el evento**:
+
+- **Cristales**: `is_active=false`. Cada uno se enciende solo cuando el motor
+  marca su señal; el de Vex, al arrancar el Acto IV.
+- **NPCs**: si el evento está parado y un no-admin se acerca a menos de 5
+  bloques, se le cierra el diálogo y le sale *«No hay nada que hablar todavía»*.
+
+**`can_reset=false` no es opcional.** Con él a `true` los cristales se reciclan
+cada dos horas y **cambian de jefe solos** — el de Sable apareció un día con un
+Great Tusk en vez de su Weavile.
+
+### El launcher, ahora también en macOS
+
+Un único enlace para repartir:
+
+```
+https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/latest
+```
+
+Tres instaladores: `.exe`, `-x64.dmg` (Intel) y `-arm64.dmg` (Apple Silicon).
+Se compilan solos con `git tag launcher-v…`. Detalle en
+[launcher-mac.md](launcher-mac.md).
+
+### El proyecto ya está en git
+
+249 ficheros, 9,9 MB. Fuera `voz/` (3,1 GB), el `.mrpack` y `node_modules`.
+**Dentro las 50 voces en OGG**, que sin el modelo de clonado no se pueden
+rehacer.
+
+---
+
 ## 6 de agosto (tarde) — señal 2 montada y el Acto II encadenado
 
 ### Sable, el guardián de la montaña
