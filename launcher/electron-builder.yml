@@ -1,0 +1,61 @@
+appId: com.pokereport.launcher
+productName: PokeReport Launcher
+copyright: Uso privado
+
+directories:
+  output: dist
+  buildResources: build
+
+files:
+  - src/**/*
+  - package.json
+
+# El launcher se distribuye entre amigos por enlace directo: un NSIS que se puede
+# instalar sin permisos de administrador evita la mitad de los problemas de soporte.
+win:
+  icon: build/icon.png
+  target:
+    - target: nsis
+      arch: [x64]
+  artifactName: PokeReportLauncher-${version}-setup.${ext}
+
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: PokeReport
+
+# macOS. Se publica un DMG por arquitectura en vez de uno universal: el
+# universal pesa el doble y aquí no aporta nada, porque cada quien se baja el
+# suyo desde la página de descargas.
+#
+#   x64     Mac con Intel
+#   arm64   Mac con Apple Silicon (M1 en adelante)
+mac:
+  icon: build/icon.png
+  category: public.app-category.games
+  target:
+    - target: dmg
+      arch: [x64, arm64]
+  artifactName: PokeReportLauncher-${version}-${arch}.${ext}
+  # El launcher descarga Java, el pack y los assets, y lanza un proceso hijo.
+  # Sin estos permisos macOS lo mata en cuanto intenta salir a la red.
+  entitlements: build/entitlements.mac.plist
+  entitlementsInherit: build/entitlements.mac.plist
+  extendInfo:
+    NSNetworkVolumesUsageDescription: PokeReport descarga el modpack desde internet.
+
+dmg:
+  artifactName: PokeReportLauncher-${version}-${arch}.${ext}
+
+# Sin firma de código: es privado.
+#
+#   Windows   SmartScreen avisa la primera vez.
+#   macOS     Gatekeeper lo bloquea: hay que abrirlo con clic derecho -> Abrir
+#             la primera vez. Explicado en docs/launcher-mac.md.
+#
+# `identity: null` es necesario para que electron-builder no intente firmar y
+# falle en un runner sin certificado de Apple.
+forceCodeSigning: false

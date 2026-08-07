@@ -1,0 +1,1058 @@
+[
+ {
+  "file": "globalpacks-fabric-1.21.1-21.0.6.jar",
+  "url": "https://cdn.modrinth.com/data/NRLPy2mk/versions/ErTctr3A/globalpacks-fabric-1.21.1-21.0.6.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "globalpacks",
+  "mod_id": "globalpacks",
+  "env": "*"
+ },
+ {
+  "file": "accessories-fabric-1.1.0-beta.53+1.21.1.jar",
+  "url": "https://cdn.modrinth.com/data/jtmvUHXj/versions/Xlt4eWBe/accessories-fabric-1.1.0-beta.53%2B1.21.1.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "accessories",
+  "mod_id": "accessories",
+  "env": "*"
+ },
+ {
+  "file": "StackDeobfuscatorFabric-1.4.3+08e71cc.jar",
+  "url": "https://cdn.modrinth.com/data/NusMqsjF/versions/pyiVLk9R/StackDeobfuscatorFabric-1.4.3%2B08e71cc.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "stackdeobf",
+  "mod_id": "stackdeobfuscator",
+  "env": "*"
+ },
+ {
+  "file": "cobblecuisine-2.0.1-1.7.rc1.jar",
+  "url": "https://cdn.modrinth.com/data/dlx62Wp3/versions/KQwSroDP/cobblecuisine-2.0.1-1.7-rc1.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "cobblecuisine",
+  "mod_id": "cobblecuisine",
+  "env": "*"
+ },
+ {
+  "file": "advancementdisable-fabric-1.0.1+1.21.jar",
+  "url": "https://cdn.modrinth.com/data/XIsVTmcm/versions/Txi9EkP3/advancementdisable-fabric-1.0.1%2B1.21.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "advancementdisable",
+  "mod_id": "advancementdisable",
+  "env": "*"
+ },
+ {
+  "file": "rctapi-fabric-1.21.1-0.15.2-beta.jar",
+  "url": "https://cdn.modrinth.com/data/CBfM2yw7/versions/9OZx0coL/rctapi-fabric-1.21.1-0.15.2-beta.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "rctapi",
+  "mod_id": "rctapi",
+  "env": "*"
+ },
+ {
+  "file": "lenientdeath-1.2.5+1.21.1.jar",
+  "url": "https://cdn.modrinth.com/data/Bfi1KBJV/versions/FUbtsgt9/lenientdeath-1.2.5%2B1.21.1.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "lenient-death",
+  "mod_id": "lenientdeath",
+  "env": "*"
+ },
+ {
+  "file": "sound-physics-remastered-fabric-1.21.1-1.5.1.jar",
+  "url": "https://cdn.modrinth.com/data/qyVF9oeo/versions/tVu2EZ4u/sound-physics-remastered-fabric-1.21.1-1.5.1.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "sound-physics-remastered",
+  "mod_id": "sound_physics_remastered",
+  "env": "*"
+ },
+ {
+  "file": "fancymenu_fabric_3.9.8_MC_1.21.1.jar",
+  "url": "https://cdn.modrinth.com/data/Wq5SjeWM/versions/d8MLo3sY/fancymenu_fabric_3.9.8_MC_1.21.1.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "fancymenu",
+  "mod_id": "fancymenu",
+  "env": "*"
+ },
+ {
+  "file": "Debugify-1.21.1+1.0.jar",
+  "url": "https://cdn.modrinth.com/data/QwxR6Gcd/versions/dO7QNiof/Debugify-1.21.1%2B1.0.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "debugify",
+  "mod_id": "debugify",
+  "env": "*"
+ },
+ {
+  "file": "Cobblemon-fabric-1.7.3+1.21.1.jar",
+  "url": "https://cdn.modrinth.com/data/MdwFAVRL/versions/kF7CvxTo/Cobblemon-fabric-1.7.3%2B1.21.1.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "cobblemon",
+  "mod_id": "cobblemon",
+  "env": "*"
+ },
+ {
+  "file": "melody_fabric_1.0.10_MC_1.21.jar",
+  "url": "https://cdn.modrinth.com/data/CVT4pFB2/versions/OqxSeb4n/melody_fabric_1.0.10_MC_1.21.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "melody",
+  "mod_id": "melody",
+  "env": "*"
+ },
+ {
+  "file": "handcrafted-fabric-1.21.1-4.0.3.jar",
+  "url": "https://cdn.modrinth.com/data/pJmCFF0p/versions/f0pKpUWd/handcrafted-fabric-1.21.1-4.0.3.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "handcrafted",
+  "mod_id": "handcrafted",
+  "env": "*"
+ },
+ {
+  "file": "c2me-fabric-mc1.21.1-0.4.0-alpha.0.23.jar",
+  "url": "https://cdn.modrinth.com/data/VSNURh3q/versions/h8ey5B7D/c2me-fabric-mc1.21.1-0.4.0-alpha.0.23.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "c2me-fabric",
+  "mod_id": "c2me",
+  "env": "*"
+ },
+ {
+  "file": "CobbleFurnies-fabric-1.2.jar",
+  "url": "https://cdn.modrinth.com/data/AXY1OO9m/versions/54k31lEX/CobbleFurnies-fabric-1.2.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "cobblefurnies",
+  "mod_id": "cobblefurnies",
+  "env": "*"
+ },
+ {
+  "file": "beautify-2.0.0+1.21.1.jar",
+  "url": "https://cdn.modrinth.com/data/DhSSvaxs/versions/ZyaUkJxq/beautify-2.0.0%2B1.21.1.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "beautify-refabricated",
+  "mod_id": "beautify",
+  "env": "*"
+ },
+ {
+  "file": "playerxp-fabric-1.0.9+1.21.1.jar",
+  "url": "https://cdn.modrinth.com/data/zlrbPCvu/versions/f6114Tas/playerxp-fabric-1.0.9%2B1.21.1.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "cobblemon-playerxp",
+  "mod_id": "playerxp",
+  "env": "*"
+ },
+ {
+  "file": "configurable-3.5.2+1.21.1-fabric.jar",
+  "url": "https://cdn.modrinth.com/data/lGffrQ3O/versions/4IO3KqeL/configurable-3.5.2%2B1.21.1-fabric.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "configurable",
+  "mod_id": "configurable",
+  "env": "*"
+ },
+ {
+  "file": "ForgeConfigAPIPort-v21.1.6-1.21.1-Fabric.jar",
+  "url": "https://cdn.modrinth.com/data/ohNO6lps/versions/N5qzq0XV/ForgeConfigAPIPort-v21.1.6-1.21.1-Fabric.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "forge-config-api-port",
+  "mod_id": "forgeconfigapiport",
+  "env": "*"
+ },
+ {
+  "file": "trinkets-3.10.0.jar",
+  "url": "https://cdn.modrinth.com/data/5aaWibi9/versions/JagCscwi/trinkets-3.10.0.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "trinkets",
+  "mod_id": "trinkets",
+  "env": "*"
+ },
+ {
+  "file": "ScalableLux-0.1.0.1+fabric.d0d58ab-all.jar",
+  "url": "https://cdn.modrinth.com/data/Ps1zyz6x/versions/Yx1tgJMI/ScalableLux-0.1.0.1%2Bfabric.d0d58ab-all.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "scalablelux",
+  "mod_id": "scalablelux",
+  "env": "*"
+ },
+ {
+  "file": "Ping-Wheel-1.12.2-fabric-1.21.1.jar",
+  "url": "https://cdn.modrinth.com/data/QQXAdCzh/versions/S05ir9dj/Ping-Wheel-1.12.2-fabric-1.21.1.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "ping-wheel",
+  "mod_id": "pingwheel",
+  "env": "*"
+ },
+ {
+  "file": "supermartijn642corelib-1.1.21-fabric-mc1.21.jar",
+  "url": "https://cdn.modrinth.com/data/rOUBggPv/versions/blDCgrqh/supermartijn642corelib-1.1.21-fabric-mc1.21.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "supermartijn642s-core-lib",
+  "mod_id": "supermartijn642corelib",
+  "env": "*"
+ },
+ {
+  "file": "respackopts-4.14.0+1.21.1.4.jar",
+  "url": "https://cdn.modrinth.com/data/TiF5QWZY/versions/y5eBSMkZ/respackopts-4.14.0%2B1.21.1.4.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "respackopts",
+  "mod_id": "respackopts",
+  "env": "*"
+ },
+ {
+  "file": "sophisticatedstorage-1.21.1-1.3.7.9.139.jar",
+  "url": "https://cdn.modrinth.com/data/iHtpVwJL/versions/kjNlOByJ/sophisticatedstorage-1.21.1-1.3.7.9.139.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "sophisticated-storage-(unofficial-fabric-port)",
+  "mod_id": "sophisticatedstorage",
+  "env": "*"
+ },
+ {
+  "file": "Only Bottle Caps-1.3.0.jar",
+  "url": "https://cdn.modrinth.com/data/tDRRddpZ/versions/9QilYtN2/Only%20Bottle%20Caps-1.3.0.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "only-bottle-caps",
+  "mod_id": "obc",
+  "env": "*"
+ },
+ {
+  "file": "RoughlyEnoughItems-16.0.799-fabric.jar",
+  "url": "https://cdn.modrinth.com/data/nfn13YXA/versions/aWzTESNC/RoughlyEnoughItems-16.0.799-fabric.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "rei",
+  "mod_id": "roughlyenoughitems",
+  "env": "*"
+ },
+ {
+  "file": "sophisticatedcore-1.21.1-1.2.9.21.168.jar",
+  "url": "https://cdn.modrinth.com/data/9jxwkYQL/versions/ZLVrtF0Q/sophisticatedcore-1.21.1-1.2.9.21.168.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "sophisticated-core-(unofficial-fabric-port)",
+  "mod_id": "sophisticatedcore",
+  "env": "*"
+ },
+ {
+  "file": "krypton-0.2.8.jar",
+  "url": "https://cdn.modrinth.com/data/fQEb0iXm/versions/Acz3ttTp/krypton-0.2.8.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "krypton",
+  "mod_id": "krypton",
+  "env": "*"
+ },
+ {
+  "file": "capturexp-fabric-1.7.3-1.3.0.jar",
+  "url": "https://cdn.modrinth.com/data/LBl4Qguc/versions/hjQp9Aq3/capturexp-fabric-1.7.3-1.3.0.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "cobblemon-capture-xp",
+  "mod_id": "capture_xp",
+  "env": "*"
+ },
+ {
+  "file": "moar-concrete-1.3.1.jar",
+  "url": "https://cdn.modrinth.com/data/lXDzrLAm/versions/hG50ZysI/moar-concrete-1.3.1.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "moar-concrete",
+  "mod_id": "moarconcrete",
+  "env": "*"
+ },
+ {
+  "file": "pokeblocks-1.4.0-1.21.1.jar",
+  "url": "https://cdn.modrinth.com/data/hnOfcjSq/versions/AMYJbQsk/pokeblocks-1.4.0-1.21.1.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "pokeblocks",
+  "mod_id": "pokeblocks",
+  "env": "*"
+ },
+ {
+  "file": "SafePastures-1.1.1+1.21.1.jar",
+  "url": "https://cdn.modrinth.com/data/qpe01spE/versions/ahfbSTCi/SafePastures-1.1.1%2B1.21.1.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "cobblemon-safepastures",
+  "mod_id": "safepastures",
+  "env": "*"
+ },
+ {
+  "file": "better-pokedex-scanner-1.0.0.jar",
+  "url": "https://cdn.modrinth.com/data/lESGhLxI/versions/fvFI487Y/better-pokedex-scanner-1.0.0.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "cobblemon-better-pokedex-scanner",
+  "mod_id": "better_pokedex_scanner",
+  "env": "*"
+ },
+ {
+  "file": "zfastnoise-1.0.13+1.21.jar",
+  "url": "https://cdn.modrinth.com/data/OnlVIpq5/versions/tss0FueO/zfastnoise-1.0.13%2B1.21.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "zfastnoise",
+  "mod_id": "zfastnoise",
+  "env": "*"
+ },
+ {
+  "file": "fzzy_config-0.7.6+1.21.jar",
+  "url": "https://cdn.modrinth.com/data/hYykXjDp/versions/kOmySYD4/fzzy_config-0.7.6%2B1.21.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "fzzy-config",
+  "mod_id": "fzzy_config",
+  "env": "*"
+ },
+ {
+  "file": "neruina-3.3.3+1.21.1-fabric.jar",
+  "url": "https://cdn.modrinth.com/data/1s5x833P/versions/S3RKG9zF/neruina-3.3.3%2B1.21.1-fabric.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "neruina",
+  "mod_id": "neruina",
+  "env": "*"
+ },
+ {
+  "file": "netherportalfix-fabric-1.21.1-21.1.3.jar",
+  "url": "https://cdn.modrinth.com/data/nPZr02ET/versions/9KrnphgC/netherportalfix-fabric-1.21.1-21.1.3.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "netherportalfix",
+  "mod_id": "netherportalfix",
+  "env": "*"
+ },
+ {
+  "file": "cobblemonraiddens-fabric-0.11.3+1.21.1.jar",
+  "url": "https://cdn.modrinth.com/data/GebWh45l/versions/Lecb595b/cobblemonraiddens-fabric-0.11.3%2B1.21.1.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "cobblemonraiddens",
+  "mod_id": "cobblemonraiddens",
+  "env": "*"
+ },
+ {
+  "file": "zamega-fabric-1.7.3.jar",
+  "url": "https://cdn.modrinth.com/data/2V1Y86sc/versions/x5u68zHH/zamega-fabric-1.7.3.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "navas-zamega",
+  "mod_id": "zamega",
+  "env": "*"
+ },
+ {
+  "file": "nethermap-4.0.0-1.21.1.jar",
+  "url": "https://cdn.modrinth.com/data/fdtm99de/versions/BEfm3cNd/nethermap-4.0.0-1.21.1.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "better-nether-map",
+  "mod_id": "nethermap",
+  "env": "*"
+ },
+ {
+  "file": "fightorflight-fabric-0.10.9.jar",
+  "url": "https://cdn.modrinth.com/data/cTdIg5HZ/versions/aLKGVSng/fightorflight-fabric-0.10.9.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "cobblemon-fight-or-flight-reborn",
+  "mod_id": "fightorflight",
+  "env": "*"
+ },
+ {
+  "file": "ferritecore-7.0.3-fabric.jar",
+  "url": "https://cdn.modrinth.com/data/uXXizFIs/versions/sOzRw3CG/ferritecore-7.0.3-fabric.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "ferrite-core",
+  "mod_id": "ferritecore",
+  "env": "*"
+ },
+ {
+  "file": "owo-lib-0.12.15.4+1.21.jar",
+  "url": "https://cdn.modrinth.com/data/ccKDOlHs/versions/JB1fLQnc/owo-lib-0.12.15.4%2B1.21.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "owo-lib",
+  "mod_id": "owo",
+  "env": "*"
+ },
+ {
+  "file": "cobblemon-additions-4.1.6.jar",
+  "url": "https://cdn.modrinth.com/data/W2pr9jyL/versions/degN5DK4/cobblemon-additions-4.1.6.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "cobblemon-additions",
+  "mod_id": "cobblemon-additions",
+  "env": "*"
+ },
+ {
+  "file": "forgivingvoid-fabric-1.21.1-21.1.7.jar",
+  "url": "https://cdn.modrinth.com/data/1vkzEZjE/versions/HGbKoEgt/forgivingvoid-fabric-1.21.1-21.1.7.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "forgiving-void",
+  "mod_id": "forgivingvoid",
+  "env": "*"
+ },
+ {
+  "file": "rctmod-fabric-1.21.1-0.18.1-beta.jar",
+  "url": "https://cdn.modrinth.com/data/lRwTUnD7/versions/gQx1F1dx/rctmod-fabric-1.21.1-0.18.1-beta.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "rctmod",
+  "mod_id": "rctmod",
+  "env": "*"
+ },
+ {
+  "file": "geckolib-fabric-1.21.1-4.9.2.jar",
+  "url": "https://cdn.modrinth.com/data/8BmcQJ2H/versions/dnJdtm0u/geckolib-fabric-1.21.1-4.9.2.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "geckolib",
+  "mod_id": "geckolib",
+  "env": "*"
+ },
+ {
+  "file": "midnightlib-1.7.5-fabric+1.21.1.jar",
+  "url": "https://cdn.modrinth.com/data/codAaoxh/versions/vqqujBpd/midnightlib-1.7.5-fabric%2B1.21.1.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "midnightlib",
+  "mod_id": "midnightlib",
+  "env": "*"
+ },
+ {
+  "file": "fabric-api-0.116.14+1.21.1.jar",
+  "url": "https://cdn.modrinth.com/data/P7dR8mSH/versions/aUrTRV7H/fabric-api-0.116.14%2B1.21.1.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "fabric-api",
+  "mod_id": "fabric-api",
+  "env": "*"
+ },
+ {
+  "file": "rechiseled-1.2.4-fabric-mc1.21.jar",
+  "url": "https://cdn.modrinth.com/data/B0g2vT6l/versions/Whwd5n82/rechiseled-1.2.4-fabric-mc1.21.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "rechiseled",
+  "mod_id": "rechiseled",
+  "env": "*"
+ },
+ {
+  "file": "cloth-config-15.0.140-fabric.jar",
+  "url": "https://cdn.modrinth.com/data/9s6osm5g/versions/HpMb5wGb/cloth-config-15.0.140-fabric.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "cloth-config",
+  "mod_id": "cloth-config",
+  "env": "*"
+ },
+ {
+  "file": "VanillaBackport-fabric-1.21.1-1.1.7.10.jar",
+  "url": "https://cdn.modrinth.com/data/6xwxDTgf/versions/ayvoY8lx/VanillaBackport-fabric-1.21.1-1.1.7.10.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "vanillabackport",
+  "mod_id": "vanillabackport",
+  "env": "*"
+ },
+ {
+  "file": "accessories_compat_layer-fabric-0.1.12+1.21.1.jar",
+  "url": "https://cdn.modrinth.com/data/ySnjMzLg/versions/pWxabbaf/accessories_compat_layer-fabric-0.1.12%2B1.21.1.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "accessories-compat-layer",
+  "mod_id": "accessories_compat_layer",
+  "env": "*"
+ },
+ {
+  "file": "libjf-3.17.5.jar",
+  "url": "https://cdn.modrinth.com/data/WKwQAwke/versions/WRFFw4eh/libjf-3.17.5.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "libjf",
+  "mod_id": "libjf",
+  "env": "*"
+ },
+ {
+  "file": "xaeroworldmap-fabric-1.21.1-1.44.2.jar",
+  "url": "https://cdn.modrinth.com/data/NcUtCpym/versions/L2nO7ZYD/xaeroworldmap-fabric-1.21.1-1.44.2.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "xaeros-world-map",
+  "mod_id": "xaeroworldmap",
+  "env": "*"
+ },
+ {
+  "file": "repurposed_structures-7.5.21+1.21.1-fabric.jar",
+  "url": "https://cdn.modrinth.com/data/muf0XoRe/versions/4uDzF4B9/repurposed_structures-7.5.21%2B1.21.1-fabric.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "repurposed-structures-fabric",
+  "mod_id": "repurposed_structures",
+  "env": "*"
+ },
+ {
+  "file": "balm-fabric-1.21.1-21.0.63.jar",
+  "url": "https://cdn.modrinth.com/data/MBAkmtvl/versions/R6U3hZRZ/balm-fabric-1.21.1-21.0.63.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "balm",
+  "mod_id": "balm",
+  "env": "*"
+ },
+ {
+  "file": "waystones-fabric-1.21.1-21.1.37.jar",
+  "url": "https://cdn.modrinth.com/data/LOpKHB2A/versions/Ub2AL65v/waystones-fabric-1.21.1-21.1.37.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "waystones",
+  "mod_id": "waystones",
+  "env": "*"
+ },
+ {
+  "file": "CobbleDollars-fabric-2.0.0+Beta-5.1+1.21.1.jar",
+  "url": "https://cdn.modrinth.com/data/s7N7AsqL/versions/cqsHXSXe/CobbleDollars-fabric-2.0.0%2BBeta-5.1%2B1.21.1.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "cobbledollars",
+  "mod_id": "cobbledollars",
+  "env": "*"
+ },
+ {
+  "file": "MobsBeGone-0.0.7.jar",
+  "url": "https://cdn.modrinth.com/data/hXvXSxxg/versions/B5tawRRL/MobsBeGone-0.0.7.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "mobsbegone",
+  "mod_id": "mobsbegone",
+  "env": "*"
+ },
+ {
+  "file": "Carved Wood-fabric-1.21.1-1.9.7-B.jar",
+  "url": "https://cdn.modrinth.com/data/WuwijfrW/versions/h1wI9HyK/Carved%20Wood-fabric-1.21.1-1.9.7-B.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "carved-wood",
+  "mod_id": "carved_wood",
+  "env": "*"
+ },
+ {
+  "file": "supermartijn642configlib-1.1.8-fabric-mc1.21.jar",
+  "url": "https://cdn.modrinth.com/data/LN9BxssP/versions/euSlaAtA/supermartijn642configlib-1.1.8-fabric-mc1.21.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "supermartijn642s-config-lib",
+  "mod_id": "supermartijn642configlib",
+  "env": "*"
+ },
+ {
+  "file": "Luckys-Cozyhome-Refurnished-1.1.20.jar",
+  "url": "https://cdn.modrinth.com/data/TNcLBDkY/versions/jJUWZCaQ/Luckys-Cozyhome-Refurnished-1.1.20.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "cozy-home",
+  "mod_id": "cozyhome",
+  "env": "*"
+ },
+ {
+  "file": "biomereplacer-2.1-hippo-fabric.jar",
+  "url": "https://cdn.modrinth.com/data/DAXbR0Wj/versions/IeQCQzcl/biomereplacer-2.1-hippo-fabric.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "biome-replacer",
+  "mod_id": "biome_replacer",
+  "env": "*"
+ },
+ {
+  "file": "cobblemon-battle-extras-fabric-1.13.45.jar",
+  "url": "https://cdn.modrinth.com/data/2iY8VFqL/versions/Sf5W9mRS/cobblemon-battle-extras-fabric-1.13.45.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "cobblemon-battle-extras",
+  "mod_id": "cobblemon-battle-extras",
+  "env": "*"
+ },
+ {
+  "file": "Platform-fabric-1.21.1-1.3.3.jar",
+  "url": "https://cdn.modrinth.com/data/i6fiqm5y/versions/BbIdNbF1/Platform-fabric-1.21.1-1.3.3.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "platform",
+  "mod_id": "platform",
+  "env": "*"
+ },
+ {
+  "file": "lithium-fabric-0.15.4+mc1.21.1.jar",
+  "url": "https://cdn.modrinth.com/data/gvQqBUqZ/versions/N08Z8wog/lithium-fabric-0.15.4%2Bmc1.21.1.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "lithium",
+  "mod_id": "lithium",
+  "env": "*"
+ },
+ {
+  "file": "LegendaryMonuments-Cobbleverse.jar",
+  "url": "https://cdn.modrinth.com/data/m6RyHSbV/versions/RtYJBrxd/LegendaryMonuments-Cobbleverse.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "legendary-monuments",
+  "mod_id": "legendarymonuments",
+  "env": "*"
+ },
+ {
+  "file": "architectury-13.0.8-fabric.jar",
+  "url": "https://cdn.modrinth.com/data/lhGA9TYQ/versions/Wto0RchG/architectury-13.0.8-fabric.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "architectury-api",
+  "mod_id": "architectury",
+  "env": "*"
+ },
+ {
+  "file": "modernfix-fabric-5.25.1+mc1.21.1.jar",
+  "url": "https://cdn.modrinth.com/data/nmDcB62a/versions/NnNX8LBn/modernfix-fabric-5.25.1%2Bmc1.21.1.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "modernfix",
+  "mod_id": "modernfix",
+  "env": "*"
+ },
+ {
+  "file": "villagerconfig-fabric-4.5.4+1.21.1.jar",
+  "url": "https://cdn.modrinth.com/data/OClpEDe3/versions/sb4XIWwK/villagerconfig-fabric-4.5.4%2B1.21.1.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "villagerconfig",
+  "mod_id": "villagerconfig",
+  "env": "*"
+ },
+ {
+  "file": "notenoughcrashes-fabric-4.4.9+1.21.1.jar",
+  "url": "https://cdn.modrinth.com/data/yM94ont6/versions/gR0LY1dB/notenoughcrashes-fabric-4.4.9%2B1.21.1.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "notenoughcrashes",
+  "mod_id": "notenoughcrashes",
+  "env": "*"
+ },
+ {
+  "file": "resourcefullib-fabric-1.21-3.0.12.jar",
+  "url": "https://cdn.modrinth.com/data/G1hIVOrD/versions/Hf91FuVF/resourcefullib-fabric-1.21-3.0.12.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "resourceful-lib",
+  "mod_id": "resourcefullib",
+  "env": "*"
+ },
+ {
+  "file": "Cobbreeding-fabric-2.2.2.jar",
+  "url": "https://cdn.modrinth.com/data/ItmVb4zY/versions/RNbPHodv/Cobbreeding-fabric-2.2.2.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "cobbreeding",
+  "mod_id": "cobbreeding",
+  "env": "*"
+ },
+ {
+  "file": "packetfixer-3.3.1-1.20.5-1.21.X-merged.jar",
+  "url": "https://cdn.modrinth.com/data/c7m1mi73/versions/2C41Q8WX/packetfixer-3.3.1-1.20.5-1.21.X-merged.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "packet-fixer",
+  "mod_id": "packetfixer",
+  "env": "*"
+ },
+ {
+  "file": "huge-structure-blocks-fabric-1.1.6.jar",
+  "url": "https://cdn.modrinth.com/data/AMLtKGdJ/versions/jZrAT0D5/huge-structure-blocks-fabric-1.1.6.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "huge-structure-blocks",
+  "mod_id": "hugestructureblocks",
+  "env": "*"
+ },
+ {
+  "file": "sophisticatedbackpacks-1.21.1-3.23.4.3.106.jar",
+  "url": "https://cdn.modrinth.com/data/ouNrBQtq/versions/nHhuPdda/sophisticatedbackpacks-1.21.1-3.23.4.3.106.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "sophisticated-backpacks-(unoffical-fabric-port)",
+  "mod_id": "sophisticatedbackpacks",
+  "env": "*"
+ },
+ {
+  "file": "CobbleverseBadges-1.3.jar",
+  "url": "https://cdn.modrinth.com/data/PHT3Zj0r/versions/3aQ0cMqp/CobbleverseBadges-1.3.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "cobbleverse-badges",
+  "mod_id": "cobbleversebadges",
+  "env": "*"
+ },
+ {
+  "file": "yet_another_config_lib_v3-3.8.2+1.21.1-fabric.jar",
+  "url": "https://cdn.modrinth.com/data/1eAoo2KR/versions/o3cDn8Vp/yet_another_config_lib_v3-3.8.2%2B1.21.1-fabric.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "yacl",
+  "mod_id": "yet_another_config_lib_v3",
+  "env": "*"
+ },
+ {
+  "file": "cobblenav-fabric-2.3.3.jar",
+  "url": "https://cdn.modrinth.com/data/bI8Nt3uA/versions/cGFERrtC/cobblenav-fabric-2.3.3.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "cobblemon-pokenav",
+  "mod_id": "cobblenav",
+  "env": "*"
+ },
+ {
+  "file": "timcore-fabric-1.7.3-1.32.0.jar",
+  "url": "https://cdn.modrinth.com/data/lVP9aUaY/versions/g5MKQfLZ/timcore-fabric-1.7.3-1.32.0.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "cobblemon-tim-core",
+  "mod_id": "tim_core",
+  "env": "*"
+ },
+ {
+  "file": "pastureLoot-1.0.5+1.21.1.jar",
+  "url": "https://cdn.modrinth.com/data/XP2jcAo0/versions/MYJtblOM/pastureLoot-1.0.5%2B1.21.1.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "cobblemon-pasture-loot",
+  "mod_id": "pasture-loot",
+  "env": "*"
+ },
+ {
+  "file": "fabric-language-kotlin-1.13.13+kotlin.2.4.10.jar",
+  "url": "https://cdn.modrinth.com/data/Ha28R6CL/versions/bdhiINYC/fabric-language-kotlin-1.13.13%2Bkotlin.2.4.10.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "fabric-language-kotlin",
+  "mod_id": "fabric-language-kotlin",
+  "env": "*"
+ },
+ {
+  "file": "tmcraft-1.4.18+1.7.3.jar",
+  "url": "https://cdn.modrinth.com/data/HU6mkUZs/versions/RYBI5bnM/tmcraft-1.4.18%2B1.7.3.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "tmcraft",
+  "mod_id": "tmcraft",
+  "env": "*"
+ },
+ {
+  "file": "mega_showdown-fabric-1.8.4+1.7.3+1.21.1.jar",
+  "url": "https://cdn.modrinth.com/data/SszvX85I/versions/Y6di9Ram/mega_showdown-fabric-1.8.4%2B1.7.3%2B1.21.1.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "cobblemon-mega-showdown",
+  "mod_id": "mega_showdown",
+  "env": "*"
+ },
+ {
+  "file": "konkrete_fabric_1.9.9_MC_1.21.jar",
+  "url": "https://cdn.modrinth.com/data/J81TRJWm/versions/Qvrc7DuG/konkrete_fabric_1.9.9_MC_1.21.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "konkrete",
+  "mod_id": "konkrete",
+  "env": "*"
+ },
+ {
+  "file": "LumyMon-0.6.6.jar",
+  "url": "https://cdn.modrinth.com/data/QAX8WiBc/versions/SSS3twZY/LumyMon-0.6.6.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "lumymon",
+  "mod_id": "lumymon",
+  "env": "*"
+ },
+ {
+  "file": "xaerominimap-fabric-1.21.1-26.4.2.jar",
+  "url": "https://cdn.modrinth.com/data/1bokaNcj/versions/Tx54V6kI/xaerominimap-fabric-1.21.1-26.4.2.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "xaeros-minimap",
+  "mod_id": "xaerominimap",
+  "env": "*"
+ },
+ {
+  "file": "interactic-0.2.3+1.21.jar",
+  "url": "https://cdn.modrinth.com/data/ErpAAAaf/versions/PGo6qQqQ/interactic-0.2.3%2B1.21.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "interactic",
+  "mod_id": "interactic",
+  "env": "*"
+ },
+ {
+  "file": "Iceberg-1.21.1-fabric-1.3.2.jar",
+  "url": "https://cdn.modrinth.com/data/5faXoLqX/versions/7ITFAyW8/Iceberg-1.21.1-fabric-1.3.2.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "iceberg",
+  "mod_id": "iceberg",
+  "env": "*"
+ },
+ {
+  "file": "comforts-fabric-9.0.5+1.21.1.jar",
+  "url": "https://cdn.modrinth.com/data/SaCpeal4/versions/LUPOTXbk/comforts-fabric-9.0.5%2B1.21.1.jar",
+  "source": "cobbleverse-1.7.42",
+  "slug": "comforts",
+  "mod_id": "comforts",
+  "env": "*"
+ },
+ {
+  "file": "cobblemon-battle-positions-1.1.3.jar",
+  "url": null,
+  "source": "cobbleverse-1.7.42",
+  "slug": "(override)",
+  "mod_id": "cobblemonbattlepositions",
+  "env": "*"
+ },
+ {
+  "file": "athena-fabric-1.21.1-4.0.6.jar",
+  "url": "https://cdn.modrinth.com/data/b1ZV3DIJ/versions/JfyYsWKP/athena-fabric-1.21.1-4.0.6.jar",
+  "source": "cobbleverse-1.7.42 (dep obligatoria)",
+  "slug": "athena-ctm",
+  "mod_id": "athena",
+  "env": "*"
+ },
+ {
+  "file": "fusion-1.2.12-fabric-mc1.21.jar",
+  "url": "https://cdn.modrinth.com/data/p19vrgc2/versions/6fQXv7Yl/fusion-1.2.12-fabric-mc1.21.jar",
+  "source": "cobbleverse-1.7.42 (dep obligatoria)",
+  "slug": "fusion-connected-textures",
+  "mod_id": "fusion",
+  "env": "*"
+ },
+ {
+  "file": "Chunky-Fabric-1.4.23.jar",
+  "url": "https://cdn.modrinth.com/data/fALzjamp/versions/RVFHfo1D/Chunky-Fabric-1.4.23.jar",
+  "source": "añadido: optimización",
+  "slug": "chunky",
+  "mod_id": null,
+  "env": "*"
+ },
+ {
+  "file": "spark-1.10.109-fabric.jar",
+  "url": "https://cdn.modrinth.com/data/l6YH9Als/versions/cALUj9l1/spark-1.10.109-fabric.jar",
+  "source": "añadido: optimización",
+  "slug": "spark",
+  "mod_id": null,
+  "env": "*"
+ },
+ {
+  "file": "vmp-fabric-mc1.21.1-0.2.0+beta.7.172-all.jar",
+  "url": "https://cdn.modrinth.com/data/wnEe9KBa/versions/VmlY7QTx/vmp-fabric-mc1.21.1-0.2.0%2Bbeta.7.172-all.jar",
+  "source": "añadido: optimización",
+  "slug": "vmp-fabric",
+  "mod_id": null,
+  "env": "*"
+ },
+ {
+  "file": "threadtweak-fabric-0.1.5+mc1.21.1.jar",
+  "url": "https://cdn.modrinth.com/data/vSEH1ERy/versions/F4sjmsi3/threadtweak-fabric-0.1.5%2Bmc1.21.1.jar",
+  "source": "añadido: optimización",
+  "slug": "threadtweak",
+  "mod_id": null,
+  "env": "*"
+ },
+ {
+  "file": "alternate-current-mc1.21-1.9.0.jar",
+  "url": "https://cdn.modrinth.com/data/r0v8vy1s/versions/78P98rac/alternate-current-mc1.21-1.9.0.jar",
+  "source": "añadido: optimización",
+  "slug": "alternate-current",
+  "mod_id": null,
+  "env": "*"
+ },
+ {
+  "file": "Clumps-fabric-1.21.1-19.0.0.1.jar",
+  "url": "https://cdn.modrinth.com/data/Wnxd13zP/versions/3ene3W1l/Clumps-fabric-1.21.1-19.0.0.1.jar",
+  "source": "añadido: optimización",
+  "slug": "clumps",
+  "mod_id": null,
+  "env": "*"
+ },
+ {
+  "file": "getittogetherdrops-fabric-1.21-1.3.1.jar",
+  "url": "https://cdn.modrinth.com/data/T0OUgf8P/versions/SONCHAXQ/getittogetherdrops-fabric-1.21-1.3.1.jar",
+  "source": "añadido: optimización",
+  "slug": "get-it-together-drops",
+  "mod_id": null,
+  "env": "*"
+ },
+ {
+  "file": "skinrestorer-2.9.0+1.21-fabric.jar",
+  "url": "https://cdn.modrinth.com/data/ghrZDhGW/versions/C4bJQJh4/skinrestorer-2.9.0%2B1.21-fabric.jar",
+  "source": "añadido: skins",
+  "slug": "skinrestorer",
+  "mod_id": "skinrestorer",
+  "env": "server"
+ },
+ {
+  "file": "cobblemonalphas-1.4.1.jar",
+  "url": "https://cdn.modrinth.com/data/QnWyhFGf/versions/wVSPSTdd/cobblemonalphas-1.4.1.jar",
+  "source": "añadido: jugabilidad",
+  "slug": "cobblemon-alpha-project",
+  "mod_id": null,
+  "env": "*"
+ },
+ {
+  "file": "lootr-fabric-1.21.1-1.11.37.122.jar",
+  "url": "https://cdn.modrinth.com/data/EltpO5cN/versions/uapIrG9e/lootr-fabric-1.21.1-1.11.37.122.jar",
+  "source": "añadido: jugabilidad",
+  "slug": "lootr",
+  "mod_id": null,
+  "env": "*"
+ },
+ {
+  "file": "lootrmon-fabric-1.21.1-0.0.0.3.jar",
+  "url": "https://cdn.modrinth.com/data/ywwXJDli/versions/nquNxBhW/lootrmon-fabric-1.21.1-0.0.0.3.jar",
+  "source": "añadido: jugabilidad",
+  "slug": "lootrmon",
+  "mod_id": null,
+  "env": "*"
+ },
+ {
+  "file": "cobblemon_smartphone-fabric-1.1.2.jar",
+  "url": "https://cdn.modrinth.com/data/n2f1HbK8/versions/IlZ44NoT/cobblemon_smartphone-fabric-1.1.2.jar",
+  "source": "añadido: jugabilidad",
+  "slug": "cobblemon-smartphone",
+  "mod_id": null,
+  "env": "*"
+ },
+ {
+  "file": "open-parties-and-claims-fabric-1.21.1-0.29.3.jar",
+  "url": "https://cdn.modrinth.com/data/gF3BGWvG/versions/rUrxgVyp/open-parties-and-claims-fabric-1.21.1-0.29.3.jar",
+  "source": "añadido: administracion",
+  "slug": "open-parties-and-claims",
+  "mod_id": null,
+  "env": "server"
+ },
+ {
+  "file": "AdvancedBackups-fabric-1.21-3.7.1.jar",
+  "url": "https://cdn.modrinth.com/data/Jrmoreqs/versions/WA3oNjMA/AdvancedBackups-fabric-1.21-3.7.1.jar",
+  "source": "añadido: administracion",
+  "slug": "advanced-backups",
+  "mod_id": null,
+  "env": "server"
+ },
+ {
+  "file": "polymer-bundled-0.9.19+1.21.1.jar",
+  "url": "https://cdn.modrinth.com/data/xGdtZczs/versions/xqZ9fctS/polymer-bundled-0.9.19%2B1.21.1.jar",
+  "source": "añadido: tumbas",
+  "slug": "polymer",
+  "mod_id": null,
+  "env": "server"
+ },
+ {
+  "file": "graves-3.4.4+1.21.jar",
+  "url": "https://cdn.modrinth.com/data/yn9u3ypm/versions/Fg64B87Y/graves-3.4.4%2B1.21.jar",
+  "source": "añadido: tumbas",
+  "slug": "universal-graves",
+  "mod_id": null,
+  "env": "server"
+ },
+ {
+  "file": "FallingTree-1.21.1-1.21.1.11.jar",
+  "url": "https://cdn.modrinth.com/data/Fb4jn8m6/versions/wxGXaJMA/FallingTree-1.21.1-1.21.1.11.jar",
+  "source": "añadido: jugabilidad y administracion",
+  "slug": "fallingtree",
+  "mod_id": null,
+  "env": "server"
+ },
+ {
+  "file": "ledger-1.3.5.jar",
+  "url": "https://cdn.modrinth.com/data/LVN9ygNV/versions/t1AtqfxZ/ledger-1.3.5.jar",
+  "source": "añadido: jugabilidad y administracion",
+  "slug": "ledger",
+  "mod_id": null,
+  "env": "server"
+ },
+ {
+  "file": "vanish-1.6.15+1.21.1.jar",
+  "url": "https://cdn.modrinth.com/data/UL4bJFDY/versions/XYTiU7Xy/vanish-1.6.15%2B1.21.1.jar",
+  "source": "añadido: jugabilidad y administracion",
+  "slug": "vanish",
+  "mod_id": null,
+  "env": "server"
+ },
+ {
+  "file": "styled-chat-2.6.1+1.21.jar",
+  "url": "https://cdn.modrinth.com/data/doqSKB0e/versions/4e1xZSk3/styled-chat-2.6.1%2B1.21.jar",
+  "source": "añadido: jugabilidad y administracion",
+  "slug": "styled-chat",
+  "mod_id": null,
+  "env": "server"
+ },
+ {
+  "file": "counter-fabric-1.7.3-1.9.0.jar",
+  "url": "https://cdn.modrinth.com/data/rj8uLYP4/versions/eEfCCFXB/counter-fabric-1.7.3-1.9.0.jar",
+  "source": "añadido: jugabilidad y administracion",
+  "slug": "cobblemon-counter",
+  "mod_id": null,
+  "env": "*"
+ },
+ {
+  "file": "LuckPerms-Fabric-5.4.140.jar",
+  "url": "https://cdn.modrinth.com/data/Vebnzrzj/versions/l47d4ZWk/LuckPerms-Fabric-5.4.140.jar",
+  "source": "añadido: administracion",
+  "slug": "luckperms",
+  "mod_id": null,
+  "env": "server"
+ },
+ {
+  "file": "kantonpcs-1.0.5.jar",
+  "url": "https://cdn.modrinth.com/data/ifw9j2BM/versions/uo9mtS5O/kantonpcs-1.0.5.jar",
+  "source": "evento-luna",
+  "slug": "kantonpcs",
+  "mod_id": "kantonpcs",
+  "env": "*"
+ },
+ {
+  "file": "cutscene-api-mc1.21.1-fabric-1.6.6.jar",
+  "url": "https://cdn.modrinth.com/data/R54NT4it/versions/q59P2WFk/cutscene-api-mc1.21.1-fabric-1.6.6.jar",
+  "source": "evento-luna",
+  "slug": "cutscene-api",
+  "mod_id": "cutscene_api",
+  "env": "*"
+ },
+ {
+  "file": "servercore-fabric-1.5.19+1.21.1.jar",
+  "url": "https://cdn.modrinth.com/data/4WWQxlQP/versions/GQ2a51Rl/servercore-fabric-1.5.19%2B1.21.1.jar",
+  "source": "optimizacion",
+  "slug": "servercore",
+  "mod_id": "servercore",
+  "env": "server"
+ },
+ {
+  "file": "letmedespawn-1.21.x-fabric-1.5.0.jar",
+  "url": "https://cdn.modrinth.com/data/vE2FN5qn/versions/Wb7jqi55/letmedespawn-1.21.x-fabric-1.5.0.jar",
+  "source": "optimizacion",
+  "slug": "lmd",
+  "mod_id": "lmd",
+  "env": "server"
+ },
+ {
+  "file": "structure_layout_optimizer-fabric-1.0.12.jar",
+  "url": "https://cdn.modrinth.com/data/ayPU0OHc/versions/522Wudew/structure_layout_optimizer-fabric-1.0.12.jar",
+  "source": "optimizacion",
+  "slug": "structure-layout-optimizer",
+  "mod_id": "structure_layout_optimizer",
+  "env": "server"
+ },
+ {
+  "file": "Ksyxis-1.4.3.jar",
+  "url": "https://cdn.modrinth.com/data/2ecVyZ49/versions/kL32PN9Q/Ksyxis-1.4.3.jar",
+  "source": "optimizacion",
+  "slug": "ksyxis",
+  "mod_id": "ksyxis",
+  "env": "server"
+ },
+ {
+  "file": "fasterrandom-5.1.0.jar",
+  "url": "https://cdn.modrinth.com/data/RfFxanNh/versions/BbFqiKvi/fasterrandom-5.1.0.jar",
+  "source": "optimizacion",
+  "slug": "faster-random",
+  "mod_id": "faster_random",
+  "env": "server"
+ },
+ {
+  "file": "easy_npc_bundle-fabric-1.21.1-7.4.1.jar",
+  "url": "https://cdn.modrinth.com/data/CgGEe1h3/versions/dH1K8SjV/easy_npc_bundle-fabric-1.21.1-7.4.1.jar",
+  "source": "evento-luna",
+  "slug": "easy-npc",
+  "mod_id": "easy_npc",
+  "env": "*"
+ },
+ {
+  "file": "easy_npc_config_ui-fabric-1.21.1-7.4.1.jar",
+  "url": "https://cdn.modrinth.com/data/uTGjf7vA/versions/8kE1E55X/easy_npc_config_ui-fabric-1.21.1-7.4.1.jar",
+  "source": "evento-luna",
+  "slug": "easy-npc-config-ui",
+  "mod_id": "easy_npc_config_ui",
+  "env": "*"
+ },
+ {
+  "file": "easy_npc-fabric-1.21.1-7.4.1.jar",
+  "url": "https://cdn.modrinth.com/data/Epm6R3P2/versions/VC8AVudT/easy_npc-fabric-1.21.1-7.4.1.jar",
+  "source": "evento-luna",
+  "slug": "easy-npc-core",
+  "mod_id": "easy_npc_core",
+  "env": "*"
+ },
+ {
+  "file": "ftb-library-fabric-2101.1.35.jar",
+  "url": "https://mediafilez.forgecdn.net/files/8569/580/ftb-library-fabric-2101.1.35.jar",
+  "source": "misiones",
+  "slug": "ftb-library",
+  "mod_id": "ftb_library",
+  "env": "*"
+ },
+ {
+  "file": "ftb-teams-fabric-2101.1.10.jar",
+  "url": "https://mediafilez.forgecdn.net/files/7878/280/ftb-teams-fabric-2101.1.10.jar",
+  "source": "misiones",
+  "slug": "ftb-teams",
+  "mod_id": "ftb_teams",
+  "env": "*"
+ },
+ {
+  "file": "ftb-quests-fabric-2101.1.29.jar",
+  "url": "https://mediafilez.forgecdn.net/files/8534/555/ftb-quests-fabric-2101.1.29.jar",
+  "source": "misiones",
+  "slug": "ftb-quests",
+  "mod_id": "ftb_quests",
+  "env": "*"
+ },
+ {
+  "file": "easynpc-x-ftb-quests-compat-1.0.0.jar",
+  "url": "https://cdn.modrinth.com/data/tJfPbrsT/versions/6IrEkWrA/easynpc-x-ftb-quests-compat-1.0.0.jar",
+  "source": "misiones",
+  "slug": "easynpc-x-ftb-quests-compat",
+  "mod_id": "easynpc_x_ftb_quests_compat",
+  "env": "*"
+ },
+ {
+  "file": "cobblemon_quests-reloaded-[1.21.1]-fabric-1.3.5.jar",
+  "url": "https://cdn.modrinth.com/data/agTMcrPN/versions/iGSukRPM/cobblemon_quests-reloaded-%5B1.21.1%5D-fabric-1.3.5.jar",
+  "source": "misiones",
+  "slug": "cobblemon-quest-reloaded",
+  "mod_id": "cobblemon_quest_reloaded",
+  "env": "*"
+ }
+]

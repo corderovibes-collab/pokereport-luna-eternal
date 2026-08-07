@@ -1,0 +1,4 @@
+El modelo, el rig y las animaciones de Luna derivan del modelo de Eevee
+del mod Cobblemon, usado bajo su licencia Creative Commons no comercial.
+La licencia completa esta junto al modelo, en
+assets/cobblemon/bedrock/pokemon/models/9001_luna/license

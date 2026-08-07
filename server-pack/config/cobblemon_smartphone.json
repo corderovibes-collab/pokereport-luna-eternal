@@ -1,0 +1,34 @@
+{
+  "ignoreUpgrades": [],
+  "cooldowns": {
+    "healButton": 1200,
+    "pcButton": 0,
+    "cloudButton": 30,
+    "waystoneButton": 5,
+    "pokedexButton": 1
+  },
+  "features": {
+    "enableHeal": true,
+    "enablePC": true,
+    "enableCloud": true,
+    "enablePokenav": true,
+    "enableCobbleDollars": true,
+    "enableWaystone": true,
+    "enablePokedex": true,
+    "enablePokeInfo": true,
+    "enableScanner": true,
+    "enableCrafting": true,
+    "enableQuickActions": true
+  },
+  "pokeInfo": {
+    "showBaseStats": true,
+    "showAbilities": true,
+    "showEvolution": true,
+    "showTraining": true,
+    "showSpawning": true,
+    "showBreeding": true,
+    "showTypeDefenses": true,
+    "showLevelMoves": true,
+    "showLearnableMoves": true
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "species": "cobblemon:luna",
+  "order": 0,
+  "variations": [
+    {
+      "aspects": [],
+      "poser": "cobblemon:luna",
+      "model": "cobblemon:luna.geo",
+      "texture": "cobblemon:textures/pokemon/9001_luna/luna.png",
+      "layers": []
+    },
+    {
+      "aspects": [
+        "shiny"
+      ],
+      "texture": "cobblemon:textures/pokemon/9001_luna/luna_shiny.png"
+    }
+  ]
+}

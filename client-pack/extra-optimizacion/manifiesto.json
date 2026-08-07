@@ -1,0 +1,42 @@
+[
+ {
+  "slug": "sodium-extra",
+  "version": "mc1.21.1-0.9.3+fabric",
+  "filename": "sodium-extra-fabric-0.9.3+mc1.21.1.jar",
+  "url": "https://cdn.modrinth.com/data/PtjYWJkn/versions/M9kVcb0e/sodium-extra-fabric-0.9.3%2Bmc1.21.1.jar",
+  "sha1": "330bfdc64bb48098f9d5faa8a5b752ebef4da926",
+  "size": 469925
+ },
+ {
+  "slug": "dynamic-fps",
+  "version": "3.11.4",
+  "filename": "dynamic-fps-3.11.4+minecraft-1.21.0-fabric.jar",
+  "url": "https://cdn.modrinth.com/data/LQ3K71Q1/versions/GBH14HiF/dynamic-fps-3.11.4%2Bminecraft-1.21.0-fabric.jar",
+  "sha1": "c0ee92c6d8a48e077aa9b02f3470619eab17d59c",
+  "size": 217532
+ },
+ {
+  "slug": "language-reload",
+  "version": "1.7.6+1.21.1",
+  "filename": "language-reload-1.7.6+1.21.1.jar",
+  "url": "https://cdn.modrinth.com/data/uLbm7CG6/versions/lLMGPiZe/language-reload-1.7.6%2B1.21.1.jar",
+  "sha1": "95c1266f43e330d4848dcf2e11a6be98a8990ce5",
+  "size": 75091
+ },
+ {
+  "slug": "threadtweak",
+  "version": "0.1.5",
+  "filename": "threadtweak-fabric-0.1.5+mc1.21.1.jar",
+  "url": "https://cdn.modrinth.com/data/vSEH1ERy/versions/F4sjmsi3/threadtweak-fabric-0.1.5%2Bmc1.21.1.jar",
+  "sha1": "47fe715b4b41644817cac50a7c79ecf26f48d7e3",
+  "size": 144270
+ },
+ {
+  "slug": "fast-ip-ping",
+  "version": "v1.0.11-mc1.21.1-fabric",
+  "filename": "fast-ip-ping-v1.0.11-mc1.21.1-fabric.jar",
+  "url": "https://cdn.modrinth.com/data/9mtu0sUO/versions/NFtAZrG7/fast-ip-ping-v1.0.11-mc1.21.1-fabric.jar",
+  "sha1": "219fa634a1087af5cb8af30e5f5b43613f8ccc89",
+  "size": 10198
+ }
+]

@@ -1,0 +1,43 @@
+# --- secretos ---------------------------------------------------------------
+# La clave de Pterodactyl y la de MineSkin NUNCA entran aqui.
+# `scripts/.env.example` si se versiona: es la plantilla.
+.env
+*.env
+!*.env.example
+scripts/.env
+
+# --- generado ---------------------------------------------------------------
+# Todo esto sale de los scripts del repositorio. Versionar la salida es pedir
+# conflictos a cada regeneracion.
+__pycache__/
+*.pyc
+evento/build/
+client-pack/menu/
+launcher/dist/
+launcher/node_modules/
+node_modules/
+
+# --- pesado -----------------------------------------------------------------
+# GitHub rechaza ficheros de mas de 100 MB y avisa a partir de 50.
+#
+#   /voz/           3,1 GB. El modelo de clonado de voz y los WAV en crudo.
+#   *.mrpack        228 MB. Se descarga de Modrinth cuando hace falta.
+#
+# OJO CON LA BARRA INICIAL. Un patron sin barra casa a CUALQUIER profundidad,
+# asi que `voz/` a secas se tragaba tambien `evento/audio/voz/` — las 50 voces
+# del evento, que son lo unico del proyecto que no se puede regenerar sin el
+# modelo de clonado. Con `/voz/` solo se ignora la carpeta de la raiz.
+/voz/
+*.mrpack
+
+# --- restos de trabajo ------------------------------------------------------
+# Volcados de NBT y presets bajados del servidor para inspeccionarlos. Utiles
+# mientras se depura, sin valor una vez resuelto.
+/audit/
+docs/pregen-progress.log
+*.log
+
+# --- sistema ----------------------------------------------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
