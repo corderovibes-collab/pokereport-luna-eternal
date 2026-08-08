@@ -1048,6 +1048,24 @@ f("zonas/poblar_todas", "\n".join(
     ["# Suelta las tres zonas de golpe. Es lo que se pulsa antes del evento."] +
     [f"function evento:zonas/poblar{n}" for n in ZONAS]))
 
+
+# El libro de misiones, a todo el servidor.
+#
+# Va aparte de `poblar_todas` a proposito, porque el orden importa: primero el
+# libro —para que sepan que buscar y donde— y solo despues los Pokemon. Al
+# reves, la gente se encuentra bichos de nivel 60 por el mapa sin ninguna
+# explicacion.
+#
+# El atajo de teclado de FTB Quests esta sin asignar en el pack (se habia
+# quedado con la T y la R, y dejaba sin chat y sin poder sacar Pokemon), asi que
+# el objeto es la unica via comoda de abrirlo.
+f("admin/repartir_libros", """
+    give @a ftbquests:book 1
+    tellraw @a ["",{"text":"\\n  EL RASTRO DE LUNA\\n","color":"light_purple","bold":true},{"text":"  El Profesor Oak ha dejado un informe para todos.\\n","color":"white"},{"text":"  Abre el libro de misiones que acabas de recibir.\\n\\n","color":"gray"}]
+    execute as @a at @s run playsound minecraft:item.book.page_turn master @s ~ ~ ~ 1 1
+    tellraw @a[tag=ev_admin] {"text":"[Evento] Libros repartidos a todo el servidor.","color":"dark_gray"}
+""")
+
 f("zonas/limpiar", "\n".join(
     ["# Recoge lo que quede sin capturar, para no dejar el mapa sembrado."] +
     [f"execute positioned {x} {y} {z} run kill @e[type=cobblemon:pokemon,distance=..25]"
@@ -1308,14 +1326,19 @@ _panel = [
         txt("  Acto "), marcador("ev_estado"),
         txt("   Senales "), marcador("ev_senal"),
         txt("   Digitos "), marcador("ev_codigo"), txt(NL)),
-    # INVITAR va el primero porque es el primer paso real del dia del evento:
-    # sin el nadie puede apuntarse, y sin gente apuntada INICIAR no hace nada.
-    # (Se quedo fuera al recortar el panel y lo encontro la auditoria.)
+    # Los botones van EN EL ORDEN EN QUE SE PULSAN el dia del evento. Antes
+    # estaban por temas y habia que acordarse de la secuencia; asi el panel la
+    # cuenta solo.
     "tellraw @s " + linea(
+        txt(NL + "  1 · Preparar  " + NL, "dark_gray"),
+        ESP, boton("[ REPARTIR LIBROS ]", "admin/repartir_libros", "light_purple", "Da el libro de misiones a todo el servidor"),
+        ESP, boton("[ POBLAR ZONAS ]", "zonas/poblar_todas", "green", "Suelta los 48 Pokemon de las tres zonas"),
+        ESP, boton("[ ACREDITADOS ]", "admin/revisar", "gold", "Quien ha terminado las misiones y quien no")),
+    "tellraw @s " + linea(
+        txt(NL + "  2 · Empezar  " + NL, "dark_gray"),
         ESP, boton("[ INVITAR ]", "admin/invitar", "aqua", "Manda la invitacion a todo el servidor"),
-        ESP, boton("[ INICIAR ]", "admin/iniciar", "green", "Arranca el evento"),
-        ESP, boton("[ ESTADO ]", "admin/estado", "aqua", "Detalle completo"),
-        ESP, boton("[ ACREDITADOS ]", "admin/revisar", "gold", "Quien esta listo y quien no")),
+        ESP, boton("[ INICIAR ]", "admin/iniciar", "green", "Arranca el Acto I"),
+        ESP, boton("[ ESTADO ]", "admin/estado", "aqua", "Detalle completo")),
     "tellraw @s " + linea(
         txt(NL + "  Si algo se atasca" + NL, "dark_gray"),
         ESP, boton("[ SALTAR ACTO ]", "admin/saltar", "yellow", "Fuerza el acto siguiente"),
@@ -1339,11 +1362,8 @@ _mas = [
         txt("  Probar" + NL, "dark_gray"),
         ESP, boton("[ PRUEBA EN SOLITARIO ]", "admin/prueba_solo", "yellow", "Al grupo, acreditado, y jefes a nivel 5"),
         ESP, boton("[ MODO REAL ]", "admin/modo_real", "red", "Devuelve los jefes a sus niveles"),
-        ESP, boton("[ COMPROBAR ]", "admin/comprobar", "green", "Repaso previo")),
-    "tellraw @s " + linea(
-        txt(NL + "  Zonas de captura" + NL, "dark_gray"),
-        ESP, boton("[ POBLAR ]", "zonas/poblar_todas", "green", "Suelta los 48 Pokemon"),
-        ESP, boton("[ LIMPIAR ]", "zonas/limpiar", "red", "Recoge lo que sobre")),
+        ESP, boton("[ COMPROBAR ]", "admin/comprobar", "green", "Repaso previo"),
+        ESP, boton("[ LIMPIAR ZONAS ]", "zonas/limpiar", "red", "Recoge los Pokemon que sobren")),
     "tellraw @s " + linea(
         txt(NL + "  A mano, si el motor falla" + NL, "dark_gray"),
         ESP, boton("[ GUARDIAN CAIDO ]", "senales/completar", "gold", "Suma una senal"),
