@@ -71,12 +71,12 @@ public class LobbyScreen extends Screen {
 		float k = this.height / (float) ALTO_ARTE;
 		int centro = this.width / 2;
 
-		texto(g, espaciar("EL RASTRO DE LUNA"), centro, alto(0.359F), 1.9F * k, LILA);
+		texto(g, "EL RASTRO DE LUNA", centro, alto(0.350F), 4.7F * k, LILA);
 
 		int s = LunaLobby.segundos();
-		texto(g, s > 0 ? reloj(s) : "YA", centro, alto(0.800F), 7.0F * k, PLATA);
+		texto(g, s > 0 ? reloj(s) : "YA", centro, alto(0.783F), 13.0F * k, PLATA);
 
-		texto(g, espaciar("EL EVENTO COMIENZA EN BREVE"), centro, alto(0.936F), 1.2F * k, GRIS);
+		texto(g, "EL EVENTO COMIENZA EN BREVE", centro, alto(0.932F), 2.4F * k, GRIS);
 	}
 
 	private int alto(float proporcion) {
@@ -85,16 +85,6 @@ public class LobbyScreen extends Screen {
 
 	private String reloj(int segundos) {
 		return String.format("%d:%02d", segundos / 60, segundos % 60);
-	}
-
-	/** El juego no sabe separar letras, asi que el espaciado se compone a mano. */
-	private String espaciar(String txt) {
-		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < txt.length(); i++) {
-			if (i > 0) sb.append(' ');
-			sb.append(txt.charAt(i));
-		}
-		return sb.toString();
 	}
 
 	/** Dibuja centrado y escalado; una fuente del juego solo tiene un tamano. */

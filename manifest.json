@@ -1,7 +1,7 @@
 {
  "schema": 1,
  "name": "COBBLEVERSE",
- "packVersion": "1.7.47",
+ "packVersion": "1.7.49",
  "minecraft": "1.21.1",
  "fabricLoader": "0.18.4",
  "java": 21,
@@ -3047,9 +3047,9 @@
   },
   {
    "path": "mods/luna-lobby-1.0.0.jar",
-   "sha1": "7a8b65f839a4f7174f90a5daa47da87448a104ca",
-   "size": 1867773,
-   "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.47/mods__luna-lobby-1.0.0.jar"
+   "sha1": "d083d15e86d99d8800a1055782fd2bc67f74bb30",
+   "size": 1845647,
+   "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.49/mods__luna-lobby-1.0.0.jar"
   }
  ]
 }
