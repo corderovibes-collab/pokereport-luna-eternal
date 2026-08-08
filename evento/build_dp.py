@@ -1777,7 +1777,7 @@ f("admin/ayuda", """
 f("sala/abrir", """
     scoreboard players set #ev ev_sala 1
     bossbar set evento:sala visible true
-    bossbar set evento:sala players @a
+    bossbar set evento:sala players @a[tag=!ev_admin]
     effect give @a[tag=!ev_admin] minecraft:resistance 999999 4 true
     effect give @a[tag=!ev_admin] minecraft:saturation 999999 0 true
     effect give @a[tag=!ev_admin] minecraft:slowness 999999 6 true
@@ -1792,8 +1792,27 @@ f("sala/abrir5",  "scoreboard players set #ev ev_sala_t 300\nfunction evento:sal
 f("sala/abrir10", "scoreboard players set #ev ev_sala_t 600\nfunction evento:sala/abrir")
 f("sala/abrir15", "scoreboard players set #ev ev_sala_t 900\nfunction evento:sala/abrir")
 
+# Cuenta a medida: `function evento:sala/abrir_min {min:7}`.
+#
+# El multiplicador vive en un jugador ficticio porque `scoreboard` no sabe operar
+# contra un numero suelto, solo contra otro marcador.
+f("sala/abrir_min", """
+    $scoreboard players set #ev ev_sala_t $(min)
+    scoreboard players set #x60 ev_sala_t 60
+    scoreboard players operation #ev ev_sala_t *= #x60 ev_sala_t
+    function evento:sala/abrir
+""")
+
+# Botonera, para no tener que acordarse de la sintaxis en mitad del evento.
+f("sala/panel", """
+    tellraw @s ["",{"text":"  Sala de espera  ","color":"light_purple","bold":true},{"text":"(elige duracion)","color":"gray"}]
+    tellraw @s ["",{"text":"   [ 1 min ]","color":"aqua","clickEvent":{"action":"run_command","value":"/function evento:sala/abrir_min {min:1}"}},{"text":"  [ 3 min ]","color":"aqua","clickEvent":{"action":"run_command","value":"/function evento:sala/abrir_min {min:3}"}},{"text":"  [ 5 min ]","color":"aqua","clickEvent":{"action":"run_command","value":"/function evento:sala/abrir_min {min:5}"}},{"text":"  [ 10 min ]","color":"aqua","clickEvent":{"action":"run_command","value":"/function evento:sala/abrir_min {min:10}"}}]
+    tellraw @s ["",{"text":"   [ 15 min ]","color":"aqua","clickEvent":{"action":"run_command","value":"/function evento:sala/abrir_min {min:15}"}},{"text":"  [ 20 min ]","color":"aqua","clickEvent":{"action":"run_command","value":"/function evento:sala/abrir_min {min:20}"}},{"text":"  [ 30 min ]","color":"aqua","clickEvent":{"action":"run_command","value":"/function evento:sala/abrir_min {min:30}"}}]
+    tellraw @s ["",{"text":"   [ EMPEZAR YA ]","color":"green","bold":true,"clickEvent":{"action":"run_command","value":"/function evento:sala/empezar"}},{"text":"   [ CANCELAR ]","color":"red","clickEvent":{"action":"run_command","value":"/function evento:sala/cerrar"}}]
+""")
+
 f("sala/retener", """
-    execute as @a[tag=!ev_admin] at @s unless entity @s[distance=..1.5] run tp @s 1084.5 66 530.5
+    execute as @a[tag=!ev_admin] at @s unless entity @s[distance=..1.5] run tp @s 1084.5 66 553.5
 """)
 
 f("sala/latido", """
@@ -1810,7 +1829,7 @@ f("sala/cuenta_grande", """
 """)
 
 f("sala/pintar", """
-    bossbar set evento:sala players @a
+    bossbar set evento:sala players @a[tag=!ev_admin]
     execute store result bossbar evento:sala value run scoreboard players get #ev ev_sala_t
 
     # El nombre de la barra es el canal por el que viaja la senal al mod de la sala:
@@ -1838,7 +1857,7 @@ f("sala/empezar", """
     effect clear @a minecraft:resistance
     effect clear @a minecraft:saturation
 
-    tp @a[tag=!ev_admin] 1084.5 66 530.5
+    tp @a[tag=!ev_admin] 1084.5 66 553.5
 
     title @a times 10 70 20
     title @a subtitle {"text":"Buscad al Profesor Oak","color":"gray"}
