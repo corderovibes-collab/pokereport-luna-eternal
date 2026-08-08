@@ -1,7 +1,7 @@
 {
  "schema": 1,
  "name": "COBBLEVERSE",
- "packVersion": "1.7.42",
+ "packVersion": "1.7.43",
  "minecraft": "1.21.1",
  "fabricLoader": "0.18.4",
  "java": 21,
@@ -3038,6 +3038,12 @@
    "sha1": "ae2b39d0bde96fec3482140f068ca7d07fd27f6a",
    "size": 108113,
    "url": "https://cdn.modrinth.com/data/agTMcrPN/versions/iGSukRPM/cobblemon_quests-reloaded-%5B1.21.1%5D-fabric-1.3.5.jar"
+  },
+  {
+   "path": "mods/cobblemon_vocalized-es-1.0.0.jar",
+   "sha1": "6d0916f51cb90a6f9f28ecea0d74ec0ba9da0a63",
+   "size": 67789224,
+   "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.43/mods__cobblemon_vocalized-es-1.0.0.jar"
   }
  ]
 }

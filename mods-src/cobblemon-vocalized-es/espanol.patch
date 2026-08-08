@@ -1,0 +1,1231 @@
+diff --git a/common/build.gradle.kts b/common/build.gradle.kts
+index 4d50ffa..5d12d3c 100644
+--- a/common/build.gradle.kts
++++ b/common/build.gradle.kts
+@@ -32,12 +32,17 @@ dependencies {
+ 	compileOnlyApi(libs.voicechat.api)
+ }
+ 
+-val frFrPattern = "assets/cobblemon_vocalized/models/fr_fr/**"
++// Solo se empaqueta el modelo es_es. Cada modelo de voz pesa unos 60 MB, asi que incluir los
++// tres triplicaria la descarga del jar para nada: este servidor juega en espanol.
++val excludedModelPatterns = listOf(
++	"assets/cobblemon_vocalized/models/en_us/**",
++	"assets/cobblemon_vocalized/models/fr_fr/**",
++)
+ 
+ tasks.withType(Copy::class.java).matching { it.name == "processResources" }.configureEach {
+-	exclude(frFrPattern)
++	exclude(excludedModelPatterns)
+ }
+ 
+ tasks.matching { it is AbstractArchiveTask }.configureEach {
+-	(this as AbstractArchiveTask).exclude(frFrPattern)
++	(this as AbstractArchiveTask).exclude(excludedModelPatterns)
+ }
+diff --git a/common/src/main/kotlin/com/cobblemon/vocalized/common/Vocalized.kt b/common/src/main/kotlin/com/cobblemon/vocalized/common/Vocalized.kt
+index 77ef5e8..e4a17e3 100644
+--- a/common/src/main/kotlin/com/cobblemon/vocalized/common/Vocalized.kt
++++ b/common/src/main/kotlin/com/cobblemon/vocalized/common/Vocalized.kt
+@@ -15,9 +15,21 @@ object Vocalized {
+ 
+ 	@JvmField
+ 	val LOGGER: Logger = LogManager.getLogger()
+-	const val MODEL: String = "en_us"
+ 
+-	val NON_ALPHANUM_SPACE: Pattern = Pattern.compile("[^a-zA-Z0-9 ]")
++	/**
++	 * Modelo de reconocimiento usado cuando el idioma del juego no tiene uno propio.
++	 * El modelo real se resuelve en tiempo de ejecucion; ver [com.cobblemon.vocalized.common.client.VocalizedVoice].
++	 */
++	const val MODEL: String = "es_es"
++
++	/** Prefijo de los modelos dentro de assets/cobblemon_vocalized/. */
++	const val MODEL_ROOT: String = "models"
++
++	/**
++	 * Conserva letras acentuadas y la enye: en espanol "puno" y "punio" no son la misma palabra,
++	 * y el patron ASCII original partia "puno" en dos tokens ("pu" + "o").
++	 */
++	val NON_ALPHANUM_SPACE: Pattern = Pattern.compile("[^\\p{IsAlphabetic}0-9 ]")
+ 	val MULTI_SPACE: Pattern = Pattern.compile("\\s+")
+ 
+ 	object VOSK {
+diff --git a/common/src/main/kotlin/com/cobblemon/vocalized/common/api_impl/voice/DefaultVoicePipeline.kt b/common/src/main/kotlin/com/cobblemon/vocalized/common/api_impl/voice/DefaultVoicePipeline.kt
+index b397402..947b20d 100644
+--- a/common/src/main/kotlin/com/cobblemon/vocalized/common/api_impl/voice/DefaultVoicePipeline.kt
++++ b/common/src/main/kotlin/com/cobblemon/vocalized/common/api_impl/voice/DefaultVoicePipeline.kt
+@@ -11,6 +11,7 @@ class DefaultVoicePipeline(
+ 	private val source: AudioSource,
+ 	private val recognizer: SpeechEngine,
+ 	private val commands: List<VoiceAction>,
++	private val stopAfterMatch: Boolean = false,
+ ) : VoicePipeline {
+ 
+ 	private val running = AtomicBoolean(false)
+@@ -56,7 +57,10 @@ class DefaultVoicePipeline(
+ 							throw RuntimeException(e)
+ 						}
+ 						if (consumed) {
+-							stopAsync()
++							// Antes se paraba siempre tras acertar. Eso obligaba a reabrir el
++							// microfono y recargar el reconocedor para cada orden, y durante ese
++							// hueco el audio se perdia: la segunda orden seguida solia caerse.
++							if (stopAfterMatch) stopAsync()
+ 							break
+ 						}
+ 					}
+diff --git a/common/src/main/kotlin/com/cobblemon/vocalized/common/api_impl/voice/vosk/LazyVoskSpeechEngine.kt b/common/src/main/kotlin/com/cobblemon/vocalized/common/api_impl/voice/vosk/LazyVoskSpeechEngine.kt
+index 13b50b9..f0c5cd5 100644
+--- a/common/src/main/kotlin/com/cobblemon/vocalized/common/api_impl/voice/vosk/LazyVoskSpeechEngine.kt
++++ b/common/src/main/kotlin/com/cobblemon/vocalized/common/api_impl/voice/vosk/LazyVoskSpeechEngine.kt
+@@ -7,7 +7,11 @@ import com.cobblemon.vocalized.common.Vocalized
+ import java.nio.file.Path
+ import java.util.function.Consumer
+ 
+-class LazyVoskSpeechEngine(private val modelDir: Path, private val sampleRate: Float) : SpeechEngine {
++class LazyVoskSpeechEngine(
++	private val modelDir: Path,
++	private val sampleRate: Float,
++	private val grammar: List<String>? = null,
++) : SpeechEngine {
+ 	private val lock = Any()
+ 
+ 	private var delegate: VoskSpeechEngine? = null
+@@ -20,7 +24,7 @@ class LazyVoskSpeechEngine(private val modelDir: Path, private val sampleRate: F
+ 			synchronized(lock) {
+ 				if (delegate == null && !failed) {
+ 					try {
+-						delegate = VoskSpeechEngine(modelDir, sampleRate)
++						delegate = VoskSpeechEngine(modelDir, sampleRate, grammar)
+ 					} catch (pThrowable: Throwable) {
+ 						failed = true
+ 						Vocalized.LOGGER.error("[Voice] Failed to load Vosk model at {}:", modelDir, pThrowable)
+diff --git a/common/src/main/kotlin/com/cobblemon/vocalized/common/api_impl/voice/vosk/VoskSpeechEngine.kt b/common/src/main/kotlin/com/cobblemon/vocalized/common/api_impl/voice/vosk/VoskSpeechEngine.kt
+index ed5b3ab..e2235c6 100644
+--- a/common/src/main/kotlin/com/cobblemon/vocalized/common/api_impl/voice/vosk/VoskSpeechEngine.kt
++++ b/common/src/main/kotlin/com/cobblemon/vocalized/common/api_impl/voice/vosk/VoskSpeechEngine.kt
+@@ -5,6 +5,7 @@ import com.cobblemon.vocalized.api.voice.SpeechEngine
+ import com.cobblemon.vocalized.api.voice.SpeechEvent
+ import com.cobblemon.vocalized.common.Vocalized
+ import com.cobblemon.vocalized.common.api_impl.voice.DefaultSpeechEvent
++import com.cobblemon.vocalized.common.vosk.Model
+ import com.cobblemon.vocalized.common.vosk.Recognizer
+ import com.cobblemon.vocalized.common.vosk.VoskModelCache
+ import com.cobblemon.vocalized.common.vosk.VoskResult
+@@ -12,7 +13,11 @@ import java.io.IOException
+ import java.nio.file.Path
+ import java.util.function.Consumer
+ 
+-class VoskSpeechEngine(private val modelDir: Path, pSampleRate: Float) : SpeechEngine {
++class VoskSpeechEngine(
++	private val modelDir: Path,
++	pSampleRate: Float,
++	pGrammar: List<String>? = null,
++) : SpeechEngine {
+ 	private val recognizer: Recognizer
+ 	private var lastPartial: String = ""
+ 
+@@ -21,7 +26,7 @@ class VoskSpeechEngine(private val modelDir: Path, pSampleRate: Float) : SpeechE
+ 	init {
+ 		val model = VoskModelCache.ensureModelLoaded(modelDir)
+ 		try {
+-			recognizer = Recognizer(model, pSampleRate)
++			recognizer = createRecognizer(model, pSampleRate, pGrammar)
+ 		} catch (e: IOException) {
+ 			VoskModelCache.releaseModel(modelDir)
+ 			throw RuntimeException(e)
+@@ -29,6 +34,55 @@ class VoskSpeechEngine(private val modelDir: Path, pSampleRate: Float) : SpeechE
+ 		Vocalized.LOGGER.info("[Voice] VoskSpeechEngine ready (recognizer created)")
+ 	}
+ 
++	/**
++	 * Crea el reconocedor, restringido a [pGrammar] cuando se aporta una lista de frases.
++	 *
++	 * Limitar el vocabulario a lo que el jugador puede decir en ese instante (sus movimientos, su
++	 * equipo y las ordenes) sube mucho el acierto frente a dictado libre, sobre todo con el modelo
++	 * pequeno. Se anade `[unk]` para que el reconocedor pueda declarar "no era ninguna" en vez de
++	 * verse forzado a elegir la frase menos mala.
++	 *
++	 * Si el modelo no admite gramatica dinamica se vuelve al reconocedor normal: es preferible
++	 * escuchar con menos precision que quedarse sordo.
++	 */
++	private fun createRecognizer(pModel: Model, pSampleRate: Float, pGrammar: List<String>?): Recognizer {
++		val grammar = buildGrammarJson(pGrammar)
++		if (grammar != null) {
++			try {
++				val restricted = Recognizer(pModel, pSampleRate, grammar)
++				if (restricted.pointer != null) {
++					Vocalized.LOGGER.info("[Voice] Recognizer restricted to {} phrase(s)", pGrammar?.size ?: 0)
++					return restricted
++				}
++				Vocalized.LOGGER.warn("[Voice] Model rejected the restricted grammar; falling back to free speech")
++			} catch (pThrowable: Throwable) {
++				Vocalized.LOGGER.warn("[Voice] Could not build a restricted grammar; falling back:", pThrowable)
++			}
++		}
++
++		return Recognizer(pModel, pSampleRate)
++	}
++
++	private fun buildGrammarJson(pGrammar: List<String>?): String? {
++		if (pGrammar.isNullOrEmpty()) return null
++
++		val entries = pGrammar
++			.asSequence()
++			.map { Vocalized.NON_ALPHANUM_SPACE.matcher(it.lowercase()).replaceAll(" ") }
++			.map { Vocalized.MULTI_SPACE.matcher(it).replaceAll(" ").trim() }
++			.filter { it.isNotEmpty() }
++			.distinct()
++			.toList()
++
++		if (entries.isEmpty()) return null
++
++		return (entries + "[unk]").joinToString(
++			separator = ",",
++			prefix = "[",
++			postfix = "]",
++		) { "\"" + it.replace("\\", "\\\\").replace("\"", "\\\"") + "\"" }
++	}
++
+ 	override fun processFrame(pFrame: AudioFrame): Boolean {
+ 		finalAvailable = recognizer.acceptWaveForm(pFrame.data(), pFrame.length())
+ 		return finalAvailable
+diff --git a/common/src/main/kotlin/com/cobblemon/vocalized/common/client/VocalizedCommonClient.kt b/common/src/main/kotlin/com/cobblemon/vocalized/common/client/VocalizedCommonClient.kt
+index 6b8c47a..4e3aac9 100644
+--- a/common/src/main/kotlin/com/cobblemon/vocalized/common/client/VocalizedCommonClient.kt
++++ b/common/src/main/kotlin/com/cobblemon/vocalized/common/client/VocalizedCommonClient.kt
+@@ -3,8 +3,9 @@ package com.cobblemon.vocalized.common.client
+ import com.cobblemon.mod.common.Cobblemon
+ import com.cobblemon.mod.common.platform.events.PlatformEvents
+ import com.cobblemon.vocalized.common.api_impl.VoiceRegistryImpl
++import com.cobblemon.vocalized.common.Vocalized
+ import com.cobblemon.vocalized.common.client.controller.battle.BattleVoiceController
+-import com.cobblemon.vocalized.common.client.controller.recall.RecallVoiceController
++import com.cobblemon.vocalized.common.client.controller.party.PartyVoiceController
+ import com.cobblemon.vocalized.common.client.integration.ClientVoiceChat
+ import com.cobblemon.vocalized.common.client.registry.VocalizedKeybinds
+ import com.cobblemon.vocalized.common.config.ConfigLoader
+@@ -16,17 +17,20 @@ object VocalizedCommonClient {
+ 		SideModManager.getInstance().initClient()
+ 		VocalizedVoice.initSync(pResourceManager)
+ 
+-		VoiceRegistryImpl.registerAll(
+-			listOf(
+-				BattleVoiceController(),
+-				RecallVoiceController(),
+-			),
+-		)
+-
++		// Los controladores piden la tuberia de voz al construirse, asi que si el modelo no cargo
++		// esto lanza. Sin este try el fallo subiria hasta el arranque del cliente y lo tumbaria:
++		// preferimos quedarnos sin voz antes que sin juego.
+ 		try {
+-			val pipeline = VocalizedVoice.pipeline()
+-			pipeline.preloadModel()
+-		} catch (_: Exception) {
++			VoiceRegistryImpl.registerAll(
++				listOf(
++					BattleVoiceController(),
++					PartyVoiceController(),
++				),
++			)
++
++			VocalizedVoice.pipeline().preloadModel()
++		} catch (pThrowable: Throwable) {
++			Vocalized.LOGGER.error("[Voice] Voice controllers disabled; speech model unavailable:", pThrowable)
+ 		}
+ 
+ 		PlatformEvents.CLIENT_TICK_POST.subscribe { _ ->
+diff --git a/common/src/main/kotlin/com/cobblemon/vocalized/common/client/VocalizedVoice.kt b/common/src/main/kotlin/com/cobblemon/vocalized/common/client/VocalizedVoice.kt
+index 1875211..79b9f40 100644
+--- a/common/src/main/kotlin/com/cobblemon/vocalized/common/client/VocalizedVoice.kt
++++ b/common/src/main/kotlin/com/cobblemon/vocalized/common/client/VocalizedVoice.kt
+@@ -4,6 +4,7 @@ import com.cobblemon.vocalized.api.MicBackend
+ import com.cobblemon.vocalized.common.Vocalized
+ import com.cobblemon.vocalized.common.api_impl.MicBackendImpl
+ import com.cobblemon.vocalized.common.config.ConfigLoader
++import com.cobblemon.vocalized.common.internal.VocalizedLangTable
+ import com.cobblemon.vocalized.common.voice.pipeline.VocalizedVoicePipeline
+ import com.cobblemon.vocalized.common.voice.pipeline.VoicePipelineBuilder
+ import com.cobblemon.vocalized.common.voice.processor.number.NumberWordProcessor
+@@ -49,8 +50,53 @@ object VocalizedVoice {
+ 		}
+ 	}
+ 
++	/**
++	 * Elige el modelo de reconocimiento que se va a cargar.
++	 *
++	 * Se prueban por orden el ajuste manual del jugador, el idioma del juego y el modelo por
++	 * defecto, y se usa el primero que exista dentro del jar. Seguir al idioma del juego importa
++	 * porque los nombres de los movimientos se los pide el mod a Cobblemon ya traducidos: un
++	 * modelo en un idioma distinto al del juego escucharia frases que nunca podrian coincidir.
++	 */
++	private fun resolveModelId(pResourceManager: ResourceManager): String? {
++		val candidates = LinkedHashSet<String>()
++
++		ConfigLoader.getClientConfig().voiceModel
++			.trim()
++			.lowercase(Locale.ROOT)
++			.takeIf { it.isNotEmpty() }
++			?.let(candidates::add)
++
++		Minecraft.getInstance().options?.languageCode
++			?.trim()
++			?.lowercase(Locale.ROOT)
++			?.takeIf { it.isNotEmpty() }
++			?.let(candidates::add)
++
++		candidates += Vocalized.MODEL
++
++		for (id in candidates) {
++			val found = pResourceManager.listResources("${Vocalized.MODEL_ROOT}/$id") {
++				it.namespace == Vocalized.MOD_ID
++			}
++			if (found.isNotEmpty()) {
++				Vocalized.LOGGER.info("[Voice] Using speech model '{}'", id)
++				return id
++			}
++		}
++
++		Vocalized.LOGGER.warn("[Voice] No bundled speech model matched any of {}", candidates)
++		return null
++	}
++
+ 	private fun loadModelInternal(pResourceManager: ResourceManager): VocalizedVoicePipeline? {
+-		val modelPrefix = "models/${Vocalized.MODEL}"
++		val modelId = resolveModelId(pResourceManager) ?: return null
++
++		// Las frases y los nombres de movimiento se leen en el idioma del modelo, no en el de la
++		// interfaz, para que el mod funcione igual con el juego puesto en cualquier idioma.
++		VocalizedLangTable.reload(pResourceManager, modelId, listOf(Vocalized.MOD_ID, "cobblemon"))
++
++		val modelPrefix = "${Vocalized.MODEL_ROOT}/$modelId"
+ 		val modelFolder = "$modelPrefix/"
+ 
+ 		val resources = pResourceManager.listResources(modelPrefix) { it.namespace == Vocalized.MOD_ID }
+diff --git a/common/src/main/kotlin/com/cobblemon/vocalized/common/client/config/ClientConfig.kt b/common/src/main/kotlin/com/cobblemon/vocalized/common/client/config/ClientConfig.kt
+index e8cb604..91caf56 100644
+--- a/common/src/main/kotlin/com/cobblemon/vocalized/common/client/config/ClientConfig.kt
++++ b/common/src/main/kotlin/com/cobblemon/vocalized/common/client/config/ClientConfig.kt
+@@ -9,6 +9,22 @@ class ClientConfig {
+ 	var micDevice: String = ""
+ 	var debug: Boolean = false
+ 
++	/**
++	 * Fuerza un modelo de voz concreto (por ejemplo `es_es`).
++	 *
++	 * Vacio = seguir al idioma del juego.
++	 */
++	var voiceModel: String = ""
++
++	/**
++	 * Limita el reconocimiento a las frases posibles en cada momento.
++	 *
++	 * Sube el acierto con palabras corrientes, pero Vosk solo admite en la gramatica palabras que
++	 * ya esten en el lexico del modelo: los nombres propios de Pokemon ("Granbull", "Ribombee")
++	 * probablemente no lo esten y quedarian mudos. Por eso viene apagado; enciendelo para comparar.
++	 */
++	var restrictVocabulary: Boolean = false
++
+ 	fun getVoiceMode(): VoiceMode =
+ 		if (this.pushToTalk) VoiceMode.PUSH_TO_TALK else VoiceMode.VOICE_ACTIVATED
+ 
+diff --git a/common/src/main/kotlin/com/cobblemon/vocalized/common/client/controller/battle/BattleVoiceController.kt b/common/src/main/kotlin/com/cobblemon/vocalized/common/client/controller/battle/BattleVoiceController.kt
+index 814f8f6..6ec6165 100644
+--- a/common/src/main/kotlin/com/cobblemon/vocalized/common/client/controller/battle/BattleVoiceController.kt
++++ b/common/src/main/kotlin/com/cobblemon/vocalized/common/client/controller/battle/BattleVoiceController.kt
+@@ -5,6 +5,7 @@ import com.cobblemon.mod.common.api.moves.Moves
+ import com.cobblemon.mod.common.battles.ForfeitActionResponse
+ import com.cobblemon.mod.common.battles.MoveActionResponse
+ import com.cobblemon.mod.common.battles.ShowdownMoveset
++import com.cobblemon.mod.common.battles.SwitchActionResponse
+ import com.cobblemon.mod.common.client.CobblemonClient
+ import com.cobblemon.mod.common.client.battle.*
+ import com.cobblemon.vocalized.api.voice.VoiceController
+@@ -12,6 +13,8 @@ import com.cobblemon.vocalized.api.voice.VoicePipeline
+ import com.cobblemon.vocalized.common.battle.move.MoveChoice
+ import com.cobblemon.vocalized.common.client.VocalizedCommonClient
+ import com.cobblemon.vocalized.common.client.VocalizedVoice
++import com.cobblemon.vocalized.common.internal.VocalizedLangTable
++import com.cobblemon.vocalized.common.voice.VocalizedPhrases
+ import com.cobblemon.vocalized.common.voice.pipeline.VocalizedVoicePipeline
+ import net.minecraft.client.Minecraft
+ import net.minecraft.world.entity.player.Player
+@@ -21,12 +24,14 @@ class BattleVoiceController : VoiceController({ null }) {
+ 
+ 	private val pipelineFactory: VocalizedVoicePipeline = VocalizedVoice.pipeline()
+ 
+-	private val forfeitPhrases: List<String> = listOf(
+-		"i forfeit",
+-		"i lose",
+-		"i quit",
+-		"i give up",
+-	)
++	/** Accion asociada a cada frase reconocida durante el combate. */
++	private sealed interface Command {
++		data class UseMove(val moveId: String) : Command
++
++		data class SwitchTo(val pokemonId: UUID) : Command
++
++		data object Forfeit : Command
++	}
+ 
+ 	override fun isActive(): Boolean {
+ 		val battle = CobblemonClient.battle ?: return false
+@@ -35,64 +40,94 @@ class BattleVoiceController : VoiceController({ null }) {
+ 	}
+ 
+ 	override fun buildPipeline(): VoicePipeline? {
+-		val context = extractContext() ?: return null
+-		val choices = extractMoveChoices(context.request)
+-		if (choices.isEmpty()) return null
+-
+-		val movePhrases = choices.map { it.displayName }
+-		val phrases = mutableListOf<String>()
+-		phrases += movePhrases
+-		phrases += forfeitPhrases
++		val commands = buildCommands()
++		if (commands.isEmpty()) return null
+ 
+ 		return pipelineFactory.createSubstringMatchPipeline(
+-			phrases,
+-			{ matched ->
+-				val matchedNorm = matched.trim().lowercase(Locale.ROOT)
+-
+-				val isForfeit = forfeitPhrases.any { fp ->
+-					val norm = fp.trim().lowercase(Locale.ROOT)
+-					norm == matchedNorm || matchedNorm.contains(norm)
+-				}
+-
+-				if (!isForfeit) {
+-					handleMoveMatch(matched, choices)
+-				} else {
+-					handleForfeitMatch()
+-				}
+-			},
++			commands.keys.toList(),
++			{ matched -> commands[matched.trim().lowercase(Locale.ROOT)]?.let(::execute) },
+ 			false,
+ 		)
+ 	}
+ 
+-	private fun handleMoveMatch(
+-		pMatchedDisplayName: String?,
+-		pMoves: List<MoveChoice>,
+-	) {
+-		val matched = pMatchedDisplayName?.trim()?.lowercase(Locale.ROOT) ?: return
+-		val chosen = findMatchingMove(matched, pMoves) ?: return
+-		selectMove(chosen.id, null)
++	/**
++	 * Construye el mapa frase -> accion para la peticion actual.
++	 *
++	 * Cuando el combate exige un relevo forzado (el Pokemon acaba de caer) no hay conjunto de
++	 * movimientos, solo relevos. Ese caso se contempla explicitamente: antes se descartaba la
++	 * peticion entera por no tener `moveSet` y la voz enmudecia justo cuando mas hace falta.
++	 */
++	private fun buildCommands(): Map<String, Command> {
++		val request = extractContext()?.request ?: return emptyMap()
++		val commands = LinkedHashMap<String, Command>()
++
++		if (!request.forceSwitch) {
++			for (choice in extractMoveChoices(request)) {
++				val name = choice.displayName.trim().lowercase(Locale.ROOT)
++				if (name.isEmpty()) continue
++				commands[name] = Command.UseMove(choice.id)
++			}
++
++			for (phrase in VocalizedPhrases.of(VocalizedPhrases.FORFEIT)) {
++				commands[phrase] = Command.Forfeit
++			}
++		}
++
++		val switchPrefixes = VocalizedPhrases.of(VocalizedPhrases.SWITCH)
++		for ((uuid, name) in extractSwitchChoices(request)) {
++			commands[name] = Command.SwitchTo(uuid)
++			for (prefix in switchPrefixes) {
++				commands["$prefix $name"] = Command.SwitchTo(uuid)
++			}
++		}
++
++		return commands
+ 	}
+ 
+-	private fun handleForfeitMatch() {
++	/**
++	 * Relevos disponibles: los del propio bando que no esten ya en el terreno ni debilitados.
++	 *
++	 * El nombre se toma del equipo del cliente para que llegue traducido; `details` de Showdown
++	 * siempre viene en ingles y no serviria para reconocer voz en otro idioma.
++	 */
++	private fun extractSwitchChoices(pRequest: SingleActionRequest): List<Pair<UUID, String>> {
++		val side = pRequest.side ?: return emptyList()
++		val party = CobblemonClient.storage.party
++		val out = mutableListOf<Pair<UUID, String>>()
++
++		for (entry in side.pokemon) {
++			if (entry.active) continue
++			if (entry.condition.contains("fnt")) continue
++
++			val uuid = entry.uuid ?: continue
++			val name = party.findByUUID(uuid)?.getDisplayName(false)?.string?.trim()?.lowercase(Locale.ROOT)
++				?: entry.details.substringBefore(',').trim().lowercase(Locale.ROOT)
++
++			if (name.isEmpty()) continue
++			out += uuid to name
++		}
++
++		return out
++	}
++
++	private fun execute(pCommand: Command) {
+ 		val battle = CobblemonClient.battle ?: return
+ 		val request = battle.getFirstUnansweredRequest() ?: return
+ 		if (request.response != null) return
+ 
+-		request.response = ForfeitActionResponse()
+-		battle.checkForFinishedChoosing()
+-	}
++		when (pCommand) {
++			is Command.UseMove -> selectMove(pCommand.moveId, null)
+ 
+-	private fun findMatchingMove(matched: String, moves: List<MoveChoice>): MoveChoice? {
+-		var containsMatch: MoveChoice? = null
++			is Command.SwitchTo -> {
++				request.response = SwitchActionResponse(pCommand.pokemonId)
++				battle.checkForFinishedChoosing()
++			}
+ 
+-		for (move in moves) {
+-			val display = move.displayName.trim().lowercase(Locale.ROOT)
+-			if (display.isBlank()) continue
+-			if (display == matched) return move
+-			if (containsMatch == null && matched.contains(display)) containsMatch = move
++			is Command.Forfeit -> {
++				request.response = ForfeitActionResponse()
++				battle.checkForFinishedChoosing()
++			}
+ 		}
+-
+-		return containsMatch
+ 	}
+ 
+ 	private fun extractContext(): Context? {
+@@ -100,30 +135,15 @@ class BattleVoiceController : VoiceController({ null }) {
+ 		val player = Minecraft.getInstance().player ?: return null
+ 		val self = battle.getParticipatingActor(player.uuid) ?: return null
+ 		val request = battle.getFirstUnansweredRequest() ?: return null
+-		if (request.moveSet == null) return null
+ 
+ 		val user = request.activePokemon
+ 		return Context(battle, player, self, request, user)
+ 	}
+ 
+ 	override fun getPhrases(): List<String>? {
+-		val context = extractContext() ?: return null
+-		val choices = extractMoveChoices(context.request)
+-		if (choices.isEmpty()) return null
+-
+-		val phrases = mutableListOf<String>()
+-		for (choice in choices) {
+-			val name = choice.displayName.trim()
+-			if (name.isEmpty()) continue
+-
+-			phrases += name
+-			phrases += name.lowercase(Locale.ROOT)
+-		}
+-
+-		// include forfeit phrases so the main voice UI can show them
+-		phrases += forfeitPhrases
+-
+-		return phrases.distinct()
++		val commands = buildCommands()
++		if (commands.isEmpty()) return null
++		return commands.keys.toList()
+ 	}
+ 
+ 	override fun getId(): String {
+@@ -175,7 +195,14 @@ class BattleVoiceController : VoiceController({ null }) {
+ 			val moveSet: ShowdownMoveset = pRequest?.moveSet ?: return emptyList()
+ 			return moveSet.moves.map {
+ 				val translated: MoveTemplate = Moves.getByNameOrDummy(it.id)
+-				MoveChoice(it.id, translated.displayName.string, translated.target)
++
++				// El nombre se toma en el idioma del modelo de voz. `displayName` sigue al idioma
++				// de la interfaz, y con el juego en ingles pedia decir "Hydro Pump" a un
++				// reconocedor que solo entiende espanol.
++				val name = VocalizedLangTable.get("cobblemon.move.${it.id}")
++					?: translated.displayName.string
++
++				MoveChoice(it.id, name, translated.target)
+ 			}
+ 		}
+ 
+diff --git a/common/src/main/kotlin/com/cobblemon/vocalized/common/client/controller/party/PartyVoiceController.kt b/common/src/main/kotlin/com/cobblemon/vocalized/common/client/controller/party/PartyVoiceController.kt
+new file mode 100644
+index 0000000..0617ee1
+--- /dev/null
++++ b/common/src/main/kotlin/com/cobblemon/vocalized/common/client/controller/party/PartyVoiceController.kt
+@@ -0,0 +1,160 @@
++package com.cobblemon.vocalized.common.client.controller.party
++
++import com.cobblemon.mod.common.CobblemonNetwork
++import com.cobblemon.mod.common.client.CobblemonClient
++import com.cobblemon.mod.common.net.messages.server.SendOutPokemonPacket
++import com.cobblemon.mod.common.pokemon.activestate.SentOutState
++import com.cobblemon.vocalized.api.voice.VoiceController
++import com.cobblemon.vocalized.api.voice.VoicePipeline
++import com.cobblemon.vocalized.common.client.VocalizedCommonClient
++import com.cobblemon.vocalized.common.client.VocalizedVoice
++import com.cobblemon.vocalized.common.voice.VocalizedPhrases
++import com.cobblemon.vocalized.common.voice.pipeline.VocalizedVoicePipeline
++import java.util.Locale
++
++/**
++ * Control del equipo por voz fuera del combate: sacar, guardar y cambiar de Pokemon.
++ *
++ * Los tres comandos viven en un unico controlador a proposito. [VoiceController] abre una captura
++ * de microfono independiente por cada controlador activo, asi que repartirlos en varios provocaria
++ * varias capturas simultaneas del mismo dispositivo.
++ *
++ * Sustituye al antiguo `RecallVoiceController`, que solo se activaba cuando el Pokemon ya estaba
++ * fuera y por tanto nunca podia sacarlo.
++ */
++class PartyVoiceController : VoiceController({ null }) {
++
++	private val pipelineFactory: VocalizedVoicePipeline = VocalizedVoice.pipeline()
++
++	/** Estado con el que se construyo la lista de frases activa. */
++	private var signature: String = ""
++
++	/** Accion asociada a cada frase reconocida. */
++	private sealed interface Command {
++		data object SendOut : Command
++
++		data object Recall : Command
++
++		data class SwitchTo(val slot: Int) : Command
++	}
++
++	override fun isActive(): Boolean {
++		if (CobblemonClient.battle != null) return false
++		if (!VocalizedCommonClient.isSpeaking()) return false
++		if (CobblemonClient.storage.party.isEmpty()) return false
++
++		// Si el equipo cambio (capturas, relevos, cambio de ranura) la lista de frases se quedo
++		// vieja. Parar aqui obliga a que el siguiente tick reconstruya la tuberia con la nueva.
++		val current = currentSignature()
++		if (current != signature) {
++			signature = current
++			stop()
++		}
++
++		return true
++	}
++
++	private fun currentSignature(): String {
++		val storage = CobblemonClient.storage
++		return storage.party.slots.joinToString(",") { it?.uuid?.toString() ?: "-" } +
++			"|" + storage.selectedSlot
++	}
++
++	override fun buildPipeline(): VoicePipeline? {
++		val commands = buildCommands()
++		if (commands.isEmpty()) return null
++
++		return pipelineFactory.createSubstringMatchPipeline(
++			commands.keys.toList(),
++			{ matched -> commands[matched.trim().lowercase(Locale.ROOT)]?.let(::execute) },
++			false,
++		)
++	}
++
++	/**
++	 * Construye el mapa frase -> accion.
++	 *
++	 * Sacar y guardar se registran **siempre las dos**, aunque en este instante solo una tenga
++	 * sentido, y es [execute] quien decide mirando el estado del momento. Registrar solo la que
++	 * toca provocaba un bloqueo: al sacar al Pokemon la tuberia se reconstruye de inmediato, antes
++	 * de que el servidor confirme el cambio, asi que volvia a registrar "sacar" y nunca "guardar";
++	 * y sin una frase que pueda acertar, ya no habia nada que disparase otra reconstruccion.
++	 *
++	 * Los nombres del equipo se anaden despues de los verbos genericos para que, ante una colision
++	 * (por ejemplo un Pokemon apodado "Ve"), gane el nombre concreto sobre el verbo.
++	 */
++	private fun buildCommands(): Map<String, Command> {
++		val commands = LinkedHashMap<String, Command>()
++
++		for (phrase in VocalizedPhrases.of(VocalizedPhrases.SEND_OUT)) {
++			commands[phrase] = Command.SendOut
++		}
++		for (phrase in VocalizedPhrases.of(VocalizedPhrases.RECALL)) {
++			commands[phrase] = Command.Recall
++		}
++
++		val party = CobblemonClient.storage.party
++		val switchPrefixes = VocalizedPhrases.of(VocalizedPhrases.SWITCH)
++
++		for (slot in party.slots.indices) {
++			val pokemon = party.get(slot) ?: continue
++			if (pokemon.isFainted()) continue
++
++			val name = pokemon.getDisplayName(false).string.trim().lowercase(Locale.ROOT)
++			if (name.isEmpty()) continue
++
++			commands[name] = Command.SwitchTo(slot)
++			for (prefix in switchPrefixes) {
++				commands["$prefix $name"] = Command.SwitchTo(slot)
++			}
++		}
++
++		return commands
++	}
++
++	private fun isSelectedSentOut(): Boolean {
++		val storage = CobblemonClient.storage
++		val pokemon = storage.party.get(storage.selectedSlot) ?: return false
++		return pokemon.state is SentOutState
++	}
++
++	private fun execute(pCommand: Command) {
++		if (CobblemonClient.battle != null) return
++
++		when (pCommand) {
++			is Command.SendOut -> if (!isSelectedSentOut()) toggle(CobblemonClient.storage.selectedSlot)
++			is Command.Recall -> if (isSelectedSentOut()) toggle(CobblemonClient.storage.selectedSlot)
++			is Command.SwitchTo -> switchTo(pCommand.slot)
++		}
++	}
++
++	/**
++	 * Cambia de Pokemon activo.
++	 *
++	 * `SendOutPokemonPacket` alterna, asi que primero se guarda el que estuviese fuera y solo
++	 * despues se saca el nuevo; enviar el segundo paquete sin recoger el primero dejaria al
++	 * servidor decidiendo entre dos Pokemon fuera a la vez.
++	 */
++	private fun switchTo(pSlot: Int) {
++		val storage = CobblemonClient.storage
++		val target = storage.party.get(pSlot) ?: return
++		if (target.isFainted()) return
++
++		if (pSlot == storage.selectedSlot && target.state is SentOutState) return
++
++		if (isSelectedSentOut()) toggle(storage.selectedSlot)
++
++		storage.selectedSlot = pSlot
++		toggle(pSlot)
++	}
++
++	private fun toggle(pSlot: Int) {
++		CobblemonNetwork.sendToServer(SendOutPokemonPacket(pSlot))
++	}
++
++	override fun getPhrases(): List<String> = buildCommands().keys.toList()
++
++	override fun getId(): String = "PartyVoiceController"
++
++	override fun threadName(): String = "Cobblemon-PartyVoicePipeline"
++}
+diff --git a/common/src/main/kotlin/com/cobblemon/vocalized/common/client/controller/recall/RecallVoiceController.kt b/common/src/main/kotlin/com/cobblemon/vocalized/common/client/controller/recall/RecallVoiceController.kt
+deleted file mode 100644
+index ed2339a..0000000
+--- a/common/src/main/kotlin/com/cobblemon/vocalized/common/client/controller/recall/RecallVoiceController.kt
++++ /dev/null
+@@ -1,64 +0,0 @@
+-package com.cobblemon.vocalized.common.client.controller.recall
+-
+-import com.cobblemon.mod.common.CobblemonNetwork
+-import com.cobblemon.mod.common.client.CobblemonClient
+-import com.cobblemon.mod.common.net.messages.server.SendOutPokemonPacket
+-import com.cobblemon.mod.common.pokemon.activestate.SentOutState
+-import com.cobblemon.vocalized.api.voice.VoiceController
+-import com.cobblemon.vocalized.api.voice.VoicePipeline
+-import com.cobblemon.vocalized.common.client.VocalizedVoice
+-import com.cobblemon.vocalized.common.voice.pipeline.VocalizedVoicePipeline
+-
+-class RecallVoiceController : VoiceController({ null }) {
+-
+-	private val pipelineFactory: VocalizedVoicePipeline = VocalizedVoice.pipeline()
+-
+-	private val phrases: List<String> = listOf(
+-		"recall",
+-		"return",
+-		"come back",
+-		"go back",
+-		"get back",
+-	)
+-
+-	override fun isActive(): Boolean {
+-		val storage = CobblemonClient.storage
+-		val party = storage.party
+-		val slot = storage.selectedSlot
+-
+-		val pokemon = party.get(slot) ?: return false
+-		if (CobblemonClient.battle != null) return false
+-		return pokemon.state is SentOutState
+-	}
+-
+-	override fun buildPipeline(): VoicePipeline {
+-		return pipelineFactory.createSubstringMatchPipeline(
+-			phrases,
+-			{ _ -> handleMatch() },
+-			false,
+-		)
+-	}
+-
+-	private fun handleMatch() {
+-		if (CobblemonClient.battle != null) return
+-		val storage = CobblemonClient.storage
+-		val party = storage.party
+-		val slot = storage.selectedSlot
+-
+-		val pokemon = party.get(slot) ?: return
+-		if (pokemon.state !is SentOutState) return
+-		CobblemonNetwork.sendToServer(SendOutPokemonPacket(CobblemonClient.storage.selectedSlot))
+-	}
+-
+-	override fun threadName(): String {
+-		return "Cobblemon-RecallVoicePipeline"
+-	}
+-
+-	override fun getPhrases(): List<String> {
+-		return phrases.toList()
+-	}
+-
+-	override fun getId(): String {
+-		return "RecallVoiceController"
+-	}
+-}
+diff --git a/common/src/main/kotlin/com/cobblemon/vocalized/common/internal/VocalizedLangTable.kt b/common/src/main/kotlin/com/cobblemon/vocalized/common/internal/VocalizedLangTable.kt
+new file mode 100644
+index 0000000..0b67f37
+--- /dev/null
++++ b/common/src/main/kotlin/com/cobblemon/vocalized/common/internal/VocalizedLangTable.kt
+@@ -0,0 +1,51 @@
++package com.cobblemon.vocalized.common.internal
++
++import com.cobblemon.vocalized.common.Vocalized
++import com.google.gson.JsonParser
++import net.minecraft.resources.ResourceLocation
++import net.minecraft.server.packs.resources.ResourceManager
++import java.io.InputStreamReader
++import java.nio.charset.StandardCharsets
++
++/**
++ * Textos leidos en el idioma del modelo de voz, no en el de la interfaz.
++ *
++ * Es una distincion que importa mucho. Los nombres de los movimientos y las frases de activacion
++ * se resolvian con el idioma del cliente, pero el modelo de reconocimiento siempre es el mismo:
++ * un jugador con el juego en ingles acababa escuchando espanol y comparandolo contra "Hydro Pump"
++ * e "i choose you". No acertaba nada, y no habia forma de notarlo salvo probando.
++ *
++ * Leyendo aqui el fichero de idioma que corresponde al modelo cargado, el mod funciona igual sin
++ * importar en que idioma tenga cada jugador su juego.
++ */
++object VocalizedLangTable {
++
++	private val entries = HashMap<String, String>()
++
++	fun reload(pResourceManager: ResourceManager, pLanguage: String, pNamespaces: List<String>) {
++		entries.clear()
++
++		for (namespace in pNamespaces) {
++			val location = ResourceLocation.fromNamespaceAndPath(namespace, "lang/$pLanguage.json")
++			try {
++				pResourceManager.getResource(location).ifPresent { resource ->
++					resource.open().use { stream ->
++						val json = JsonParser
++							.parseReader(InputStreamReader(stream, StandardCharsets.UTF_8))
++							.asJsonObject
++
++						for ((key, value) in json.entrySet()) {
++							if (value.isJsonPrimitive) entries[key] = value.asString
++						}
++					}
++				}
++			} catch (pThrowable: Throwable) {
++				Vocalized.LOGGER.warn("[Voice] Could not read {} language file:", namespace, pThrowable)
++			}
++		}
++
++		Vocalized.LOGGER.info("[Voice] Loaded {} '{}' translations for voice matching", entries.size, pLanguage)
++	}
++
++	fun get(pKey: String): String? = entries[pKey]
++}
+diff --git a/common/src/main/kotlin/com/cobblemon/vocalized/common/voice/VocalizedPhrases.kt b/common/src/main/kotlin/com/cobblemon/vocalized/common/voice/VocalizedPhrases.kt
+new file mode 100644
+index 0000000..e1c3a5a
+--- /dev/null
++++ b/common/src/main/kotlin/com/cobblemon/vocalized/common/voice/VocalizedPhrases.kt
+@@ -0,0 +1,49 @@
++package com.cobblemon.vocalized.common.voice
++
++import com.cobblemon.vocalized.common.Vocalized
++import com.cobblemon.vocalized.common.internal.VocalizedLang
++import com.cobblemon.vocalized.common.internal.VocalizedLangTable
++import java.util.Locale
++
++/**
++ * Frases de activacion traducibles.
++ *
++ * Cada clave de idioma agrupa varias alternativas separadas por `|`, de modo que cada traduccion
++ * aporta los sinonimos naturales de su lengua sin tocar el codigo. En espanol conviene ofrecer
++ * varias formas porque el reconocedor puede oir cualquiera de ellas:
++ *
++ * ```
++ * "voice.cobblemon_vocalized.phrase.send_out": "adelante|yo te elijo|sal|ve"
++ * ```
++ *
++ * Si la clave no esta traducida se devuelve una lista vacia y el comando simplemente no se ofrece,
++ * en lugar de registrar la clave cruda como si fuese una frase.
++ */
++object VocalizedPhrases {
++
++	/** Sacar al Pokemon seleccionado. */
++	const val SEND_OUT: String = "phrase.send_out"
++
++	/** Guardar al Pokemon que esta fuera. */
++	const val RECALL: String = "phrase.recall"
++
++	/** Prefijos de cambio ("cambia a ...") usados dentro y fuera del combate. */
++	const val SWITCH: String = "phrase.switch"
++
++	/** Rendirse en combate. */
++	const val FORFEIT: String = "phrase.forfeit"
++
++	fun of(pKey: String): List<String> {
++		// Primero el idioma del modelo de voz; el de la interfaz solo como respaldo. Un jugador
++		// con el juego en ingles debe seguir diciendo las frases en el idioma que el mod escucha.
++		val raw = VocalizedLangTable.get("voice.${Vocalized.MOD_ID}.$pKey")
++			?: VocalizedLang.voice(pKey).string
++
++		if (raw.isBlank() || raw.endsWith(pKey)) return emptyList()
++
++		return raw.split('|')
++			.map { it.trim().lowercase(Locale.ROOT) }
++			.filter { it.isNotEmpty() }
++			.distinct()
++	}
++}
+diff --git a/common/src/main/kotlin/com/cobblemon/vocalized/common/voice/pipeline/VocalizedVoicePipeline.kt b/common/src/main/kotlin/com/cobblemon/vocalized/common/voice/pipeline/VocalizedVoicePipeline.kt
+index f39ef49..8f33d34 100644
+--- a/common/src/main/kotlin/com/cobblemon/vocalized/common/voice/pipeline/VocalizedVoicePipeline.kt
++++ b/common/src/main/kotlin/com/cobblemon/vocalized/common/voice/pipeline/VocalizedVoicePipeline.kt
+@@ -74,7 +74,6 @@ class VocalizedVoicePipeline(
+ 	): VoicePipeline {
+ 		val micName = detectConfiguredMicName()
+ 		val source = createMicSource(micName)
+-		val recognizer = LazyVoskSpeechEngine(modelDirectory, sampleRateHz)
+ 
+ 		val orderedPhrases: List<String> = pPhrases
+ 			.filter { it != null && it.trim().isNotBlank() }
+@@ -82,14 +81,26 @@ class VocalizedVoicePipeline(
+ 			.sortedByDescending { it.length }
+ 			.toList()
+ 
++		// El reconocedor se limita a las frases que tienen sentido ahora mismo. La tuberia ya
++		// conoce esa lista exacta, asi que restringir el vocabulario no cuesta nada y evita que
++		// el modelo intente transcribir espanol abierto para luego buscar coincidencias en el.
++		val grammar = if (ConfigLoader.getClientConfig().restrictVocabulary) orderedPhrases else null
++		val recognizer = LazyVoskSpeechEngine(modelDirectory, sampleRateHz, grammar)
++
++		Vocalized.LOGGER.info("[Voice] Listening for {} phrase(s): {}", orderedPhrases.size, orderedPhrases)
++
+ 		val matcher: Function<String?, String?> = Function { normalizedText ->
+ 			val raw = normalizedText ?: ""
+ 			val text = processorRegistry.applyAll(raw).lowercase(Locale.ROOT)
+ 			val joinedText = TextUtils.joinTokens(text)
++			val heardSound = TextUtils.phoneticKey(text)
+ 
+-			if (ConfigLoader.getClientConfig().debug) {
+-				Vocalized.LOGGER.info("[Voice] \n raw=`{}` \n processed=`{}` \n joined=`{}`", raw, text, joinedText)
+-			}
++			// A proposito sin condicionar al modo depuracion: saber que oyo el microfono es lo
++			// unico que distingue "no te ha entendido" de "te entendio y no supo que hacer".
++			Vocalized.LOGGER.info("[Voice] heard=`{}` joined=`{}` sound=`{}`", raw, joinedText, heardSound)
++
++			var fuzzyBest: String? = null
++			var fuzzyScore = Int.MAX_VALUE
+ 
+ 			for (phrase in orderedPhrases) {
+ 				val phraseRaw = phrase.lowercase(Locale.ROOT)
+@@ -97,18 +108,47 @@ class VocalizedVoicePipeline(
+ 				val phraseJoined = TextUtils.joinTokens(phraseNorm)
+ 
+ 				if (phraseNorm.isNotBlank() && text.contains(phraseNorm)) {
++					Vocalized.LOGGER.info("[Voice] matched `{}` (exact)", phrase)
+ 					return@Function phrase
+ 				}
+ 
+ 				if (phraseJoined.isNotBlank() && joinedText.contains(phraseJoined)) {
++					Vocalized.LOGGER.info("[Voice] matched `{}` (joined)", phrase)
+ 					return@Function phrase
+ 				}
+ 
+ 				if (phraseNorm.isNotBlank() && TextUtils.tokensMajorityMatch(text, phraseNorm, 0.6)) {
++					Vocalized.LOGGER.info("[Voice] matched `{}` (tokens)", phrase)
++					return@Function phrase
++				}
++
++				// Comparacion por sonido: "Hidrobomba" contra el "idro bomba" que suele devolver
++				// el reconocedor. Ambas se reducen a la misma clave fonetica.
++				val phraseSound = TextUtils.phoneticKey(phraseRaw)
++				if (phraseSound.isNotBlank() && heardSound.contains(phraseSound)) {
++					Vocalized.LOGGER.info("[Voice] matched `{}` (sound)", phrase)
+ 					return@Function phrase
+ 				}
++
++				// Ultimo recurso para los nombres propios. "Charizard" o "Ribombee" no existen en
++				// un modelo de espanol, asi que el reconocedor devuelve algo parecido pero nunca
++				// identico; se acepta si esta lo bastante cerca en relacion a su longitud.
++				if (phraseSound.length >= 5 && heardSound.isNotEmpty()) {
++					val distance = TextUtils.closestDistance(heardSound, phraseSound)
++					val allowed = phraseSound.length / 3
++					if (distance <= allowed && distance < fuzzyScore) {
++						fuzzyScore = distance
++						fuzzyBest = phrase
++					}
++				}
+ 			}
+ 
++			if (fuzzyBest != null) {
++				Vocalized.LOGGER.info("[Voice] matched `{}` (approx, distance={})", fuzzyBest, fuzzyScore)
++				return@Function fuzzyBest
++			}
++
++			Vocalized.LOGGER.info("[Voice] no match")
+ 			null
+ 		}
+ 
+@@ -116,13 +156,14 @@ class VocalizedVoicePipeline(
+ 		val command = SubstringMatchAction(
+ 			matcher as Function<String, String>,
+ 			pOnMatch,
+-			pStopAfterMatch,
++			false,
+ 		)
+ 
+ 		return DefaultVoicePipeline(
+ 			source,
+ 			recognizer,
+ 			listOf<VoiceAction>(command),
++			pStopAfterMatch,
+ 		)
+ 	}
+ 
+diff --git a/common/src/main/kotlin/com/cobblemon/vocalized/common/voice/processor/number/NumberWordConverter.kt b/common/src/main/kotlin/com/cobblemon/vocalized/common/voice/processor/number/NumberWordConverter.kt
+index 2360c83..d0a53b2 100644
+--- a/common/src/main/kotlin/com/cobblemon/vocalized/common/voice/processor/number/NumberWordConverter.kt
++++ b/common/src/main/kotlin/com/cobblemon/vocalized/common/voice/processor/number/NumberWordConverter.kt
+@@ -15,7 +15,13 @@ object NumberWordConverter {
+ 	private val FORMAT_FR: ThreadLocal<RuleBasedNumberFormat> =
+ 		ThreadLocal.withInitial { RuleBasedNumberFormat(Locale.FRENCH, RuleBasedNumberFormat.SPELLOUT) }
+ 
+-	private val DEFAULT_FORMATS: List<ThreadLocal<RuleBasedNumberFormat>> = listOf(FORMAT_EN, FORMAT_FR)
++	private val FORMAT_ES: ThreadLocal<RuleBasedNumberFormat> =
++		ThreadLocal.withInitial {
++			RuleBasedNumberFormat(Locale.forLanguageTag("es"), RuleBasedNumberFormat.SPELLOUT)
++		}
++
++	private val DEFAULT_FORMATS: List<ThreadLocal<RuleBasedNumberFormat>> =
++		listOf(FORMAT_EN, FORMAT_FR, FORMAT_ES)
+ 
+ 	fun convertNumberWordsToDigits(pInput: String?): String {
+ 		if (pInput == null) return ""
+diff --git a/common/src/main/kotlin/com/cobblemon/vocalized/common/voice/processor/text/TextUtils.kt b/common/src/main/kotlin/com/cobblemon/vocalized/common/voice/processor/text/TextUtils.kt
+index 2ee0d2f..035ba2f 100644
+--- a/common/src/main/kotlin/com/cobblemon/vocalized/common/voice/processor/text/TextUtils.kt
++++ b/common/src/main/kotlin/com/cobblemon/vocalized/common/voice/processor/text/TextUtils.kt
+@@ -2,11 +2,13 @@ package com.cobblemon.vocalized.common.voice.processor.text
+ 
+ import com.cobblemon.vocalized.common.Vocalized
+ import com.cobblemon.vocalized.common.voice.processor.number.NumberWordConverter
++import java.text.Normalizer
+ import java.util.Locale
+ import java.util.regex.Pattern
+ 
+ object TextUtils {
+ 	private val NON_ALPHA_NUM: Pattern = Pattern.compile("[^\\p{IsAlphabetic}\\d]+")
++	private val DIACRITICS: Regex = Regex("\\p{Mn}+")
+ 
+ 	fun normalizeForMatch(pInput: String?): String {
+ 		if (pInput.isNullOrBlank()) return ""
+@@ -21,6 +23,83 @@ object TextUtils {
+ 		return pNormalized.replace(" ", "")
+ 	}
+ 
++	/**
++	 * Reduce un texto a como *suena* en espanol, no a como se escribe.
++	 *
++	 * Los nombres de los movimientos son palabras inventadas ("Hidrobomba", "Gigarrayo") que no
++	 * existen en el vocabulario de un modelo de espanol general, asi que el reconocedor devuelve
++	 * siempre algo parecido pero mal escrito: "idro bomba", "jira rayo". Colapsando las parejas de
++	 * letras que suenan igual, las dos formas acaban en la misma clave y coinciden.
++	 *
++	 * Reglas aplicadas: la hache es muda, b/v y c/k/q son el mismo sonido, z y ce/ci van a s,
++	 * ge/gi va a j, ll a y, x a ks, y las letras dobles se colapsan.
++	 */
++	fun phoneticKey(pInput: String?): String {
++		if (pInput.isNullOrBlank()) return ""
++
++		val plain = Normalizer.normalize(pInput.lowercase(Locale.ROOT), Normalizer.Form.NFD)
++			.replace(DIACRITICS, "")
++
++		val sounds = StringBuilder()
++		var i = 0
++		while (i < plain.length) {
++			val c = plain[i]
++			val next = if (i + 1 < plain.length) plain[i + 1] else ' '
++
++			when {
++				c == 'h' -> Unit
++				c == 'v' || c == 'w' -> sounds.append('b')
++				c == 'z' -> sounds.append('s')
++				c == 'c' && next == 'h' -> { sounds.append('c'); i++ }
++				c == 'c' && (next == 'e' || next == 'i') -> sounds.append('s')
++				c == 'c' || c == 'k' -> sounds.append('k')
++				c == 'q' -> { sounds.append('k'); if (next == 'u') i++ }
++				c == 'g' && (next == 'e' || next == 'i') -> sounds.append('j')
++				c == 'g' && next == 'u' -> { sounds.append('g'); i++ }
++				c == 'l' && next == 'l' -> { sounds.append('y'); i++ }
++				c == 'x' -> sounds.append("ks")
++				c.isLetterOrDigit() -> sounds.append(c)
++				else -> Unit
++			}
++			i++
++		}
++
++		val collapsed = StringBuilder()
++		for (c in sounds) {
++			if (collapsed.isEmpty() || collapsed.last() != c) collapsed.append(c)
++		}
++		return collapsed.toString()
++	}
++
++	/**
++	 * Distancia de edicion entre [pPattern] y el trozo de [pText] que mas se le parezca.
++	 *
++	 * Es la distancia de Levenshtein habitual salvo por la primera fila, que se deja a cero: eso
++	 * permite que la coincidencia empiece en cualquier punto del texto, y quedarse con el minimo
++	 * de la ultima fila permite que acabe en cualquier otro. Sirve para reconocer un nombre suelto
++	 * dentro de una frase mas larga aunque el reconocedor lo haya oido con algun fallo.
++	 */
++	fun closestDistance(pText: String?, pPattern: String?): Int {
++		if (pPattern.isNullOrEmpty()) return 0
++		if (pText.isNullOrEmpty()) return pPattern.length
++
++		var previous = IntArray(pText.length + 1)
++		var current = IntArray(pText.length + 1)
++
++		for (i in 1..pPattern.length) {
++			current[0] = i
++			for (j in 1..pText.length) {
++				val cost = if (pPattern[i - 1] == pText[j - 1]) 0 else 1
++				current[j] = minOf(current[j - 1] + 1, previous[j] + 1, previous[j - 1] + cost)
++			}
++			val swap = previous
++			previous = current
++			current = swap
++		}
++
++		return previous.min()
++	}
++
+ 	fun tokensMajorityMatch(pText: String?, pPhraseNorm: String?, pThreshold: Double): Boolean {
+ 		if (pText.isNullOrBlank() || pPhraseNorm.isNullOrBlank()) return false
+ 
+diff --git a/common/src/main/resources/assets/cobblemon_vocalized/lang/en_us.json b/common/src/main/resources/assets/cobblemon_vocalized/lang/en_us.json
+index 9053a81..13b5ff9 100644
+--- a/common/src/main/resources/assets/cobblemon_vocalized/lang/en_us.json
++++ b/common/src/main/resources/assets/cobblemon_vocalized/lang/en_us.json
+@@ -6,5 +6,10 @@
+   "voice.cobblemon_vocalized.voice_activated": "Voice Activated",
+   "button.cobblemon_vocalized.voice_mode": "Voice Mode: %s",
+   "button.cobblemon_vocalized.use_simple_voice_chat": "Use Simple Voice Chat Integration: %s",
+-  "button.cobblemon_vocalized.debug_mode": "Debug Mode: %s"
+-}
+\ No newline at end of file
++  "button.cobblemon_vocalized.debug_mode": "Debug Mode: %s",
++
++  "voice.cobblemon_vocalized.phrase.send_out": "i choose you|come on out|let's go|go get them",
++  "voice.cobblemon_vocalized.phrase.recall": "recall|return|come back|go back|get back",
++  "voice.cobblemon_vocalized.phrase.switch": "switch to|swap to|change to|switch out",
++  "voice.cobblemon_vocalized.phrase.forfeit": "i forfeit|i lose|i quit|i give up"
++}
+diff --git a/common/src/main/resources/assets/cobblemon_vocalized/lang/es_es.json b/common/src/main/resources/assets/cobblemon_vocalized/lang/es_es.json
+new file mode 100644
+index 0000000..23bb7ac
+--- /dev/null
++++ b/common/src/main/resources/assets/cobblemon_vocalized/lang/es_es.json
+@@ -0,0 +1,15 @@
++{
++  "key.cobblemon_vocalized.push_to_talk": "Pulsar para hablar",
++  "key.cobblemon_vocalized.vocalized_menu": "Abrir menú de configuración",
++  "key.cobblemon_vocalized.category": "Controles de Cobblemon: Vocalized",
++  "voice.cobblemon_vocalized.push_to_talk": "Pulsar para hablar",
++  "voice.cobblemon_vocalized.voice_activated": "Activado por voz",
++  "button.cobblemon_vocalized.voice_mode": "Modo de voz: %s",
++  "button.cobblemon_vocalized.use_simple_voice_chat": "Usar integración con Simple Voice Chat: %s",
++  "button.cobblemon_vocalized.debug_mode": "Modo depuración: %s",
++
++  "voice.cobblemon_vocalized.phrase.send_out": "adelante|yo te elijo|a luchar|sal ya|te elijo a ti",
++  "voice.cobblemon_vocalized.phrase.recall": "vuelve|regresa|ven aquí|retírate|descansa",
++  "voice.cobblemon_vocalized.phrase.switch": "cambia a|cambio a|cambia por|relevo|te toca a ti",
++  "voice.cobblemon_vocalized.phrase.forfeit": "me rindo|abandono|me retiro|nos rendimos"
++}
+diff --git a/fabric/build.gradle.kts b/fabric/build.gradle.kts
+index cb25d24..847e27e 100644
+--- a/fabric/build.gradle.kts
++++ b/fabric/build.gradle.kts
+@@ -62,14 +62,19 @@ tasks.processResources {
+ 	}
+ }
+ 
+-val frFrPattern = "assets/cobblemon_vocalized/models/fr_fr/**"
++// Solo se empaqueta el modelo es_es. Cada modelo de voz pesa unos 60 MB, asi que incluir los
++// tres triplicaria la descarga del jar para nada: este servidor juega en espanol.
++val excludedModelPatterns = listOf(
++	"assets/cobblemon_vocalized/models/en_us/**",
++	"assets/cobblemon_vocalized/models/fr_fr/**",
++)
+ 
+ tasks.withType(Copy::class.java).matching { it.name == "processResources" }.configureEach {
+-	exclude(frFrPattern)
++	exclude(excludedModelPatterns)
+ }
+ 
+ tasks.matching { it is AbstractArchiveTask }.configureEach {
+-	(this as AbstractArchiveTask).exclude(frFrPattern)
++	(this as AbstractArchiveTask).exclude(excludedModelPatterns)
+ }
+ 
+ tasks {
+diff --git a/neoforge/build.gradle.kts b/neoforge/build.gradle.kts
+index 884da00..4d5c89f 100644
+--- a/neoforge/build.gradle.kts
++++ b/neoforge/build.gradle.kts
+@@ -65,14 +65,19 @@ tasks.processResources {
+ 	}
+ }
+ 
+-val frFrPattern = "assets/cobblemon_vocalized/models/fr_fr/**"
++// Solo se empaqueta el modelo es_es. Cada modelo de voz pesa unos 60 MB, asi que incluir los
++// tres triplicaria la descarga del jar para nada: este servidor juega en espanol.
++val excludedModelPatterns = listOf(
++	"assets/cobblemon_vocalized/models/en_us/**",
++	"assets/cobblemon_vocalized/models/fr_fr/**",
++)
+ 
+ tasks.withType(Copy::class.java).matching { it.name == "processResources" }.configureEach {
+-	exclude(frFrPattern)
++	exclude(excludedModelPatterns)
+ }
+ 
+ tasks.matching { it is AbstractArchiveTask }.configureEach {
+-	(this as AbstractArchiveTask).exclude(frFrPattern)
++	(this as AbstractArchiveTask).exclude(excludedModelPatterns)
+ }
+ 
+ tasks {

@@ -41,3 +41,7 @@ docs/pregen-progress.log
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# Jars compilados del mod de voz (67 MB, se reconstruyen con mods-src/.../construir.sh)
+client-pack/local-mods/*.jar
+mods-src/*/build/
