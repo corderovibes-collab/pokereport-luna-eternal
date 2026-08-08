@@ -1136,6 +1136,146 @@ index 2ee0d2f..035ba2f 100644
  	fun tokensMajorityMatch(pText: String?, pPhraseNorm: String?, pThreshold: Double): Boolean {
  		if (pText.isNullOrBlank() || pPhraseNorm.isNullOrBlank()) return false
  
+diff --git a/common/src/main/kotlin/com/cobblemon/vocalized/common/vosk/LibVosk.kt b/common/src/main/kotlin/com/cobblemon/vocalized/common/vosk/LibVosk.kt
+index 2f47675..b2708f4 100644
+--- a/common/src/main/kotlin/com/cobblemon/vocalized/common/vosk/LibVosk.kt
++++ b/common/src/main/kotlin/com/cobblemon/vocalized/common/vosk/LibVosk.kt
+@@ -55,13 +55,13 @@ class LibVosk {
+ 		external fun vosk_set_log_level(pLevel: Int)
+ 
+ 		@JvmStatic
+-		external fun vosk_model_new(pPath: String?): Pointer
++		external fun vosk_model_new(pPath: Pointer?): Pointer
+ 
+ 		@JvmStatic
+ 		external fun vosk_model_free(pModel: Pointer)
+ 
+ 		@JvmStatic
+-		external fun vosk_spk_model_new(pPath: String?): Pointer
++		external fun vosk_spk_model_new(pPath: Pointer?): Pointer
+ 
+ 		@JvmStatic
+ 		external fun vosk_spk_model_free(pModel: Pointer)
+@@ -73,7 +73,7 @@ class LibVosk {
+ 		external fun vosk_recognizer_new_spk(pModel: Pointer?, pSampleRate: Float, pSpeakerModel: Pointer?): Pointer
+ 
+ 		@JvmStatic
+-		external fun vosk_recognizer_new_grm(pModel: Pointer?, pSampleRate: Float, pGrammar: String?): Pointer
++		external fun vosk_recognizer_new_grm(pModel: Pointer?, pSampleRate: Float, pGrammar: Pointer?): Pointer
+ 
+ 		@JvmStatic
+ 		external fun vosk_recognizer_set_max_alternatives(pRecognizer: Pointer?, pMaxAlternatives: Int)
+@@ -97,13 +97,13 @@ class LibVosk {
+ 		external fun vosk_recognizer_accept_waveform_f(pRecognizer: Pointer?, pData: FloatArray?, pLength: Int): Boolean
+ 
+ 		@JvmStatic
+-		external fun vosk_recognizer_result(pRecognizer: Pointer?): String?
++		external fun vosk_recognizer_result(pRecognizer: Pointer?): Pointer?
+ 
+ 		@JvmStatic
+-		external fun vosk_recognizer_final_result(pRecognizer: Pointer?): String?
++		external fun vosk_recognizer_final_result(pRecognizer: Pointer?): Pointer?
+ 
+ 		@JvmStatic
+-		external fun vosk_recognizer_partial_result(pRecognizer: Pointer?): String?
++		external fun vosk_recognizer_partial_result(pRecognizer: Pointer?): Pointer?
+ 
+ 		@JvmStatic
+ 		external fun vosk_recognizer_reset(pRecognizer: Pointer?)
+diff --git a/common/src/main/kotlin/com/cobblemon/vocalized/common/vosk/Model.kt b/common/src/main/kotlin/com/cobblemon/vocalized/common/vosk/Model.kt
+index e811f53..8720d77 100644
+--- a/common/src/main/kotlin/com/cobblemon/vocalized/common/vosk/Model.kt
++++ b/common/src/main/kotlin/com/cobblemon/vocalized/common/vosk/Model.kt
+@@ -7,7 +7,7 @@ class Model : PointerType, AutoCloseable {
+ 	constructor() : super()
+ 
+ 	@Throws(IOException::class)
+-	constructor(pPath: String) : super(LibVosk.vosk_model_new(pPath)) {
++	constructor(pPath: String) : super(LibVosk.vosk_model_new(VoskStrings.toNative(pPath))) {
+ 		if (pointer == null) {
+ 			throw IOException("Failed to create a model")
+ 		}
+diff --git a/common/src/main/kotlin/com/cobblemon/vocalized/common/vosk/Recognizer.kt b/common/src/main/kotlin/com/cobblemon/vocalized/common/vosk/Recognizer.kt
+index 52b11f4..daae022 100644
+--- a/common/src/main/kotlin/com/cobblemon/vocalized/common/vosk/Recognizer.kt
++++ b/common/src/main/kotlin/com/cobblemon/vocalized/common/vosk/Recognizer.kt
+@@ -15,7 +15,7 @@ class Recognizer : PointerType, AutoCloseable {
+ 		super(LibVosk.vosk_recognizer_new_spk(pModel.pointer, pSampleRate, pSpeakerModel.pointer))
+ 
+ 	constructor(pModel: Model, pSampleRate: Float, pGrammar: String) :
+-		super(LibVosk.vosk_recognizer_new_grm(pModel.pointer, pSampleRate, pGrammar))
++		super(LibVosk.vosk_recognizer_new_grm(pModel.pointer, pSampleRate, VoskStrings.toNative(pGrammar)))
+ 
+ 	fun setMaxAlternatives(pMaxAlternatives: Int) {
+ 		LibVosk.vosk_recognizer_set_max_alternatives(pointer, pMaxAlternatives)
+@@ -46,15 +46,15 @@ class Recognizer : PointerType, AutoCloseable {
+ 	}
+ 
+ 	fun getResult(): String? {
+-		return LibVosk.vosk_recognizer_result(pointer)
++		return VoskStrings.fromNative(LibVosk.vosk_recognizer_result(pointer))
+ 	}
+ 
+ 	fun getPartialResult(): String? {
+-		return LibVosk.vosk_recognizer_partial_result(pointer)
++		return VoskStrings.fromNative(LibVosk.vosk_recognizer_partial_result(pointer))
+ 	}
+ 
+ 	fun getFinalResult(): String? {
+-		return LibVosk.vosk_recognizer_final_result(pointer)
++		return VoskStrings.fromNative(LibVosk.vosk_recognizer_final_result(pointer))
+ 	}
+ 
+ 	fun reset() {
+diff --git a/common/src/main/kotlin/com/cobblemon/vocalized/common/vosk/SpeakerModel.kt b/common/src/main/kotlin/com/cobblemon/vocalized/common/vosk/SpeakerModel.kt
+index 5bd8bef..4f13b8f 100644
+--- a/common/src/main/kotlin/com/cobblemon/vocalized/common/vosk/SpeakerModel.kt
++++ b/common/src/main/kotlin/com/cobblemon/vocalized/common/vosk/SpeakerModel.kt
+@@ -7,7 +7,7 @@ class SpeakerModel : PointerType, AutoCloseable {
+ 	constructor() : super()
+ 
+ 	@Throws(IOException::class)
+-	constructor(pPath: String) : super(LibVosk.vosk_spk_model_new(pPath)) {
++	constructor(pPath: String) : super(LibVosk.vosk_spk_model_new(VoskStrings.toNative(pPath))) {
+ 		if (pointer == null) {
+ 			throw IOException("Failed to create a speaker model")
+ 		}
+diff --git a/common/src/main/kotlin/com/cobblemon/vocalized/common/vosk/VoskStrings.kt b/common/src/main/kotlin/com/cobblemon/vocalized/common/vosk/VoskStrings.kt
+new file mode 100644
+index 0000000..5f99999
+--- /dev/null
++++ b/common/src/main/kotlin/com/cobblemon/vocalized/common/vosk/VoskStrings.kt
+@@ -0,0 +1,30 @@
++package com.cobblemon.vocalized.common.vosk
++
++import com.sun.jna.Memory
++import com.sun.jna.Pointer
++
++/**
++ * Conversion de cadenas con la libreria nativa, siempre en UTF-8.
++ *
++ * Vosk habla UTF-8, pero [com.sun.jna.Native.register] usa el juego de caracteres por defecto de
++ * la plataforma, que en un Windows en espanol es Cp1252. Dejarlo asi tenia dos consecuencias, y
++ * ninguna avisaba:
++ *
++ * - Al leer, cualquier palabra con tilde volvia rota: "si" se recibia como "sÃ­", de modo que
++ *   ordenes como "ven aqui" o "garra dragon" no podian coincidir jamas.
++ * - Al escribir, la ruta del modelo viaja como cadena. Un jugador cuyo usuario de Windows lleve
++ *   tilde o enye ("Jose", "Munoz") generaba una ruta que la libreria no sabia abrir, y el modelo
++ *   fallaba al cargar sin mas explicacion.
++ */
++object VoskStrings {
++
++	fun toNative(pValue: String): Memory {
++		val bytes = pValue.toByteArray(Charsets.UTF_8)
++		val memory = Memory((bytes.size + 1).toLong())
++		memory.write(0, bytes, 0, bytes.size)
++		memory.setByte(bytes.size.toLong(), 0)
++		return memory
++	}
++
++	fun fromNative(pPointer: Pointer?): String? = pPointer?.getString(0, Charsets.UTF_8.name())
++}
 diff --git a/common/src/main/resources/assets/cobblemon_vocalized/lang/en_us.json b/common/src/main/resources/assets/cobblemon_vocalized/lang/en_us.json
 index 9053a81..13b5ff9 100644
 --- a/common/src/main/resources/assets/cobblemon_vocalized/lang/en_us.json

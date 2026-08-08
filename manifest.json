@@ -1,7 +1,7 @@
 {
  "schema": 1,
  "name": "COBBLEVERSE",
- "packVersion": "1.7.44",
+ "packVersion": "1.7.45",
  "minecraft": "1.21.1",
  "fabricLoader": "0.18.4",
  "java": 21,
@@ -3041,9 +3041,9 @@
   },
   {
    "path": "mods/cobblemon_vocalized-es-1.0.0.jar",
-   "sha1": "ac06e2a9bd056b067716ae0d9c37c999e223422c",
-   "size": 67794637,
-   "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.44/mods__cobblemon_vocalized-es-1.0.0.jar"
+   "sha1": "e0ec90f994d8db938ac5b7d9d96989134a988195",
+   "size": 67796203,
+   "url": "https://github.com/corderovibes-collab/pokereport-luna-eternal/releases/download/pack-1.7.45/mods__cobblemon_vocalized-es-1.0.0.jar"
   }
  ]
 }
