@@ -1202,6 +1202,131 @@ index cb25d24..847e27e 100644
  }
  
  tasks {
+diff --git a/fabric/src/main/kotlin/com/cobblemon/vocalized/fabric/client/VocalizedClient.kt b/fabric/src/main/kotlin/com/cobblemon/vocalized/fabric/client/VocalizedClient.kt
+index dc9f636..dc18c76 100644
+--- a/fabric/src/main/kotlin/com/cobblemon/vocalized/fabric/client/VocalizedClient.kt
++++ b/fabric/src/main/kotlin/com/cobblemon/vocalized/fabric/client/VocalizedClient.kt
+@@ -4,6 +4,7 @@ import com.cobblemon.vocalized.common.Vocalized
+ import com.cobblemon.vocalized.common.client.VocalizedCommonClient
+ import com.cobblemon.vocalized.common.config.ConfigLoader
+ import com.cobblemon.vocalized.fabric.FabricVocalized
++import com.cobblemon.vocalized.fabric.client.command.VocalizedCommands
+ import com.cobblemon.vocalized.fabric.client.registry.FabricKeybinds
+ import net.fabricmc.api.ClientModInitializer
+ import net.fabricmc.api.EnvType
+@@ -27,6 +28,7 @@ class VocalizedClient : ClientModInitializer {
+ 	override fun onInitializeClient() {
+ 		FabricKeybinds.init()
+ 		FabricClientEvents.init()
++		VocalizedCommands.init()
+ 		FabricVocalized.networkManager.registerClientHandlers()
+ 
+ 		try {
+diff --git a/fabric/src/main/kotlin/com/cobblemon/vocalized/fabric/client/command/VocalizedCommands.kt b/fabric/src/main/kotlin/com/cobblemon/vocalized/fabric/client/command/VocalizedCommands.kt
+new file mode 100644
+index 0000000..988cdf6
+--- /dev/null
++++ b/fabric/src/main/kotlin/com/cobblemon/vocalized/fabric/client/command/VocalizedCommands.kt
+@@ -0,0 +1,99 @@
++package com.cobblemon.vocalized.fabric.client.command
++
++import com.cobblemon.vocalized.common.api_impl.VoiceRegistryImpl
++import com.cobblemon.vocalized.common.voice.VocalizedPhrases
++import net.fabricmc.api.EnvType
++import net.fabricmc.api.Environment
++import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager
++import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback
++import net.fabricmc.fabric.api.client.message.v1.ClientSendMessageEvents
++import net.minecraft.ChatFormatting
++import net.minecraft.client.Minecraft
++import net.minecraft.network.chat.Component
++import java.util.Locale
++
++/**
++ * Chuleta de las ordenes de voz, en el propio juego.
++ *
++ * Se ofrece como `/palabras` y como `!palabras`. La segunda forma es la que la gente escribe por
++ * costumbre en un servidor, pero un mensaje de chat que no se intercepte acaba publicado para
++ * todos; por eso se cancela antes de salir en lugar de dejarlo pasar.
++ *
++ * La lista no es fija: la parte de "ahora mismo" se la pregunta a los propios controladores de voz,
++ * asi que muestra exactamente lo que el mod esta escuchando en ese instante — tus ataques si estas
++ * combatiendo, tu equipo si no.
++ */
++@Environment(EnvType.CLIENT)
++object VocalizedCommands {
++
++	private val ALIASES = listOf("palabras", "voz")
++
++	fun init() {
++		ClientCommandRegistrationCallback.EVENT.register { pDispatcher, _ ->
++			for (alias in ALIASES) {
++				pDispatcher.register(
++					ClientCommandManager.literal(alias).executes { context ->
++						for (line in buildHelp()) context.source.sendFeedback(line)
++						1
++					},
++				)
++			}
++		}
++
++		ClientSendMessageEvents.ALLOW_CHAT.register { pMessage ->
++			val typed = pMessage.trim().lowercase(Locale.ROOT)
++			if (ALIASES.none { typed == "!$it" }) return@register true
++
++			val client = Minecraft.getInstance()
++			client.execute {
++				val chat = client.gui.chat
++				for (line in buildHelp()) chat.addMessage(line)
++			}
++			false
++		}
++	}
++
++	private fun buildHelp(): List<Component> {
++		val lines = mutableListOf<Component>()
++
++		lines += Component.literal("Ordenes por voz").withStyle(ChatFormatting.GOLD, ChatFormatting.BOLD)
++
++		section(lines, "Sacar", VocalizedPhrases.SEND_OUT)
++		section(lines, "Guardar", VocalizedPhrases.RECALL)
++
++		lines += Component.literal("  Cambiar  ").withStyle(ChatFormatting.YELLOW)
++			.append(Component.literal("di el nombre del Pokemon").withStyle(ChatFormatting.WHITE))
++			.append(Component.literal("  o  ").withStyle(ChatFormatting.DARK_GRAY))
++			.append(Component.literal("cambia a <nombre>").withStyle(ChatFormatting.WHITE))
++
++		section(lines, "Rendirse", VocalizedPhrases.FORFEIT, "solo en combate")
++
++		val listening = VoiceRegistryImpl.getControllers()
++			.mapNotNull { it.getPhrases() }
++			.flatten()
++			.distinct()
++
++		lines += if (listening.isEmpty()) {
++			Component.literal("Ahora mismo no esta escuchando nada.").withStyle(ChatFormatting.RED)
++		} else {
++			Component.literal("Escuchando ahora (${listening.size}): ").withStyle(ChatFormatting.GREEN)
++				.append(Component.literal(listening.joinToString(", ")).withStyle(ChatFormatting.GRAY))
++		}
++
++		return lines
++	}
++
++	private fun section(pLines: MutableList<Component>, pTitle: String, pKey: String, pNote: String? = null) {
++		val phrases = VocalizedPhrases.of(pKey)
++		if (phrases.isEmpty()) return
++
++		val line = Component.literal("  ${pTitle.padEnd(8)} ").withStyle(ChatFormatting.YELLOW)
++			.append(Component.literal(phrases.joinToString("  ·  ")).withStyle(ChatFormatting.WHITE))
++
++		if (pNote != null) {
++			line.append(Component.literal("  ($pNote)").withStyle(ChatFormatting.DARK_GRAY))
++		}
++
++		pLines += line
++	}
++}
 diff --git a/neoforge/build.gradle.kts b/neoforge/build.gradle.kts
 index 884da00..4d5c89f 100644
 --- a/neoforge/build.gradle.kts
