@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "id": "lunalobby",
+  "version": "${version}",
+  "name": "PokeReport: Sala de Espera",
+  "description": "Pantalla de espera con cuenta atras para El Rastro de Luna.",
+  "authors": ["PokeReport"],
+  "license": "MIT",
+  "environment": "client",
+  "entrypoints": { "client": ["com.pokereport.lunalobby.LunaLobby"] },
+  "mixins": [ { "config": "lunalobby.mixins.json", "environment": "client" } ],
+  "depends": { "fabricloader": ">=0.15.0", "minecraft": "~1.21.1", "java": ">=21" }
+}

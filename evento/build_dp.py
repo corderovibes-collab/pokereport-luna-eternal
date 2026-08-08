@@ -41,7 +41,7 @@ ficheros: dict[str, str] = {}
 # Todos los marcadores del evento, sacados de donde se crean. `admin/reiniciar`
 # los limpia a partir de estas listas para que anadir uno nuevo no vuelva a
 # dejar restos colgados.
-_OBJETIVOS_GLOBALES = ['ev_estado', 'ev_reloj', 'ev_senal', 'ev_senal_act', 'ev_codigo', 'ev_modo', 'ev_sys', 'ev_reto', 'ev_reto_id', 'ev_raid0', 'ev_raid', 'ev_raid_v', 'ev_oak', 'ev_oak_esp', 'ev_sig', 'ev_lab', 'ev_lab0', 'ev_lab_v', 'ev_luna', 'ev_fijar', 'ev_oak_listo', 'ev_esc', 'ev_esc_p', 'ev_esc_t', 'ev_cine_t']
+_OBJETIVOS_GLOBALES = ['ev_estado', 'ev_reloj', 'ev_senal', 'ev_senal_act', 'ev_codigo', 'ev_modo', 'ev_sys', 'ev_reto', 'ev_reto_id', 'ev_raid0', 'ev_raid', 'ev_raid_v', 'ev_oak', 'ev_oak_esp', 'ev_sig', 'ev_lab', 'ev_lab0', 'ev_lab_v', 'ev_luna', 'ev_fijar', 'ev_oak_listo', 'ev_esc', 'ev_esc_p', 'ev_esc_t', 'ev_cine_t', 'ev_sala', 'ev_sala_t']
 _OBJETIVOS_JUGADOR = ['ev_unirse', 'ev_acto', 'ev_baliza', 'ev_m1', 'ev_m2', 'ev_m3', 'ev_m4', 'ev_m5', 'ev_m6', 'ev_p1', 'ev_p4', 'ev_p6']
 
 
@@ -55,9 +55,19 @@ def f(ruta: str, cuerpo: str) -> None:
 #  Arranque
 # ===========================================================================
 f("cargar", f"""
+    # La barra de la sala de espera. `add` falla sin consecuencias si ya existe,
+    # que es lo normal en cada /reload; lo que importa es dejarla configurada.
+    bossbar add evento:sala {{"text":"El Rastro de Luna"}}
+    bossbar set evento:sala color purple
+    bossbar set evento:sala style notched_10
+    bossbar set evento:sala max 900
+    bossbar set evento:sala visible false
+
     # Se ejecuta al cargar el mundo y en cada /reload.
 
     # --- marcadores globales (viven en el jugador falso #ev) ---
+    scoreboard objectives add ev_sala dummy
+    scoreboard objectives add ev_sala_t dummy
     scoreboard objectives add ev_estado dummy
     scoreboard objectives add ev_reloj dummy
     scoreboard objectives add ev_senal dummy
@@ -122,6 +132,7 @@ f("cargar", f"""
     execute unless score #ev ev_codigo = #ev ev_codigo run scoreboard players set #ev ev_codigo 0
     execute unless score #ev ev_modo = #ev ev_modo run scoreboard players set #ev ev_modo 0
     scoreboard players set #ev ev_sys 0
+
     scoreboard players set #ev ev_cine_t 0
     execute unless score #ev ev_esc = #ev ev_esc run scoreboard players set #ev ev_esc 0
     execute unless score #ev ev_esc_p = #ev ev_esc_p run scoreboard players set #ev ev_esc_p 0
@@ -138,12 +149,18 @@ f("reloj", """
     # tick.json entra aqui 20 veces por segundo. Casi todo el trabajo se hace
     # una vez por segundo: comprobar condiciones 20 veces seguidas no cambia
     # nada y se nota en el rendimiento con gente conectada.
+    # La sala va aqui y no en `segundo` a proposito: para retener a la gente hay
+    # que reponerles la posicion en cada tick, no una vez por segundo.
+    execute if score #ev ev_sala matches 1 run function evento:sala/retener
+
     scoreboard players add #ev ev_sys 1
     execute if score #ev ev_sys matches 20.. run function evento:segundo
 """)
 
 f("segundo", f"""
     scoreboard players set #ev ev_sys 0
+
+    execute if score #ev ev_sala matches 1 run function evento:sala/latido
 
     # Quien haya pulsado el boton de la invitacion
     execute as @a[scores={{ev_unirse=1}}] run function evento:util/inscribir
@@ -1041,7 +1058,7 @@ for _n, (_especie, (_zx, _zy, _zz), _rol) in ZONAS.items():
         _dx = round(_r * _math.cos(_ang))
         _dz = round(_r * _math.sin(_ang))
         _lineas.append(
-            f"execute positioned {_zx + _dx} {_zy} {_zz + _dz} run pokespawn {_especie} level={NIVEL_CAPTURA}")
+            f"pokespawnat {_zx + _dx} {_zy} {_zz + _dz} {_especie} level={NIVEL_CAPTURA}")
     f(f"zonas/poblar{_n}", "\n".join(_lineas))
 
 f("zonas/poblar_todas", "\n".join(
@@ -1110,8 +1127,11 @@ f("admin/prueba_solo", """
 f("lab/aparece_luna", f"""
     scoreboard players set #ev ev_luna 0
 
-    # `pokespawn` no tiene posicion propia: sin `positioned` la suelta en 0,0,0.
-    execute positioned {LUNA_POS[0]} {LUNA_POS[1]} {LUNA_POS[2]} run pokespawn luna level={LUNA_NIVEL}
+    # `pokespawn` aparece donde este quien ejecuta, y desde la consola eso no es
+    # ningun sitio util: `execute positioned` no le sirve porque lee la posicion
+    # de la entidad, no la del comando. Cobblemon trae `pokespawnat`, que si
+    # acepta coordenadas explicitas.
+    pokespawnat {LUNA_POS[0]} {LUNA_POS[1]} {LUNA_POS[2]} luna level={LUNA_NIVEL}
 
     # Congelarla llega dos segundos despues, no aqui: la entidad no existe
     # todavia en este mismo tick y el `data merge` no encontraria nada.
@@ -1743,6 +1763,105 @@ f("admin/ayuda", """
 # ===========================================================================
 #  Empaquetado
 # ===========================================================================
+# ===========================================================================
+#  Sala de espera
+# ===========================================================================
+#
+# Retiene a la gente en un punto con la cuenta atras a la vista mientras se
+# termina de preparar el evento. Se les repone la posicion en cada tick en vez
+# de fiarlo solo a los efectos: la lentitud no impide caerse ni alejarse
+# despacio, y aqui lo que interesa es que nadie se disperse.
+#
+# Los admin quedan fuera: hay que poder moverse para colocar cosas.
+
+f("sala/abrir", """
+    scoreboard players set #ev ev_sala 1
+    bossbar set evento:sala visible true
+    bossbar set evento:sala players @a
+    effect give @a[tag=!ev_admin] minecraft:resistance 999999 4 true
+    effect give @a[tag=!ev_admin] minecraft:saturation 999999 0 true
+    effect give @a[tag=!ev_admin] minecraft:slowness 999999 6 true
+    # La ceguera acerca la niebla hasta que no se ve el mundo: es lo mas parecido
+    # a una pantalla de carga que se puede imponer desde el servidor.
+    effect give @a[tag=!ev_admin] minecraft:blindness 999999 0 true
+    tellraw @a[tag=ev_admin] {"text":"[Evento] Sala de espera abierta.","color":"green"}
+    function evento:sala/latido
+""")
+
+f("sala/abrir5",  "scoreboard players set #ev ev_sala_t 300\nfunction evento:sala/abrir")
+f("sala/abrir10", "scoreboard players set #ev ev_sala_t 600\nfunction evento:sala/abrir")
+f("sala/abrir15", "scoreboard players set #ev ev_sala_t 900\nfunction evento:sala/abrir")
+
+f("sala/retener", """
+    execute as @a[tag=!ev_admin] at @s unless entity @s[distance=..1.5] run tp @s 1084.5 66 530.5
+""")
+
+f("sala/latido", """
+    scoreboard players remove #ev ev_sala_t 1
+    function evento:sala/pintar
+    execute if score #ev ev_sala_t matches ..0 run function evento:sala/empezar
+""")
+
+f("sala/cuenta_grande", """
+    title @a[tag=!ev_admin] times 0 25 5
+    title @a[tag=!ev_admin] subtitle {"text":"segundos","color":"gray"}
+    title @a[tag=!ev_admin] title [{"score":{"name":"#ev","objective":"ev_sala_t"},"color":"light_purple","bold":true}]
+    execute as @a[tag=!ev_admin] at @s run playsound minecraft:block.note_block.pling voice @s ~ ~ ~ 1 1.5
+""")
+
+f("sala/pintar", """
+    bossbar set evento:sala players @a
+    execute store result bossbar evento:sala value run scoreboard players get #ev ev_sala_t
+
+    # El nombre de la barra es el canal por el que viaja la senal al mod de la sala:
+    # un datapack no puede mandar paquetes propios, pero si puede renombrar una barra.
+    # Sin el mod instalado se ve una barra normal con la cuenta, que tampoco estorba.
+    execute store result storage evento:sala seg int 1 run scoreboard players get #ev ev_sala_t
+    function evento:sala/nombrar with storage evento:sala
+    title @a[tag=!ev_admin] actionbar ["",{"text":"El evento empieza en ","color":"gray"},{"score":{"name":"#ev","objective":"ev_sala_t"},"color":"light_purple","bold":true},{"text":" s","color":"gray"}]
+
+    # Aviso grande solo en los hitos: repetir el titulo cada segundo parpadea feo.
+    execute if score #ev ev_sala_t matches 300 run function evento:sala/cuenta_grande
+    execute if score #ev ev_sala_t matches 120 run function evento:sala/cuenta_grande
+    execute if score #ev ev_sala_t matches 60 run function evento:sala/cuenta_grande
+    execute if score #ev ev_sala_t matches 30 run function evento:sala/cuenta_grande
+    execute if score #ev ev_sala_t matches 1..10 run function evento:sala/cuenta_grande
+""")
+
+f("sala/empezar", """
+    scoreboard players set #ev ev_sala 0
+    scoreboard players set #ev ev_sala_t 0
+    bossbar set evento:sala visible false
+
+    effect clear @a minecraft:slowness
+    effect clear @a minecraft:blindness
+    effect clear @a minecraft:resistance
+    effect clear @a minecraft:saturation
+
+    tp @a[tag=!ev_admin] 1084.5 66 530.5
+
+    title @a times 10 70 20
+    title @a subtitle {"text":"Buscad al Profesor Oak","color":"gray"}
+    title @a title [{"text":"EL RASTRO DE LUNA","color":"light_purple","bold":true}]
+    execute as @a at @s run playsound minecraft:block.beacon.activate voice @s ~ ~ ~ 1 1
+    tellraw @a {"text":"  El evento ha comenzado. Hablad con el Profesor Oak.","color":"gold"}
+""")
+
+f("sala/nombrar", """
+    $bossbar set evento:sala name {"text":"[[LUNA]] $(seg)"}
+""")
+
+f("sala/cerrar", """
+    scoreboard players set #ev ev_sala 0
+    bossbar set evento:sala visible false
+    effect clear @a minecraft:slowness
+    effect clear @a minecraft:blindness
+    effect clear @a minecraft:resistance
+    effect clear @a minecraft:saturation
+    tellraw @a[tag=ev_admin] {"text":"[Evento] Sala cerrada sin empezar.","color":"yellow"}
+""")
+
+
 def avances() -> dict:
     """Genera los avances que detectan las misiones.
 
