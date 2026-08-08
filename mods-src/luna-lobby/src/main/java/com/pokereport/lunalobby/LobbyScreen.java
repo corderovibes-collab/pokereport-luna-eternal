@@ -1,23 +1,35 @@
 package com.pokereport.lunalobby;
 
-import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.Style;
+import net.minecraft.resources.ResourceLocation;
 
 /**
  * Pantalla de espera a pantalla completa.
  *
- * El fondo se dibuja opaco de lado a lado a proposito: es lo que oculta el mundo. No se usa el
- * fondo por defecto de las pantallas porque ese solo oscurece, y por debajo se seguiria viendo
- * el terreno y a los demas jugadores moverse.
+ * El fondo se dibuja opaco de borde a borde: es lo que oculta el mundo. No se usa el fondo por
+ * defecto de las pantallas porque ese solo oscurece, y por debajo se seguiria viendo el terreno
+ * y a los demas jugadores moverse.
+ *
+ * Las medidas estan tomadas sobre un maquetado de 1920x1080 y se reescalan con la altura real,
+ * de modo que la composicion se mantiene igual en cualquier resolucion.
  */
 public class LobbyScreen extends Screen {
 
-	private static final int FONDO_ARRIBA = 0xFF120A24;
-	private static final int FONDO_ABAJO = 0xFF05030A;
-	private static final int LUNA = 0xFFE8E2FF;
-	private static final int MORADO = 0xFFB98CFF;
+	private static final ResourceLocation FONDO =
+			ResourceLocation.fromNamespaceAndPath("lunalobby", "textures/gui/fondo.png");
+
+	private static final ResourceLocation FUENTE =
+			ResourceLocation.fromNamespaceAndPath("lunalobby", "luna");
+
+	private static final int ANCHO_ARTE = 1920;
+	private static final int ALTO_ARTE = 1080;
+
+	private static final int PLATA = 0xFFF6F2FF;
+	private static final int LILA = 0xFFEFE6FF;
+	private static final int GRIS = 0xFF9C93B8;
 
 	public LobbyScreen() {
 		super(Component.literal("El Rastro de Luna"));
@@ -35,83 +47,63 @@ public class LobbyScreen extends Screen {
 		return false;
 	}
 
+	/**
+	 * Dibuja el arte cubriendo la pantalla entera.
+	 *
+	 * Se escala por el lado que mas falta cubrir y se recorta el sobrante en vez de estirar la
+	 * imagen a la resolucion: en pantallas panoramicas, estirar un 16:9 deformaria a Luna.
+	 */
 	@Override
 	public void renderBackground(GuiGraphics g, int mouseX, int mouseY, float partial) {
-		g.fillGradient(0, 0, this.width, this.height, FONDO_ARRIBA, FONDO_ABAJO);
-		estrellas(g);
-		luna(g, this.width / 2, this.height / 3, Math.min(this.width, this.height) / 7);
-	}
+		float escala = Math.max((float) this.width / ANCHO_ARTE, (float) this.height / ALTO_ARTE);
+		int ancho = Math.round(ANCHO_ARTE * escala);
+		int alto = Math.round(ALTO_ARTE * escala);
+		int x = (this.width - ancho) / 2;
+		int y = (this.height - alto) / 2;
 
-	/**
-	 * Estrellas colocadas con una secuencia determinista.
-	 *
-	 * Interesa que no parpadeen ni salten de sitio entre fotogramas, asi que la posicion se
-	 * calcula a partir del indice y no de un generador aleatorio nuevo en cada render.
-	 */
-	private void estrellas(GuiGraphics g) {
-		for (int i = 0; i < 140; i++) {
-			int x = (int) ((i * 7919L) % Math.max(1, this.width));
-			int y = (int) ((i * 6271L) % Math.max(1, this.height));
-			int brillo = 120 + (i * 37) % 120;
-			int color = (brillo << 24) | 0xFFFFFF;
-			g.fill(x, y, x + 1, y + 1, color);
-			if (i % 17 == 0) {
-				g.fill(x, y + 1, x + 1, y + 2, color);
-				g.fill(x + 1, y, x + 2, y + 1, color);
-			}
-		}
-	}
-
-	/** Disco lleno dibujado por franjas horizontales, con un halo suave alrededor. */
-	private void luna(GuiGraphics g, int cx, int cy, int radio) {
-		for (int capa = 3; capa >= 1; capa--) {
-			int r = radio + capa * 6;
-			int alfa = 0x10 * capa;
-			franjas(g, cx, cy, r, (alfa << 24) | (MORADO & 0xFFFFFF));
-		}
-		franjas(g, cx, cy, radio, LUNA);
-		franjas(g, cx - radio / 3, cy - radio / 4, (int) (radio * 0.85), FONDO_ARRIBA);
-	}
-
-	private void franjas(GuiGraphics g, int cx, int cy, int radio, int color) {
-		for (int dy = -radio; dy <= radio; dy++) {
-			int dx = (int) Math.sqrt((double) radio * radio - (double) dy * dy);
-			g.fill(cx - dx, cy + dy, cx + dx, cy + dy + 1, color);
-		}
+		g.blit(FONDO, x, y, ancho, alto, 0.0F, 0.0F, ANCHO_ARTE, ALTO_ARTE, ANCHO_ARTE, ALTO_ARTE);
 	}
 
 	@Override
 	public void render(GuiGraphics g, int mouseX, int mouseY, float partial) {
 		this.renderBackground(g, mouseX, mouseY, partial);
 
+		float k = this.height / (float) ALTO_ARTE;
 		int centro = this.width / 2;
-		int base = this.height / 2 + this.height / 8;
 
-		texto(g, "EL RASTRO DE LUNA", centro, base - 34, 2.0F, MORADO);
+		texto(g, espaciar("EL RASTRO DE LUNA"), centro, alto(0.359F), 1.9F * k, LILA);
 
 		int s = LunaLobby.segundos();
-		if (s > 0) {
-			texto(g, reloj(s), centro, base + 6, 4.0F, LUNA);
-			g.drawCenteredString(this.font, Component.literal("El evento comienza en breve")
-					.withStyle(ChatFormatting.GRAY), centro, base + 52, 0xFFFFFFFF);
-		} else {
-			texto(g, "YA", centro, base + 6, 4.0F, LUNA);
-		}
+		texto(g, s > 0 ? reloj(s) : "YA", centro, alto(0.800F), 7.0F * k, PLATA);
 
-		g.drawCenteredString(this.font, Component.literal("Esperando a los entrenadores...")
-				.withStyle(ChatFormatting.DARK_GRAY), centro, this.height - 20, 0xFFFFFFFF);
+		texto(g, espaciar("EL EVENTO COMIENZA EN BREVE"), centro, alto(0.936F), 1.2F * k, GRIS);
+	}
+
+	private int alto(float proporcion) {
+		return Math.round(this.height * proporcion);
 	}
 
 	private String reloj(int segundos) {
 		return String.format("%d:%02d", segundos / 60, segundos % 60);
 	}
 
-	/** Dibuja centrado y escalado; el texto del juego solo tiene un tamano. */
+	/** El juego no sabe separar letras, asi que el espaciado se compone a mano. */
+	private String espaciar(String txt) {
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < txt.length(); i++) {
+			if (i > 0) sb.append(' ');
+			sb.append(txt.charAt(i));
+		}
+		return sb.toString();
+	}
+
+	/** Dibuja centrado y escalado; una fuente del juego solo tiene un tamano. */
 	private void texto(GuiGraphics g, String txt, int cx, int cy, float escala, int color) {
+		Component comp = Component.literal(txt).withStyle(Style.EMPTY.withFont(FUENTE));
 		g.pose().pushPose();
 		g.pose().translate(cx, cy, 0);
 		g.pose().scale(escala, escala, 1.0F);
-		g.drawCenteredString(this.font, txt, 0, 0, color);
+		g.drawCenteredString(this.font, comp, 0, 0, color);
 		g.pose().popPose();
 	}
 }
